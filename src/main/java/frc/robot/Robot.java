@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import ca.team3161.lib.robot.TitanBot;
 import ca.team3161.lib.utils.controls.LogitechDualAction;
 import ca.team3161.lib.utils.controls.LogitechDualAction.LogitechAxis;
 
@@ -23,7 +24,7 @@ import frc.robot.subsystems.drivetrain.DrivetrainImpl;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends TitanBot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
@@ -31,12 +32,26 @@ public class Robot extends TimedRobot {
   private Drivetrain drive;
   private LogitechDualAction driverPad; 
 
+  @Override
+  public int getAutonomousPeriodLengthSeconds() {
+    return 20; //TODO replace with actual auto length
+  }
+
+  @Override
+  public void disabledSetup(){
+  }
+
+  @Override
+  public void disabledRoutine() {
+  }
+
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
-  public void robotInit() {
+  public void robotSetup() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
@@ -68,7 +83,7 @@ public class Robot extends TimedRobot {
    * SendableChooser make sure to add them to the chooser code above as well.
    */
   @Override
-  public void autonomousInit() {
+  public void autonomousSetup() {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -78,7 +93,7 @@ public class Robot extends TimedRobot {
    * This function is called periodically during autonomous.
    */
   @Override
-  public void autonomousPeriodic() {
+  public void autonomousRoutine() {
     switch (m_autoSelected) {
       case kCustomAuto:
         // Put custom auto code here
@@ -94,14 +109,25 @@ public class Robot extends TimedRobot {
    * This function is called periodically during operator control.
    */
   @Override
-  public void teleopPeriodic() {
+  public void teleopSetup() {
     //TODO make the controller actually drive the robot
+  }
+
+  @Override
+  public void teleopRoutine() {
+    // TODO Auto-generated method stub
+    
   }
 
   /**
    * This function is called periodically during test mode.
    */
   @Override
-  public void testPeriodic() {
+  public void testSetup() {
+  }
+
+  @Override
+  public void testRoutine(){
+
   }
 }
