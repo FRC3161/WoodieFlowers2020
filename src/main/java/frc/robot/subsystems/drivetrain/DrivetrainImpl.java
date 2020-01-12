@@ -1,6 +1,8 @@
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.RobotMap;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class DrivetrainImpl implements Drivetrain {
@@ -9,8 +11,8 @@ public class DrivetrainImpl implements Drivetrain {
     private final DifferentialDrive drivetrain;
     
     public DrivetrainImpl(){
-        this.leftMotorController = new WPI_TalonSRX(1); //TODO Placeholder Channel
-        this.rightMotorController = new WPI_TalonSRX(2); //TODO Placeholder Channel
+        this.leftMotorController = new WPI_TalonSRX(RobotMap.TALON_LEFT_DRIVE_PORT); //TODO Placeholder Channel
+        this.rightMotorController = new WPI_TalonSRX(RobotMap.TALON_RIGHT_DRIVE_PORT); //TODO Placeholder Channel
         this.drivetrain = new DifferentialDrive(this.leftMotorController, this.rightMotorController);
     }
 

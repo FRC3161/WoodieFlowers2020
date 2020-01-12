@@ -56,7 +56,7 @@ public class Robot extends TitanBot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     this.drive = new DrivetrainImpl();
-    this.driverPad = new LogitechDualAction(0); // TODO idk if this is the right port
+    this.driverPad = new LogitechDualAction(RobotMap.DRIVER_PAD_PORT); // TODO idk if this is the right port
   }
 
   /**
