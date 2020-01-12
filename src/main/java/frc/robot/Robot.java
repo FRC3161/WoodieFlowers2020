@@ -31,6 +31,7 @@ public class Robot extends TitanBot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private Drivetrain drive;
   private LogitechDualAction driverPad; 
+  private ControllerBindings controls;
 
   @Override
   public int getAutonomousPeriodLengthSeconds() {
@@ -115,8 +116,7 @@ public class Robot extends TitanBot {
 
   @Override
   public void teleopRoutine() {
-    // TODO Auto-generated method stub
-    
+    this.drive.drive(controls.driverLeftStickY(), controls.driverRightStickY());
   }
 
   /**
