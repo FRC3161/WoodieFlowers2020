@@ -8,4 +8,9 @@ public final class RobotMap {
     //Encoders
     public static final int[] LEFT_ENCODER_PORTS = {0, 1}; //TODO
     public static final int[] RIGHT_ENCODER_PORTS = {2, 3}; //TODO
+
+    //PID
+    public static final double Kp = 0.0001;
+    public static final double Ki = 0.0001;
+    public static final double Kd = 0.0001;
 }
