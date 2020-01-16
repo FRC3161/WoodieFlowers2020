@@ -35,7 +35,7 @@ public class Robot extends TitanBot {
 
   @Override
   public int getAutonomousPeriodLengthSeconds() {
-    return 20; //TODO replace with actual auto length
+    return 15;
   }
 
   @Override
