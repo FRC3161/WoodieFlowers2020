@@ -27,5 +27,9 @@ public class ShooterImpl  implements Shooter{
 
     public boolean getPosition(){
         // Returns true if it is up, otherwise false
+        if(this.shooterSolenoid.get()) {
+            return true;
+        }
+        return false;
     }
 }
