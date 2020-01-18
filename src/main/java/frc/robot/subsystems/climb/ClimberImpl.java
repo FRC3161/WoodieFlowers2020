@@ -1,7 +1,6 @@
 package frc.robot.subsystems.climb;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.robot.RobotMap;
 
 public class ClimberImpl implements Climber {
