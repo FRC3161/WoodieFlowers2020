@@ -32,4 +32,11 @@ public class ShooterImpl  implements Shooter{
         }
         return false;
     }
+
+    public void invertPosition(){
+        if(getPosition()) {
+            this.shooterSolenoid.set(true);
+        }
+        this.shooterSolenoid.set(false);
+    }
 }
