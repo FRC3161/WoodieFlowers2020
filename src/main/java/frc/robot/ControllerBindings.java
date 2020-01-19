@@ -8,14 +8,19 @@ import ca.team3161.lib.utils.controls.SquaredJoystickMode;
 public class ControllerBindings {
 
     private LogitechDualAction driverPad;
+    private LogitechDualAction operatorPad;
 
     public static final LogitechControl DRIVE_LEFT_STICK = LogitechControl.LEFT_STICK;
     public static final LogitechControl DRIVE_RIGHT_STICK = LogitechControl.RIGHT_STICK;
 
-    ControllerBindings(int driverPort){
+    ControllerBindings(int driverPort, int operatorPort){
+        // Driver Pad
         this.driverPad = new LogitechDualAction(driverPort);
         this.driverPad.setMode(DRIVE_LEFT_STICK, LogitechAxis.Y, new SquaredJoystickMode());
         this.driverPad.setMode(DRIVE_RIGHT_STICK, LogitechAxis.Y, new SquaredJoystickMode());
+        
+        // Operator Pad
+        this.operatorPad = new LogitechDualAction(operatorPort);
     }
 
     public double driverLeftStickY(){
