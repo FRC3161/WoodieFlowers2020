@@ -17,4 +17,8 @@ public final class RobotMap {
 
     // Shooter
     public static final int SHOOTER_TALON_PORT = 2; // TODO
+    public static final int SHOOTER_SOLENOID_CHANNEL = 0; //TODO
+
+    // Climber
+    public static final int CLIMBER_TALON_PORT = 3; // TODO
 }
