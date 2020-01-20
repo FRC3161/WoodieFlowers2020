@@ -57,13 +57,13 @@ dependencies {
     nativeZip wpi.deps.wpilibJni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.wpilibJni(wpi.platforms.desktop)
     
-    implementation "com.ctre.phoenix:api-java:5.17.6+"
-    implementation "com.ctre.phoenix:wpiapi-java:5.17.6+"
-    implementation "com.ctre.phoenix:core:5.17.6+"
-    implementation "com.ctre.phoenix:cci:5.17.6+"
-    implementation "com.ctre.phoenix:diagnostics:5.17.6+"
-    implementation "com.ctre.phoenix:canutils:5.17.6+"
-    implementation "com.ctre.phoenix:platform-stub:5.17.6+"
+    implementation "com.ctre.phoenix:api-java:+"
+    implementation "com.ctre.phoenix:wpiapi-java:+"
+    implementation "com.ctre.phoenix:core:+"
+    implementation "com.ctre.phoenix:cci:+"
+    implementation "com.ctre.phoenix:diagnostics:+"
+    implementation "com.ctre.phoenix:canutils:+"
+    implementation "com.ctre.phoenix:platform-stub:+"
     implementation "com.github.FRC3161:Yggdrasil:e04c00a361"
 
     implementation wpi.deps.vendor.java()
