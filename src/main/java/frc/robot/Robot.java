@@ -7,12 +7,10 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import ca.team3161.lib.robot.TitanBot;
 import ca.team3161.lib.utils.controls.LogitechDualAction;
-import ca.team3161.lib.utils.controls.LogitechDualAction.LogitechAxis;
 
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
