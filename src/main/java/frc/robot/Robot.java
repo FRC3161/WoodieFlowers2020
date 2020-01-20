@@ -116,6 +116,7 @@ public class Robot extends TitanBot {
 
   @Override
   public void teleopRoutine() {
+    //TODO properly bind controls
     this.drive.drive(controls.driverLeftStickY(), controls.driverRightStickY());
   }
 
