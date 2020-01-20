@@ -34,6 +34,6 @@ public class DrivetrainImpl implements Drivetrain {
 
     @Override
     public void drive(double leftSpeed, double rightSpeed) {
-        this.drivetrain.tankDrive(this.leftPIDController.calculate(leftEncoder.getDistance()), this.rightPIDController.calculate(rightEncoder.getDistance())); // idk if this works 
+        this.drivetrain.tankDrive(leftSpeed, rightSpeed);
     }
 }
