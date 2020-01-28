@@ -46,6 +46,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
         require(shooterController);
         require(beltController);
         require(rollerController);
+        require(shooterEncoder);
     }
 
     @Override
