@@ -3,6 +3,7 @@ package frc.robot.subsystems.shooter;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import frc.robot.RobotMap;
 
@@ -16,7 +17,8 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     Encoder shooterEncoder;
     
     public ShooterImpl() {
-        
+       
+        super(50, TimeUnit.MILLISECONDS); // TODO figure out actual value
         this.rollerController = new WPI_TalonSRX(RobotMap.ROLLER_TALON_PORT);
         this.beltController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
         this.shooterController  = new WPI_TalonSRX(frc.robot.RobotMap.SHOOTER_TALON_PORT);
