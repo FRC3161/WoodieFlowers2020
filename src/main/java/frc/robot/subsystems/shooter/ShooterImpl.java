@@ -14,15 +14,12 @@ public class ShooterImpl  implements Shooter{
         this.shooterSolenoid = new Solenoid(RobotMap.SHOOTER_SOLENOID_CHANNEL);
     }
     
-    public void shoot() {
-        // Right now this is a placeholder to allow us to test
-        this.shooterController.set(1.0d);
-        try{
-            Thread.sleep(5000);
-        } catch(InterruptedException e){
-            System.out.println("Shooting");
+    public void shoot(boolean shooting) {
+        if (shooting){
+            this.shooterController.set(1.0d);
+        } else {
+            this.shooterController.set(0.0d);
         }
-        this.shooterController.set(0.0d);
     }
 
     public boolean getPosition(){
@@ -36,6 +33,7 @@ public class ShooterImpl  implements Shooter{
     public void invertPosition(){
         if(getPosition()) {
             this.shooterSolenoid.set(true);
+            return;
         }
         this.shooterSolenoid.set(false);
     }
