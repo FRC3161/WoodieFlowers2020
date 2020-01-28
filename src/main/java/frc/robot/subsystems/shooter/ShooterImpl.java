@@ -3,9 +3,10 @@ package frc.robot.subsystems.shooter;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import frc.robot.RobotMap;
 
-public class ShooterImpl  implements Shooter{
+public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     
     WPI_TalonSRX shooterController;
     WPI_TalonSRX beltController;
@@ -36,6 +37,19 @@ public class ShooterImpl  implements Shooter{
             return;
         }
             this.shooterController.set(0.0d);
+    }
+
+    @Override
+    public void defineResources(){
+        require(shooterController);
+        require(beltController);
+        require(rollerController);
+    }
+
+    @Override
+    public void task(){
+        return;
+        //Placeholder
     }
 
     public boolean getPosition(){
