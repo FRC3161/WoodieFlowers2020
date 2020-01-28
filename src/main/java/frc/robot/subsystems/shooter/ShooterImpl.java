@@ -23,7 +23,7 @@ public class ShooterImpl  implements Shooter{
     
     public void shoot(boolean shooting) {
         if (shooting){
-            if (getShooterRPM() > 4000){
+            if (getShooterRPM() < 4000){
                 this.shooterController.set(1.0d);
             }
             return;
