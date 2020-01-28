@@ -17,9 +17,9 @@ public class ShooterImpl  implements Shooter{
     public void shoot(boolean shooting) {
         if (shooting){
             this.shooterController.set(1.0d);
-        } else {
-            this.shooterController.set(0.0d);
+            return;
         }
+            this.shooterController.set(0.0d);
     }
 
     public boolean getPosition(){
