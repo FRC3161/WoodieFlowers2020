@@ -8,11 +8,18 @@ import frc.robot.RobotMap;
 public class ShooterImpl  implements Shooter{
     
     WPI_TalonSRX shooterController;
+    WPI_TalonSRX beltController;
+    WPI_TalonSRX rollerController;
+
     Solenoid shooterSolenoid;
     Encoder shooterEncoder;
     
     public ShooterImpl() {
+        
+        this.rollerController = new WPI_TalonSRX(RobotMap.ROLLER_TALON_PORT);
+        this.beltController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
         this.shooterController  = new WPI_TalonSRX(frc.robot.RobotMap.SHOOTER_TALON_PORT);
+        
         this.shooterSolenoid = new Solenoid(RobotMap.SHOOTER_SOLENOID_CHANNEL);
         this.shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_PORTS[0], RobotMap.SHOOTER_ENCODER_PORTS[1]);
     }
