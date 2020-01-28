@@ -18,7 +18,7 @@ public class ShooterImpl  implements Shooter{
     }
 
     private double getShooterRPM() {
-        return (this.shooterEncoder.getRate() / 128);
+        return ((this.shooterEncoder.getRate() / 128) * 60);
     }
     
     public void shoot(boolean shooting) {
