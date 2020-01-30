@@ -30,9 +30,14 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
         this.feeder.stop();
     }
 
+    public void unload() {
+        this.feeder.unload();
+        // Seems kind of redundant, but abstraction
+    }
+
     public void defineResources(){
-        // PLACEHOLDER
         return;
+        // IDK if I need to require the shooter and feeder or not
     }
 
     public void task() {
