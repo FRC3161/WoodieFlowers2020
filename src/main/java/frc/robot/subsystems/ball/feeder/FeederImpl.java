@@ -17,8 +17,9 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void feedBalls() {
-        // PLACEHOLDER
-        return;
+        this.beltController.set(0.6d);
+        this.rollerController.set(0.8d);
+        // TODO Find actual values
     }
 
     public void stop() {
