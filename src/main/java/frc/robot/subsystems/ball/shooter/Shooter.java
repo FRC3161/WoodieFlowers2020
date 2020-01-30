@@ -1,4 +1,4 @@
-package frc.robot.subsystems.shooter;
+package frc.robot.subsystems.ball.shooter;
 
 public interface Shooter {
     void shoot(boolean shooting);
