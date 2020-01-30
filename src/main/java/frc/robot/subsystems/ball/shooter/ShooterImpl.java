@@ -26,7 +26,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
         return ((this.shooterEncoder.getRate() / 128) * 60);
     }
     
-    public void shoot() {
+    public void runShooter() {
         if (getShooterRPM() < 4000){
             this.shooterController.set(1.0d);
             return;
