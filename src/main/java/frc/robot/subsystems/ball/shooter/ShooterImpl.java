@@ -62,7 +62,9 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
 
     public boolean readyForBalls(){
-        // PLACEHOLDER
-        return true;
+        if (this.getShooterRPM() > 4000 /* Placholder value */){
+            return true;
+        }    
+        return false;
     }
 }
