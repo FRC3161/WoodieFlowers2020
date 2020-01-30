@@ -28,8 +28,9 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void reverseFeeder() {
-        // PLACEHOLDER
-        return;
+        this.beltController.set(-0.6d);
+        this.rollerController.set(-0.8d);
+        // TODO see above
     }
 
     public void defineResources(){
