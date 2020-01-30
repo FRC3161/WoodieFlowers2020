@@ -9,7 +9,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     WPI_TalonSRX beltController;
     WPI_TalonSRX rollerController;
 
-    FeederImpl(){
+    public FeederImpl(){
         super(1, TimeUnit.SECONDS);
         
         this.beltController = new WPI_TalonSRX(frc.robot.RobotMap.BELT_TALON_PORT);
