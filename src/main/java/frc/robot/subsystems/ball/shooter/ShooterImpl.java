@@ -46,7 +46,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
         //Placeholder
     }
 
-    public boolean getPosition(){
+    private boolean getPosition(){
         // Returns true if it is up, otherwise false
         return this.shooterSolenoid.get();
     }
