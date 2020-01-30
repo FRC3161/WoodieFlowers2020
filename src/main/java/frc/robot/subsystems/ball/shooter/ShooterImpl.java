@@ -65,4 +65,8 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
         }    
         return false;
     }
+
+    public void stopShooter() {
+        this.shooterController.set(0.0d);
+    }
 }
