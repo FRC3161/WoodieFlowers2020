@@ -38,6 +38,11 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         require(rollerController);
     }
 
+    public void unload() {
+        reverseFeeder();
+        // TODO implement sensor logic
+    }
+
     public void task() {
         // PLACEHOLDER
         return;
