@@ -10,17 +10,12 @@ import frc.robot.RobotMap;
 public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     
     WPI_TalonSRX shooterController;
-    WPI_TalonSRX beltController;
-    WPI_TalonSRX rollerController;
-
     Solenoid shooterSolenoid;
     Encoder shooterEncoder;
     
     public ShooterImpl() {
        
         super(50, TimeUnit.MILLISECONDS); // TODO figure out actual value
-        this.rollerController = new WPI_TalonSRX(RobotMap.ROLLER_TALON_PORT);
-        this.beltController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
         this.shooterController  = new WPI_TalonSRX(frc.robot.RobotMap.SHOOTER_TALON_PORT);
         
         this.shooterSolenoid = new Solenoid(RobotMap.SHOOTER_SOLENOID_CHANNEL);
@@ -44,8 +39,6 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     @Override
     public void defineResources(){
         require(shooterController);
-        require(beltController);
-        require(rollerController);
         require(shooterEncoder);
     }
 
@@ -57,10 +50,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
 
     public boolean getPosition(){
         // Returns true if it is up, otherwise false
-        if(this.shooterSolenoid.get()) {
-            return true;
-        }
-        return false;
+        return this.shooterSolenoid.get();
     }
 
     public void invertPosition(){
@@ -69,5 +59,10 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
             return;
         }
         this.shooterSolenoid.set(false);
+    }
+
+    public boolean readyForBalls(){
+        // PLACEHOLDER
+        return true;
     }
 }
