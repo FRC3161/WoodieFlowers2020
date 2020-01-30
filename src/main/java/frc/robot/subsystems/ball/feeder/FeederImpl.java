@@ -34,8 +34,8 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void defineResources(){
-        // PLACEHOLDER
-        return;
+        require(beltController);
+        require(rollerController);
     }
 
     public void task() {
