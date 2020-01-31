@@ -51,7 +51,11 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     }
 
     public void task() {
-        // PLACEHOLDER
-        return;
+        if(this.shootEnabled) {
+            this.shooter.runShooter();
+            if(this.shooter.readyForBalls()) {
+                this.feeder.feedBalls();
+            }
+        }
     }
 }
