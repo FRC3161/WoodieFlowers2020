@@ -10,19 +10,30 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     private ShooterImpl shooter;
     private FeederImpl feeder;
+
+    private boolean shootEnabled;
     
     BallImpl() {
         // PLACEHOLDER
         super(1, TimeUnit.SECONDS);
         this.shooter = new ShooterImpl();
         this.feeder = new FeederImpl();
+
+        this.shootEnabled = false;
     }
     
     public void shoot(){
+        this.shootEnabled = true;
+        /*
         this.shooter.runShooter();
         if(this.shooter.readyForBalls()){
             this.feeder.feedBalls();
         }
+        */
+    }
+
+    public void cancelShooting() {
+        this.shootEnabled = false;
     }
 
     public void stop(){
