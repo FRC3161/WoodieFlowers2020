@@ -37,7 +37,6 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     public void defineResources(){
         return;
-        // IDK if I need to require the shooter and feeder or not
     }
 
     public void task() {
