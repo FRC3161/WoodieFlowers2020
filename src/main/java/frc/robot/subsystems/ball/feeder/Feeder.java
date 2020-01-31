@@ -4,5 +4,4 @@ public interface Feeder {
     void feedBalls();
     void unload();
     void stop();
-    void reverseFeeder();
 }
