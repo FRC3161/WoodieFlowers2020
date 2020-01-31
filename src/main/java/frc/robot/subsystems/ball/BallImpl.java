@@ -8,8 +8,8 @@ import frc.robot.subsystems.ball.shooter.ShooterImpl;
 
 public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
-    ShooterImpl shooter;
-    FeederImpl feeder;
+    private ShooterImpl shooter;
+    private FeederImpl feeder;
     
     BallImpl() {
         // PLACEHOLDER
