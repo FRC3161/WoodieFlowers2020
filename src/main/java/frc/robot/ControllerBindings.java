@@ -9,18 +9,23 @@ public class ControllerBindings {
 
     private LogitechDualAction driverPad;
     private LogitechDualAction operatorPad;
+    private int driverPort;
+    private int operatorPort;
 
     public static final LogitechControl DRIVE_LEFT_STICK = LogitechControl.LEFT_STICK;
     public static final LogitechControl DRIVE_RIGHT_STICK = LogitechControl.RIGHT_STICK;
 
-    ControllerBindings(int driverPort, int operatorPort){
+    ControllerBindings(){
         // Driver Pad
-        this.driverPad = new LogitechDualAction(driverPort);
+        this.driverPort = 0;
+        this.operatorPort = 1;
+        this.driverPad = new LogitechDualAction(this.driverPort);
+
         this.driverPad.setMode(DRIVE_LEFT_STICK, LogitechAxis.Y, new SquaredJoystickMode());
         this.driverPad.setMode(DRIVE_RIGHT_STICK, LogitechAxis.Y, new SquaredJoystickMode());
         
         // Operator Pad
-        this.operatorPad = new LogitechDualAction(operatorPort);
+        this.operatorPad = new LogitechDualAction(this.operatorPort);
     }
 
     public double driverLeftStickY(){
