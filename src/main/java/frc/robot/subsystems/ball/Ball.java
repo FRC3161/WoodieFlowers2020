@@ -4,5 +4,4 @@ public interface Ball {
     void shoot();
     void cancelShoot();
     void unload();
-    void cancelUnload();
 }
