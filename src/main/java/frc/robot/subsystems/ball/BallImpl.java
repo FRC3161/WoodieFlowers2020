@@ -43,9 +43,4 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
         // PLACEHOLDER
         return;
     }
-
-    public void cancelUnload() {
-        return;
-        // Placeholder
-    }
 }
