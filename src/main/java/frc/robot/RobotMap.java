@@ -24,4 +24,6 @@ public final class RobotMap {
 
     // Climber
     public static final int CLIMBER_TALON_PORT = 3; // TODO
+    public static final int CLIMBER_SOLENOID1_CHANNEL = 1;
+    public static final int CLIMBER_SOLENOID2_CHANNEL = 2;
 }
