@@ -33,6 +33,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     public void stop(){
         this.shooter.stopShooter();
         this.feeder.stop();
+        this.shootEnabled = false;
     }
 
     public void unload() {
