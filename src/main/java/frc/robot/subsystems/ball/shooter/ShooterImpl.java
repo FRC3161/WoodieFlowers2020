@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
+import ca.team3161.lib.utils.SmartDashboardTuner;
 import frc.robot.RobotMap;
 
 public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
@@ -12,6 +13,9 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     WPI_TalonSRX shooterController;
     Solenoid shooterSolenoid;
     Encoder shooterEncoder;
+
+    double shooterRPM;
+    SmartDashboardTuner rpmTuner;
     
     public ShooterImpl() {
        
@@ -20,6 +24,9 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
         
         this.shooterSolenoid = new Solenoid(RobotMap.SHOOTER_SOLENOID_CHANNEL);
         this.shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_PORTS[0], RobotMap.SHOOTER_ENCODER_PORTS[1]);
+
+        this.shooterRPM = 4000;
+        this.rpmTuner = new SmartDashboardTuner("Shooter RPM",  shooterRPM, d -> this.shooterRPM = d);
     }
 
     private double getShooterRPM() {
@@ -27,7 +34,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
     
     public void runShooter() {
-        if (getShooterRPM() < 4000){
+        if (getShooterRPM() < shooterRPM){
             this.shooterController.set(1.0d);
             return;
         }
@@ -60,7 +67,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
 
     public boolean readyForBalls(){
-        if (this.getShooterRPM() > 4000 /* Placholder value */){
+        if (this.getShooterRPM() > shooterRPM){
             return true;
         }    
         return false;
