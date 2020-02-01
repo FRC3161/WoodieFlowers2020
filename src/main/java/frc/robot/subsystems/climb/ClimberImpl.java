@@ -43,12 +43,13 @@ public class ClimberImpl implements Climber {
     }
 
     public void retractClimber() {
-        // PLACEHOLDER
-        return;
+        if(this.climberSolenoid1.get() && this.climberSolenoid2.get()) {
+            this.climberSolenoid1.set(false);
+            this.climberSolenoid2.set(false);
+        }
     }
 
     public void liftRobot(){
-        // PLACEHOLDER
-        return;
+        this.lifterMotorController.set(0.8d); // Determine actual value
     }
 }
