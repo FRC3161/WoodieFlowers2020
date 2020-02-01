@@ -7,6 +7,7 @@ import frc.robot.RobotMap;
 public class ClimberImpl implements Climber {
     
     WPI_TalonSRX climberMotorController;
+    WPI_TalonSRX lifterMotorController;
 
     // Pretty sure there are two solenoids
     Solenoid climberSolenoid1;
@@ -14,6 +15,7 @@ public class ClimberImpl implements Climber {
     
     public ClimberImpl() {
         this.climberMotorController = new WPI_TalonSRX(RobotMap.CLIMBER_TALON_PORT);
+        this.lifterMotorController = new WPI_TalonSRX(RobotMap.LIFTER_TALON_PORT);
 
         this.climberSolenoid1 = new Solenoid(RobotMap.CLIMBER_SOLENOID1_CHANNEL);
         this.climberSolenoid2 = new Solenoid(RobotMap.CLIMBER_SOLENOID2_CHANNEL);
