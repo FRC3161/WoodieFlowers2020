@@ -30,9 +30,14 @@ public class ClimberImpl implements Climber {
         }
     }
 
+    // Consider making one method that inverts the climber instead of extending it or retracting it
+
     public void extendClimber() {
-        // PLACEHOLDER
-        return;
+        // Not sure if there are any negative consequences to trying to enable an already enabled solenoid, but it can't hurt
+        if(!this.climberSolenoid1.get() && !this.climberSolenoid2.get()){
+            this.climberSolenoid1.set(true);
+            this.climberSolenoid2.set(true);
+        }
     }
 
     public void retractClimber() {
