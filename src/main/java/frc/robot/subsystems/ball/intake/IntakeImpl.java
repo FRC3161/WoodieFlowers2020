@@ -2,27 +2,42 @@ package frc.robot.subsystems.ball.intake;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
+import java.util.concurrent.TimeUnit;
 
-public class IntakeImpl implements Intake {
+public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
 
     Solenoid intakeSolenoid;
     WPI_TalonSRX intakeMotorController;
+    boolean extended;
+    int intakeDirection;
 
     public IntakeImpl() {
+        super(250, TimeUnit.MILLISECONDS); // Figure out actual value
         this.intakeSolenoid = new Solenoid(frc.robot.RobotMap.INTAKE_SOLENOID_CHANNEL);
         this.intakeMotorController = new WPI_TalonSRX(frc.robot.RobotMap.INTAKE_TALON_PORT);
     }
     
-    public void extend(boolean motorDirection) {
+    public void extend(int motorDirection) {
         // Placeholder
         return;
     }
 
     public void extend() {
-        extend(true);
+        extend(1);
     }
 
     public void retract() {
+        // Placeholder
+        return;
+    }
+
+    public void defineResources() {
+        require(intakeMotorController);
+        require(intakeSolenoid);
+    }
+
+    public void task(){
         // Placeholder
         return;
     }
