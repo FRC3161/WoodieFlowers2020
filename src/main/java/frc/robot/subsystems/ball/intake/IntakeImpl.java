@@ -11,12 +11,14 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
     WPI_TalonSRX intakeMotorController;
     boolean extended;
     int intakeDirection;
+    double intakeSpeed;
 
     public IntakeImpl() {
         super(250, TimeUnit.MILLISECONDS); // Figure out actual value
         this.intakeSolenoid = new Solenoid(frc.robot.RobotMap.INTAKE_SOLENOID_CHANNEL);
         this.intakeMotorController = new WPI_TalonSRX(frc.robot.RobotMap.INTAKE_TALON_PORT);
         this.extended = this.intakeSolenoid.get();
+        this.intakeSpeed = 0.8d;
     }
     
     public void extend(int motorDirection) {
@@ -39,7 +41,12 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
     }
 
     public void task(){
-        // Placeholder
-        return;
+        if(this.extended) {
+            this.intakeSolenoid.set(true);
+            this.intakeMotorController.set(this.intakeDirection * this.intakeSpeed);
+        } else {
+            this.intakeSolenoid.set(false);
+            this.intakeMotorController.set(0.0d);
+        }
     }
 }
