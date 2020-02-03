@@ -6,4 +6,5 @@ public interface Ball {
     void stop();
     void unload();
     void collect();
+    void retract();
 }
