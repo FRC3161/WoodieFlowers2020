@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.RobotMap;
 
 
-// TODO make ClimberImpl a subsystem
 public class ClimberImpl implements Climber {
     
     WPI_TalonSRX climberMotorController;
