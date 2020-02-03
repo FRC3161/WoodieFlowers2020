@@ -1,6 +1,8 @@
 package frc.robot;
 
 public final class RobotMap {
+    // TODO gotta fix all of these, it's pretty much just random numbers at this point
+    
     // Drive
     public static final int TALON_LEFT_DRIVE_PORT = 0; //TODO
     public static final int TALON_RIGHT_DRIVE_PORT = 1; //TODO
@@ -21,6 +23,10 @@ public final class RobotMap {
     public static final int BELT_TALON_PORT = 4;
     public static final int SHOOTER_SOLENOID_CHANNEL = 0; //TODO
     public static final int[] SHOOTER_ENCODER_PORTS = {4, 5};
+
+    // Intake
+    public static final int INTAKE_TALON_PORT = 8;
+    public static final int INTAKE_SOLENOID_CHANNEL = 5;
 
     // Climber
     public static final int CLIMBER_TALON_PORT = 3; // TODO
