@@ -5,4 +5,5 @@ public interface Ball {
     void cancelShooting();
     void stop();
     void unload();
+    void collect();
 }

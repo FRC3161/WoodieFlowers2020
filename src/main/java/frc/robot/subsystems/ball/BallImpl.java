@@ -5,11 +5,13 @@ import java.util.concurrent.TimeUnit;
 
 import frc.robot.subsystems.ball.feeder.FeederImpl;
 import frc.robot.subsystems.ball.shooter.ShooterImpl;
+import frc.robot.subsystems.ball.intake.IntakeImpl;
 
 public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     private ShooterImpl shooter;
     private FeederImpl feeder;
+    private IntakeImpl intake;
 
     private boolean shootEnabled;
     
@@ -18,7 +20,9 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
         super(1, TimeUnit.SECONDS);
         this.shooter = new ShooterImpl();
         this.feeder = new FeederImpl();
+        this.intake = new IntakeImpl();
 
+        this.intake.start();
         this.shootEnabled = false;
     }
     
@@ -43,6 +47,10 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     public void defineResources(){
         return;
+    }
+
+    public void collect() {
+        this.intake.extend();
     }
 
     public void task() {
