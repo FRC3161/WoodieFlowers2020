@@ -53,6 +53,10 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
         this.intake.extend();
     }
 
+    public void retract() {
+        this.intake.retract();
+    }
+
     public void task() {
         if(this.shootEnabled) {
             this.shooter.runShooter();
