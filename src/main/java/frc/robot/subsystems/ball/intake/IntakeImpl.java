@@ -30,8 +30,7 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
     }
 
     public void retract() {
-        // Placeholder
-        return;
+        this.extended = false;
     }
 
     public void defineResources() {
