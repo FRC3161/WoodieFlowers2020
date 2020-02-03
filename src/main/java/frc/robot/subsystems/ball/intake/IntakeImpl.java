@@ -28,7 +28,6 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
 
     public void extend() {
         extend(1);
-        this.extended = true;
     }
 
     public void retract() {
