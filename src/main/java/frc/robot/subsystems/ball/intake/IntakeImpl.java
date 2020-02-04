@@ -18,7 +18,7 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
 
     Solenoid intakeSolenoid;
     WPI_TalonSRX intakeMotorController;
-    boolean extended;
+    volatile boolean extended;
     int intakeDirection;
     double intakeSpeed;
 
