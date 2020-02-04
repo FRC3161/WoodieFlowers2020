@@ -23,7 +23,7 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
     double intakeSpeed;
 
     public IntakeImpl() {
-        super(20, TimeUnit.MILLISECONDS); // Figure out actual value
+        super(20, TimeUnit.MILLISECONDS);
         this.intakeSolenoid = new Solenoid(frc.robot.RobotMap.INTAKE_SOLENOID_CHANNEL);
         this.intakeMotorController = new WPI_TalonSRX(frc.robot.RobotMap.INTAKE_TALON_PORT);
         this.extended = this.intakeSolenoid.get();
