@@ -3,9 +3,18 @@ package frc.robot.subsystems.ball.intake;
 import edu.wpi.first.wpilibj.Solenoid;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
+import java.util.EnumMap;
 import java.util.concurrent.TimeUnit;
 
 public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
+
+    public enum motorDirections {
+        FORWARDS,
+        BACKWARDS
+    }
+
+    EnumMap<motorDirections, Integer> motorDirectionsMap;
+
 
     Solenoid intakeSolenoid;
     WPI_TalonSRX intakeMotorController;
@@ -19,15 +28,19 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
         this.intakeMotorController = new WPI_TalonSRX(frc.robot.RobotMap.INTAKE_TALON_PORT);
         this.extended = this.intakeSolenoid.get();
         this.intakeSpeed = 0.8d;
+
+        this.motorDirectionsMap = new EnumMap<>(motorDirections.class);
+        this.motorDirectionsMap.put(motorDirections.FORWARDS, new Integer(1));
+        this.motorDirectionsMap.put(motorDirections.BACKWARDS, new Integer(-1));
     }
     
-    public void extend(int motorDirection) {
-        this.intakeDirection = motorDirection;
+    public void extend(motorDirections direction) {
+        this.intakeDirection = this.motorDirectionsMap.get(direction);
         this.extended = true;
     }
 
     public void extend() {
-        extend(1);
+        extend(motorDirections.FORWARDS);
     }
 
     public void retract() {
