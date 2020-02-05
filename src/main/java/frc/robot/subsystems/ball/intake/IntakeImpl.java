@@ -8,12 +8,12 @@ import java.util.concurrent.TimeUnit;
 
 public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
 
-    public enum motorDirections {
+    public enum MotorDirections {
         FORWARDS,
         BACKWARDS
     }
 
-    EnumMap<motorDirections, Integer> motorDirectionsMap;
+    EnumMap<MotorDirections, Integer> motorDirectionsMap;
 
 
     Solenoid intakeSolenoid;
@@ -29,18 +29,18 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
         this.extended = this.intakeSolenoid.get();
         this.intakeSpeed = 0.8d;
 
-        this.motorDirectionsMap = new EnumMap<>(motorDirections.class);
-        this.motorDirectionsMap.put(motorDirections.FORWARDS, Integer.valueOf(1));
-        this.motorDirectionsMap.put(motorDirections.BACKWARDS, Integer.valueOf(-1));
+        this.motorDirectionsMap = new EnumMap<>(MotorDirections.class);
+        this.motorDirectionsMap.put(MotorDirections.FORWARDS, Integer.valueOf(1));
+        this.motorDirectionsMap.put(MotorDirections.BACKWARDS, Integer.valueOf(-1));
     }
     
-    public void extend(motorDirections direction) {
+    public void extend(MotorDirections direction) {
         this.intakeDirection = this.motorDirectionsMap.get(direction);
         this.extended = true;
     }
 
     public void extend() {
-        extend(motorDirections.FORWARDS);
+        extend(MotorDirections.FORWARDS);
     }
 
     public void retract() {
