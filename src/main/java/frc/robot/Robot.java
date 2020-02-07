@@ -11,8 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import ca.team3161.lib.robot.TitanBot;
 import ca.team3161.lib.utils.controls.LogitechDualAction;
+import ca.team3161.lib.utils.controls.LogitechDualAction.LogitechControl;
 import ca.team3161.lib.utils.controls.Gamepad.PressType;
-
+import ca.team3161.lib.utils.controls.LogitechDualAction.LogitechAxis;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 import frc.robot.subsystems.ball.BallImpl;
@@ -119,12 +120,13 @@ public class Robot extends TitanBot {
     //TODO make the controller actually drive the robot
     this.operatorPad.bind(ControllerBindings.Bindings.INTAKE.getButton(), PressType.PRESS, () -> ballSubsystem.collect());
     this.operatorPad.bind(ControllerBindings.Bindings.INTAKE.getButton(), PressType.RELEASE, () -> ballSubsystem.retract());
+    this.operatorPad.enableBindings();
   }
 
   @Override
   public void teleopRoutine() {
     //TODO properly bind controls
-    this.drive.drive(controls.driverLeftStickY(), controls.driverRightStickY());
+    this.drive.drive(this.driverPad.getValue(LogitechControl.LEFT_STICK, LogitechAxis.Y), this.driverPad.getValue(LogitechControl.RIGHT_STICK, LogitechAxis.Y));
   }
 
   /**
