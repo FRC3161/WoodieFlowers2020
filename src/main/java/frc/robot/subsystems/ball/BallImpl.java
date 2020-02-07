@@ -15,7 +15,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     private boolean shootEnabled;
     
-    BallImpl() {
+    public BallImpl() {
         // PLACEHOLDER
         super(1, TimeUnit.SECONDS);
         this.shooter = new ShooterImpl();
