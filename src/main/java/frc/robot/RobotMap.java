@@ -27,7 +27,8 @@ public final class RobotMap {
 
     // Intake
     public static final int INTAKE_TALON_PORT = 8;
-    public static final int INTAKE_SOLENOID_CHANNEL = 5;
+    public static final int INTAKE_SOLENOID_IN_CHANNEL = 0;
+    public static final int INTAKE_SOLENOID_OUT_CHANNEL = 3;
 
     // Climber
     public static final int CLIMBER_TALON_PORT = 3; // TODO
