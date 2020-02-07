@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import ca.team3161.lib.robot.TitanBot;
 import ca.team3161.lib.utils.controls.LogitechDualAction;
+import ca.team3161.lib.utils.controls.Gamepad.PressType;
 
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
+import frc.robot.subsystems.ball.BallImpl;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,8 +30,11 @@ public class Robot extends TitanBot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private Drivetrain drive;
+  
   private LogitechDualAction driverPad; 
+  private LogitechDualAction operatorPad;
   private ControllerBindings controls;
+  private BallImpl ballSubsystem;
 
   @Override
   public int getAutonomousPeriodLengthSeconds() {
@@ -56,6 +61,8 @@ public class Robot extends TitanBot {
     SmartDashboard.putData("Auto choices", m_chooser);
     this.drive = new DrivetrainImpl();
     this.driverPad = new LogitechDualAction(RobotMap.DRIVER_PAD_PORT); // TODO idk if this is the right port
+    this.operatorPad = new LogitechDualAction(RobotMap.OPERATOR_PAD_PORT);
+    this.ballSubsystem = new BallImpl();
   }
 
   /**
@@ -110,6 +117,7 @@ public class Robot extends TitanBot {
   @Override
   public void teleopSetup() {
     //TODO make the controller actually drive the robot
+    this.operatorPad.bind(ControllerBindings.Bindings.INTAKE.getButton(), PressType.PRESS, () -> ballSubsystem.collect());
   }
 
   @Override
