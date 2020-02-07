@@ -118,6 +118,7 @@ public class Robot extends TitanBot {
   public void teleopSetup() {
     //TODO make the controller actually drive the robot
     this.operatorPad.bind(ControllerBindings.Bindings.INTAKE.getButton(), PressType.PRESS, () -> ballSubsystem.collect());
+    this.operatorPad.bind(ControllerBindings.Bindings.INTAKE.getButton(), PressType.RELEASE, () -> ballSubsystem.retract());
   }
 
   @Override
