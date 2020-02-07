@@ -17,6 +17,7 @@ import ca.team3161.lib.utils.controls.LogitechDualAction.LogitechAxis;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 import frc.robot.subsystems.ball.BallImpl;
+import frc.robot.ControllerBindings.Bindings;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,7 +35,6 @@ public class Robot extends TitanBot {
   
   private LogitechDualAction driverPad; 
   private LogitechDualAction operatorPad;
-  private ControllerBindings controls;
   private BallImpl ballSubsystem;
 
   @Override
@@ -120,15 +120,15 @@ public class Robot extends TitanBot {
   @Override
   public void teleopSetup() {
     //TODO make the controller actually drive the robot
-    this.operatorPad.bind(ControllerBindings.Bindings.INTAKE.getButton(), PressType.PRESS, () -> ballSubsystem.collect());
-    this.operatorPad.bind(ControllerBindings.Bindings.INTAKE.getButton(), PressType.RELEASE, () -> ballSubsystem.retract());
+    this.operatorPad.bind(Bindings.INTAKE.getButton(), PressType.PRESS, () -> ballSubsystem.collect());
+    this.operatorPad.bind(Bindings.INTAKE.getButton(), PressType.RELEASE, () -> ballSubsystem.retract());
     //this.operatorPad.enableBindings();
   }
 
   @Override
   public void teleopRoutine() {
     //TODO properly bind controls
-    this.drive.drive(this.driverPad.getValue(LogitechControl.LEFT_STICK, LogitechAxis.Y), this.driverPad.getValue(LogitechControl.RIGHT_STICK, LogitechAxis.Y));
+    this.drive.drive(this.driverPad.getValue(Bindings.LEFT_STICK.getStick(), Bindings.Y_AXIS.getAxis()), this.driverPad.getValue(Bindings.RIGHT_STICK.getStick(), Bindings.Y_AXIS.getAxis())); // Yeah it's shorter the old way, but this way we keep all of the bindings in one place
   }
 
   /**
