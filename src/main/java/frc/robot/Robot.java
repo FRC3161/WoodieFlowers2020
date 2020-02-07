@@ -64,6 +64,8 @@ public class Robot extends TitanBot {
     this.driverPad = new LogitechDualAction(RobotMap.DRIVER_PAD_PORT); // TODO idk if this is the right port
     this.operatorPad = new LogitechDualAction(RobotMap.OPERATOR_PAD_PORT);
     this.ballSubsystem = new BallImpl();
+    registerLifecycleComponent(driverPad);
+    registerLifecycleComponent(operatorPad);
   }
 
   /**
@@ -120,7 +122,7 @@ public class Robot extends TitanBot {
     //TODO make the controller actually drive the robot
     this.operatorPad.bind(ControllerBindings.Bindings.INTAKE.getButton(), PressType.PRESS, () -> ballSubsystem.collect());
     this.operatorPad.bind(ControllerBindings.Bindings.INTAKE.getButton(), PressType.RELEASE, () -> ballSubsystem.retract());
-    this.operatorPad.enableBindings();
+    //this.operatorPad.enableBindings();
   }
 
   @Override
