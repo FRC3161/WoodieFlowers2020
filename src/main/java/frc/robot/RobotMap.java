@@ -4,8 +4,8 @@ public final class RobotMap {
     // TODO gotta fix all of these, it's pretty much just random numbers at this point
     
     // Drive
-    public static final int TALON_LEFT_DRIVE_PORT = 0; 
-    public static final int TALON_RIGHT_DRIVE_PORT = 1; 
+    public static final int[] TALON_LEFT_DRIVE_PORTS = {0, 1, 2}; 
+    public static final int[] TALON_RIGHT_DRIVE_PORTS = {3, 4, 5}; 
     public static final int DRIVER_PAD_PORT = 0;
     public static final int OPERATOR_PAD_PORT = 1;
 
