@@ -5,6 +5,7 @@ import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import edu.wpi.first.wpilibj.Encoder;
 import java.util.concurrent.TimeUnit;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetrain {
@@ -39,15 +40,16 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         this.drivetrain.tankDrive(leftSpeed, rightSpeed);
     }
 
-    public void getLeftEncoderTicks() {
-        this.leftEncoder.get();
+    public int getLeftEncoderTicks() {
+        return this.leftEncoder.get();
     }
 
-    public void getRightEncoderTicks() {
-        this.rightEncoder.get();
+    public int getRightEncoderTicks() {
+        return this.rightEncoder.get();
     }
 
     public void task(){
-        return;
+        SmartDashboard.putNumber("Left Side Encoder Ticks", this.getLeftEncoderTicks());
+        SmartDashboard.putNumber("Right Side Encoder Ticks", this.getRightEncoderTicks());
     }
 }
