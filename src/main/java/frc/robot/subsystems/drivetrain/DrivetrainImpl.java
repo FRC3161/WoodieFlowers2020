@@ -17,7 +17,7 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     private final DifferentialDrive drivetrain;
     
     public DrivetrainImpl(){
-        super(125, TimeUnit.MILLISECONDS); // Consider adjusting, 125ms might be wasteful in terms of cpu
+        super(500, TimeUnit.MILLISECONDS); // Slow because all it does is put ticks to the dashboard for testing purposes 
         //Motor controllers and drivetrain
         this.leftMotorController = new WPI_TalonSRX(RobotMap.TALON_LEFT_DRIVE_PORT);
         this.leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_PORTS[0], RobotMap.LEFT_ENCODER_PORTS[1]);
