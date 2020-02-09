@@ -16,16 +16,19 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
 
     double shooterRPM;
     SmartDashboardTuner rpmTuner;
-    
-    public ShooterImpl() {
-       
+   
+    public ShooterImpl(SpeedController cntrl){
         super(50, TimeUnit.MILLISECONDS); // TODO figure out actual value
-        this.shooterController  = new WPI_TalonSRX(frc.robot.RobotMap.SHOOTER_TALON_PORT);
+        this.shooterController = cntrl;
         
         this.shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_PORTS[0], RobotMap.SHOOTER_ENCODER_PORTS[1]);
 
         this.shooterRPM = 4000;
         this.rpmTuner = new SmartDashboardTuner("Shooter RPM",  shooterRPM, d -> this.shooterRPM = d);
+    }
+
+    public ShooterImpl() {
+        this(new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORT));
     }
 
     private double getShooterRPM() {
