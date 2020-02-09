@@ -12,12 +12,16 @@ public class ShooterImplTest {
     
     @Test
     public void testStopShooter(){
+        // Create a mock speedcontroller
         SpeedController shooterMotorController = mock(SpeedController.class);
 
+        // Initialize the shooter subsystem with the mock speedcontroller
         ShooterImpl shooterSubsystem = new ShooterImpl(shooterMotorController);
 
+        // Method from the shooter subsystem
         shooterSubsystem.stopShooter();
 
+        // Testing that the method did what we actually wanted
         assertEquals(Double.valueOf(0.0d), Double.valueOf(shooterMotorController.get()));
     }
 
