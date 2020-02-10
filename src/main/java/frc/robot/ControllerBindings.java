@@ -9,6 +9,7 @@ public final class ControllerBindings {
         // Some of these seem kind of redundant, but it's best to consolidate everything here
 
         public static final LogitechButton INTAKE = LogitechButton.LEFT_TRIGGER;
+        public static final LogitechButton SHOOTER = LogitechButton.RIGHT_TRIGGER;
         
         public static final LogitechControl RIGHT_STICK = LogitechControl.RIGHT_STICK;
         public static final LogitechControl LEFT_STICK = LogitechControl.LEFT_STICK;
