@@ -62,6 +62,10 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
         require(intakeSolenoid);
     }
 
+    public boolean getDeployed() {
+        return this.extended;
+    }
+
     public void task(){
         if(this.extended) {
             this.intakeSolenoid.set(DoubleSolenoid.Value.kForward);
