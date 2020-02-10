@@ -15,7 +15,6 @@ import ca.team3161.lib.utils.controls.Gamepad.PressType;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 import frc.robot.subsystems.ball.BallImpl;
-import frc.robot.subsystems.ball.shooter.ShooterImpl;
 import frc.robot.ControllerBindings;
 
 /**
