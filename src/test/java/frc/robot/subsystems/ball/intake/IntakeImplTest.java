@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import org.mockito.Mockito;
 import org.junit.Before;
 import frc.robot.subsystems.ball.intake.IntakeImpl;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -24,6 +25,9 @@ public class IntakeImplTest {
     @Test
     public void testConstructor(){
         // Constructor is run earlier
+
+        Mockito.when(intakeSolenoid.get()).thenReturn(DoubleSolenoid.Value.kReverse);
+
         // Check the initial state of the solenoid
         assertEquals(false, intakeSubsystem.getDeployed());
     }
