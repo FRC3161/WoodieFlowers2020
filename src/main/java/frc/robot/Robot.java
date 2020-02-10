@@ -15,6 +15,7 @@ import ca.team3161.lib.utils.controls.Gamepad.PressType;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 import frc.robot.subsystems.ball.BallImpl;
+import frc.robot.subsystems.ball.shooter.ShooterImpl;
 import frc.robot.ControllerBindings;
 
 /**
@@ -117,9 +118,11 @@ public class Robot extends TitanBot {
    */
   @Override
   public void teleopSetup() {
-    //TODO make the controller actually drive the robot
+    // TODO talk with driveteam about controls
     this.operatorPad.bind(ControllerBindings.INTAKE, PressType.PRESS, () -> ballSubsystem.collect());
     this.operatorPad.bind(ControllerBindings.INTAKE, PressType.RELEASE, () -> ballSubsystem.retract());
+    this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.PRESS, () -> ballSubsystem.shoot());
+    this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.RELEASE, () -> ballSubsystem.stop());
     //this.operatorPad.enableBindings();
   }
 
