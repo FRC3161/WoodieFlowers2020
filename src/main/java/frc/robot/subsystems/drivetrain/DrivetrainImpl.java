@@ -68,11 +68,11 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         this.drivetrain.tankDrive(leftSpeed, rightSpeed);
     }
 
-    public int getLeftEncoderTicks() {
+    public long getLeftEncoderTicks() {
         return this.leftEncoder.get();
     }
 
-    public int getRightEncoderTicks() {
+    public long getRightEncoderTicks() {
         return this.rightEncoder.get();
     }
 
