@@ -7,7 +7,6 @@ import static org.mockito.Mockito.mock;
 import org.junit.runner.RunWith;
 
 import frc.robot.subsystems.ball.intake.IntakeImpl;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -32,7 +31,7 @@ public class IntakeImplTest {
         intakeSubsystem.extend();
 
         // Check if it behaves as expected
-        assertEquals(false, intakeSubsystem.getDeployed());
+        assertEquals(true, intakeSubsystem.getDeployed());
     }
 
     @Test
