@@ -25,4 +25,13 @@ public class IntakeImplTest {
         // Check the initial state of the solenoid
         assertEquals(false, intakeSubsystem.getDeployed());
     }
+
+    @Test
+    public void testExtend() {
+        // Extend the intake
+        intakeSubsystem.extend();
+
+        // Check if it behaves as expected
+        assertEquals(true, intakeSubsystem.getDeployed());
+    }
 }
