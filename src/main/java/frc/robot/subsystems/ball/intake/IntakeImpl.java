@@ -2,6 +2,8 @@ package frc.robot.subsystems.ball.intake;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.SpeedController;
+import frc.robot.RobotMap;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import java.util.EnumMap;
 import java.util.concurrent.TimeUnit;
@@ -17,15 +19,15 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
 
 
     DoubleSolenoid intakeSolenoid;
-    WPI_TalonSRX intakeMotorController;
+    SpeedController intakeMotorController;
     volatile boolean extended;
     int intakeDirection;
     double intakeSpeed;
 
-    public IntakeImpl() {
+    public IntakeImpl(DoubleSolenoid sol, SpeedController mc) {
         super(20, TimeUnit.MILLISECONDS);
-        this.intakeSolenoid = new DoubleSolenoid(frc.robot.RobotMap.INTAKE_SOLENOID_IN_CHANNEL, frc.robot.RobotMap.INTAKE_SOLENOID_OUT_CHANNEL);
-        this.intakeMotorController = new WPI_TalonSRX(frc.robot.RobotMap.INTAKE_TALON_PORT);
+        this.intakeSolenoid = sol; 
+        this.intakeMotorController = mc;
         if(this.intakeSolenoid.get() == DoubleSolenoid.Value.kForward){
             this.extended = true;
         } else {
@@ -36,6 +38,10 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
         this.motorDirectionsMap = new EnumMap<>(MotorDirections.class);
         this.motorDirectionsMap.put(MotorDirections.FORWARDS, Integer.valueOf(1));
         this.motorDirectionsMap.put(MotorDirections.BACKWARDS, Integer.valueOf(-1));
+    }
+
+    public IntakeImpl() {
+        this(new DoubleSolenoid(RobotMap.INTAKE_SOLENOID_IN_CHANNEL, RobotMap.INTAKE_SOLENOID_OUT_CHANNEL), new WPI_TalonSRX(RobotMap.INTAKE_TALON_PORT));
     }
     
     public void extend(MotorDirections direction) {
