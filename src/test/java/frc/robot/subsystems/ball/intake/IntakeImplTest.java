@@ -32,6 +32,15 @@ public class IntakeImplTest {
         intakeSubsystem.extend();
 
         // Check if it behaves as expected
-        assertEquals(true, intakeSubsystem.getDeployed());
+        assertEquals(false, intakeSubsystem.getDeployed());
+    }
+
+    @Test
+    public void testRetract() {
+        // Retract the intake
+        intakeSubsystem.retract();
+
+        // Check behaviour
+        assertEquals(false, intakeSubsystem.getDeployed());
     }
 }
