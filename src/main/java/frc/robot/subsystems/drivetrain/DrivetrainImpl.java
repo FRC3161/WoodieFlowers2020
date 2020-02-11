@@ -76,6 +76,11 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         return this.rightEncoder.get();
     }
 
+    public void resetEncoderTicks() {
+        this.leftEncoder.reset();
+        this.rightEncoder.reset();
+    }
+
     public void task(){
         SmartDashboard.putNumber("Left Side Encoder Ticks", this.getLeftEncoderTicks());
         SmartDashboard.putNumber("Right Side Encoder Ticks", this.getRightEncoderTicks());
