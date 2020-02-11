@@ -15,6 +15,7 @@ import ca.team3161.lib.utils.controls.Gamepad.PressType;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 import frc.robot.subsystems.ball.BallImpl;
+import frc.robot.subsystems.ball.Ball;
 import frc.robot.ControllerBindings;
 
 /**
@@ -33,7 +34,7 @@ public class Robot extends TitanBot {
   
   private LogitechDualAction driverPad; 
   private LogitechDualAction operatorPad;
-  private BallImpl ballSubsystem;
+  private Ball ballSubsystem;
 
   @Override
   public int getAutonomousPeriodLengthSeconds() {
