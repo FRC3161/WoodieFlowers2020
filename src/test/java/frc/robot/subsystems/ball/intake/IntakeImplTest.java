@@ -36,6 +36,9 @@ public class IntakeImplTest {
     public void testExtend() {
         // Extend the intake
         intakeSubsystem.extend();
+        intakeSubsystem.task();
+
+        Mockito.verify(intakeSolenoid).set(DoubleSolenoid.Value.kForward);
 
         // Check if it behaves as expected
         assertEquals(true, intakeSubsystem.getDeployed());
