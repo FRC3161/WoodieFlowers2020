@@ -45,6 +45,9 @@ public class IntakeImplTest {
     public void testRetract() {
         // Retract the intake
         intakeSubsystem.retract();
+        intakeSubsystem.task();
+
+        Mockito.verify(intakeSolenoid).set(DoubleSolenoid.Value.kReverse);
 
         // Check behaviour
         assertEquals(false, intakeSubsystem.getDeployed());
