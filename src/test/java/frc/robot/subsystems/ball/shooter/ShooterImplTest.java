@@ -35,7 +35,13 @@ public class ShooterImplTest {
     }
     @Test
     public void testReadyForBalls() {
-        Mockito.when(shooterEncoder.get()).thenReturn(0);
+        Mockito.when(shooterEncoder.getRate()).thenReturn(0.0);
         assertEquals(Boolean.valueOf(false), Boolean.valueOf(shooterSubsystem.readyForBalls()));
+    }
+
+    @Test
+    public void testReadyForBallsTrue() {
+        Mockito.when(shooterEncoder.getRate()).thenReturn(100000.0);
+        assertEquals(Boolean.valueOf(true), Boolean.valueOf(shooterSubsystem.readyForBalls()));
     }
 }
