@@ -3,15 +3,19 @@ package frc.robot.subsystems.ball;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import java.util.concurrent.TimeUnit;
 
+import frc.robot.subsystems.ball.feeder.Feeder;
+import frc.robot.subsystems.ball.shooter.Shooter;
+import frc.robot.subsystems.ball.intake.Intake;
+
 import frc.robot.subsystems.ball.feeder.FeederImpl;
 import frc.robot.subsystems.ball.shooter.ShooterImpl;
 import frc.robot.subsystems.ball.intake.IntakeImpl;
 
 public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
-    private ShooterImpl shooter;
-    private FeederImpl feeder;
-    private IntakeImpl intake;
+    private Shooter shooter;
+    private Feeder feeder;
+    private Intake intake;
 
     private boolean shootEnabled;
     
