@@ -29,6 +29,7 @@ public class ShooterImplTest {
 
         // Specifying return value of mock method
         Mockito.when(shooterMotorController.get()).thenReturn(0.0d);
+        Mockito.verify(shooterMotorController).set(0.0d);
 
         // Testing that the method did what we actually wanted
         assertEquals(Double.valueOf(0.0d), Double.valueOf(shooterMotorController.get()));
