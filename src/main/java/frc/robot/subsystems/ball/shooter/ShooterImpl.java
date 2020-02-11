@@ -56,7 +56,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
 
     public boolean readyForBalls(){
-        if (this.getShooterRPM() > shooterRPM){
+        if (this.getShooterRPM() > this.shooterRPM){
             return true;
         }    
         return false;
