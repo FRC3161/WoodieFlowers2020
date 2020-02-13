@@ -39,7 +39,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void unload() {
-        reverseFeeder();
+        this.reverseFeeder();
         // TODO implement sensor logic
     }
 
