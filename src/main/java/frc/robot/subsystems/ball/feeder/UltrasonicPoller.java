@@ -10,7 +10,9 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
 
     Ultrasonic ultrasonicSensor;
 
-    UltrasonicPoller(Ultrasonic sensor) {
+    UltrasonicPoller(Ultrasonic sensor, int time) {
+        // sensor is pretty self explanatory
+        // time is how long you want the sensor to not detect an object until true is returned
         super(25, TimeUnit.MILLISECONDS); // 4Hz seems reasonable
         this.ultrasonicSensor = sensor;
     }
