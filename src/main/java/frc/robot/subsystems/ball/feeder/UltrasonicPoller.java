@@ -1,6 +1,7 @@
 package frc.robot.subsystems.ball.feeder;
 
 import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.time.StopWatch;
 
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -9,6 +10,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 class UltrasonicPoller extends RepeatingPooledSubsystem {
 
     Ultrasonic ultrasonicSensor;
+    StopWatch timer = new StopWatch();
 
     UltrasonicPoller(Ultrasonic sensor, int time) {
         // sensor is pretty self explanatory
