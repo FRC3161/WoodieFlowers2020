@@ -19,6 +19,11 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     private final WPI_TalonSRX leftMotorController3;
     private final SpeedControllerGroup leftMotorControllers;
 
+    // PID Constants
+    static final double Kp = 0.0001;
+    static final double Ki = 0.0001;
+    static final double Kd = -0.0001;
+
     // Right Side Motor Controllers and Group
     private final WPI_TalonSRX rightMotorController1;
     private final WPI_TalonSRX rightMotorController2;
@@ -48,8 +53,8 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         this.rightMotorControllers = new SpeedControllerGroup(this.rightMotorController1, this.rightMotorController2, this.rightMotorController3);
         this.rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORTS[0], RobotMap.RIGHT_ENCODER_PORTS[1]);
 
-        this.leftPIDController = new PIDController(RobotMap.DRIVETRAIN_KP, RobotMap.DRIVETRAIN_KI, RobotMap.DRIVETRAIN_KD); // TODO setup SmartdashboardPIDTuner
-        this.rightPIDController = new PIDController(RobotMap.DRIVETRAIN_KP, RobotMap.DRIVETRAIN_KI, RobotMap.DRIVETRAIN_KD);
+        this.leftPIDController = new PIDController(Kp, Ki, Kd); // TODO setup SmartdashboardPIDTuner
+        this.rightPIDController = new PIDController(Kp, Ki, Kd);
 
         this.drivetrain = new DifferentialDrive(this.leftMotorControllers, this.rightMotorControllers);
     }
