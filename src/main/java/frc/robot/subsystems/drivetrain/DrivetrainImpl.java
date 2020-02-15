@@ -68,7 +68,7 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
 
     @Override
     public boolean atSetpoint(){
-        return this.leftPIDController.atSetpoint() & rightPIDController.atSetpoint();
+        return this.leftPIDController.atSetpoint() && rightPIDController.atSetpoint();
     }
 
     public void defineResources() {
