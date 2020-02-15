@@ -26,10 +26,6 @@ import frc.robot.ControllerBindings;
  * project.
  */
 public class Robot extends TitanBot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private Drivetrain drive;
   
   private LogitechDualAction driverPad; 
@@ -56,9 +52,6 @@ public class Robot extends TitanBot {
    */
   @Override
   public void robotSetup() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
     this.drive = new DrivetrainImpl();
     this.driverPad = new LogitechDualAction(RobotMap.DRIVER_PAD_PORT); // TODO idk if this is the right port
     this.operatorPad = new LogitechDualAction(RobotMap.OPERATOR_PAD_PORT);
@@ -92,9 +85,6 @@ public class Robot extends TitanBot {
    */
   @Override
   public void autonomousSetup() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
   }
 
   /**
@@ -102,15 +92,6 @@ public class Robot extends TitanBot {
    */
   @Override
   public void autonomousRoutine() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
   }
 
   /**
