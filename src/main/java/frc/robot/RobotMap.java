@@ -14,9 +14,9 @@ public final class RobotMap {
     public static final int[] RIGHT_ENCODER_PORTS = {2, 3}; 
 
     // PID
-    public static final double Kp = 0.0001;
-    public static final double Ki = 0.0001;
-    public static final double Kd = 0.0001;
+    public static final double DRIVETRAIN_KP = 0.0001;
+    public static final double DRIVETRAIN_KI = 0.0001;
+    public static final double DRIVETRAIN_KD = 0.0001;
 
     // Shooter
     public static final int SHOOTER_TALON_PORT = 2; 
