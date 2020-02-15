@@ -48,8 +48,8 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         this.rightMotorControllers = new SpeedControllerGroup(this.rightMotorController1, this.rightMotorController2, this.rightMotorController3);
         this.rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORTS[0], RobotMap.RIGHT_ENCODER_PORTS[1]);
 
-        this.leftPIDController = new PIDController(RobotMap.Kp, RobotMap.Ki, RobotMap.Kd); // TODO setup SmartdashboardPIDTuner
-        this.rightPIDController = new PIDController(RobotMap.Kp, RobotMap.Ki, RobotMap.Kd);
+        this.leftPIDController = new PIDController(RobotMap.DRIVETRAIN_KP, RobotMap.DRIVETRAIN_KI, RobotMap.DRIVETRAIN_KD); // TODO setup SmartdashboardPIDTuner
+        this.rightPIDController = new PIDController(RobotMap.DRIVETRAIN_KP, RobotMap.DRIVETRAIN_KI, RobotMap.DRIVETRAIN_KD);
 
         this.drivetrain = new DifferentialDrive(this.leftMotorControllers, this.rightMotorControllers);
     }
