@@ -22,7 +22,7 @@ public class Autonomous {
         this.drivetrain.setSetpoint(-120 * (WHEEL_DIAMETER * 128)); // Distance in inches * Wheel diameter in inches * ticks per rotation
         while(!this.drivetrain.atSetpoint()){
             this.drivetrain.drivePID();
-            Thread.sleep(20);
+            Thread.sleep(200);
         }
     }
 
