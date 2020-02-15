@@ -12,12 +12,16 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
     Ultrasonic ultrasonicSensor;
     StopWatch timer = new StopWatch();
 
-    UltrasonicPoller(Ultrasonic sensor, long time, double distance) {
+    UltrasonicPoller(Ultrasonic sensor, long time, double distance, long rate) {
         // sensor is pretty self explanatory
         // time is how long you want the sensor to not detect an object until true is returned
         // distance is the minimum distance threshold
-        super(25, TimeUnit.MILLISECONDS); // 4Hz seems reasonable
+        super(rate, TimeUnit.MILLISECONDS); // 4Hz seems reasonable
         this.ultrasonicSensor = sensor;
+    }
+
+    UltrasonicPoller(Ultrasonic sensor, long time, double distance) {
+        this(sensor, time, distance, 25);
     }
 
     @Override
