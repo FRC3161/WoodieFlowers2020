@@ -66,6 +66,11 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         this.drivetrain.tankDrive(this.leftPIDController.calculate(this.leftEncoder.get()), this.rightPIDController.calculate(this.rightEncoder.get())); // Consider doing something to make this more reasonable
     }
 
+    @Override
+    public boolean atSetpoint(){
+        return this.leftPIDController.atSetpoint() & rightPIDController.atSetpoint();
+    }
+
     public void defineResources() {
         
         require(leftMotorController1);
