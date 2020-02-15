@@ -39,6 +39,11 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
         require(ultrasonicSensor);
     }
 
+    // Consider renaming, probably want to generalize the name if we ever re-use it
+    public boolean checkUnloaded(){
+        return this.noBalls;
+    }
+
     @Override
     public void task(){
         if(!this.timer.isStarted()){
