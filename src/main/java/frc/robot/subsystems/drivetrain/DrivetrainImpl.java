@@ -5,6 +5,7 @@ import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import edu.wpi.first.wpilibj.Encoder;
 import java.util.concurrent.TimeUnit;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import frc.robot.RobotMap;
@@ -14,14 +15,14 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     
     // Left Side Motor Controllers and Group
     private final WPI_TalonSRX leftMotorController1;
-    private final WPI_TalonSRX leftMotorController2;
-    private final WPI_TalonSRX leftMotorController3;
+    private final WPI_VictorSPX leftMotorController2;
+    private final WPI_VictorSPX leftMotorController3;
     private final SpeedControllerGroup leftMotorControllers;
 
     // Right Side Motor Controllers and Group
     private final WPI_TalonSRX rightMotorController1;
-    private final WPI_TalonSRX rightMotorController2;
-    private final WPI_TalonSRX rightMotorController3;
+    private final WPI_VictorSPX rightMotorController2;
+    private final WPI_VictorSPX rightMotorController3;
     private final SpeedControllerGroup rightMotorControllers;
 
     private final Encoder leftEncoder;
@@ -33,14 +34,14 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         super(500, TimeUnit.MILLISECONDS); // Slow because all it does is put ticks to the dashboard for testing purposes 
         //Motor controllers and drivetrain
         this.leftMotorController1 = new WPI_TalonSRX(RobotMap.TALON_LEFT_DRIVE_PORTS[0]);
-        this.leftMotorController2 = new WPI_TalonSRX(RobotMap.TALON_LEFT_DRIVE_PORTS[1]);
-        this.leftMotorController3 = new WPI_TalonSRX(RobotMap.TALON_LEFT_DRIVE_PORTS[2]);
+        this.leftMotorController2 = new WPI_VictorSPX(RobotMap.TALON_LEFT_DRIVE_PORTS[1]);
+        this.leftMotorController3 = new WPI_VictorSPX(RobotMap.TALON_LEFT_DRIVE_PORTS[2]);
         this.leftMotorControllers = new SpeedControllerGroup(this.leftMotorController1, this.leftMotorController2, this.leftMotorController3);
         this.leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_PORTS[0], RobotMap.LEFT_ENCODER_PORTS[1]);
 
         this.rightMotorController1 = new WPI_TalonSRX(RobotMap.TALON_RIGHT_DRIVE_PORTS[0]);
-        this.rightMotorController2 = new WPI_TalonSRX(RobotMap.TALON_RIGHT_DRIVE_PORTS[1]);
-        this.rightMotorController3 = new WPI_TalonSRX(RobotMap.TALON_RIGHT_DRIVE_PORTS[2]);
+        this.rightMotorController2 = new WPI_VictorSPX(RobotMap.TALON_RIGHT_DRIVE_PORTS[1]);
+        this.rightMotorController3 = new WPI_VictorSPX(RobotMap.TALON_RIGHT_DRIVE_PORTS[2]);
         this.rightMotorControllers = new SpeedControllerGroup(this.rightMotorController1, this.rightMotorController2, this.rightMotorController3);
         this.rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORTS[0], RobotMap.RIGHT_ENCODER_PORTS[1]);
 
