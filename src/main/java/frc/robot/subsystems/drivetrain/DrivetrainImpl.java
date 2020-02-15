@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.RobotMap;
 
 public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetrain {
@@ -25,8 +26,11 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     private final SpeedControllerGroup rightMotorControllers;
 
     private final Encoder leftEncoder;
-
     private final Encoder rightEncoder;
+
+    private final PIDController leftPIDController;
+    private final PIDController rightPIDController; 
+
     private final DifferentialDrive drivetrain;
     
     public DrivetrainImpl(){
@@ -44,7 +48,21 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         this.rightMotorControllers = new SpeedControllerGroup(this.rightMotorController1, this.rightMotorController2, this.rightMotorController3);
         this.rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORTS[0], RobotMap.RIGHT_ENCODER_PORTS[1]);
 
+        this.leftPIDController = new PIDController(RobotMap.Kp, RobotMap.Ki, RobotMap.Kd); // TODO setup SmartdashboardPIDTuner
+        this.rightPIDController = new PIDController(RobotMap.Kp, RobotMap.Ki, RobotMap.Kd);
+
         this.drivetrain = new DifferentialDrive(this.leftMotorControllers, this.rightMotorControllers);
+    }
+
+    @Override
+    public void setSetpoint(double setpoint){
+        this.leftPIDController.setSetpoint(setpoint);
+        this.rightPIDController.setSetpoint(setpoint);
+    }
+
+    @Override
+    public void drivePID(){
+        this.drivetrain.tankDrive(this.leftPIDController.calculate(this.leftEncoder.get()), this.rightPIDController.calculate(this.rightEncoder.get())); // Consider doing something to make this more reasonable
     }
 
     public void defineResources() {
