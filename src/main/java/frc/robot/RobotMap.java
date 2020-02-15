@@ -16,7 +16,7 @@ public final class RobotMap {
     // PID
     public static final double DRIVETRAIN_KP = 0.0001;
     public static final double DRIVETRAIN_KI = 0.0001;
-    public static final double DRIVETRAIN_KD = 0.0001;
+    public static final double DRIVETRAIN_KD = -0.0001;
 
     // Shooter
     public static final int SHOOTER_TALON_PORT = 2; 
