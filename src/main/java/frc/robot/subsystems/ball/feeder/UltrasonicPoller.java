@@ -16,6 +16,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
     boolean noBalls;
     long time;
     double distance;
+    double currentRange;
 
     UltrasonicPoller(Ultrasonic sensor, long time, double distance, long rate) {
         // sensor is pretty self explanatory
@@ -43,9 +44,10 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
         if(!this.timer.isStarted()){
             this.timer.start();
         }
-        if((this.ultrasonicSensor.getRangeMM() > this.distance) && (this.timer.getTime() > this.time)) {
+        this.currentRange = this.ultrasonicSensor.getRangeMM();
+        if((this.currentRange > this.distance) && (this.timer.getTime() > this.time)) {
             this.noBalls = true;
-        } else if(this.ultrasonicSensor.getRangeMM() <= this.distance) {
+        } else if(this.currentRange <= this.distance) {
             this.timer.reset();
         }
     }
