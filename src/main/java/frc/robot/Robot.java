@@ -15,6 +15,7 @@ import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 import frc.robot.subsystems.ball.BallImpl;
 import frc.robot.subsystems.ball.Ball;
 import frc.robot.ControllerBindings;
+import frc.robot.Autonomous;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,6 +30,7 @@ public class Robot extends TitanBot {
   private LogitechDualAction driverPad; 
   private LogitechDualAction operatorPad;
   private Ball ballSubsystem;
+  private Autonomous auto;
 
   @Override
   public int getAutonomousPeriodLengthSeconds() {
@@ -54,6 +56,7 @@ public class Robot extends TitanBot {
     this.driverPad = new LogitechDualAction(RobotMap.DRIVER_PAD_PORT); // TODO idk if this is the right port
     this.operatorPad = new LogitechDualAction(RobotMap.OPERATOR_PAD_PORT);
     this.ballSubsystem = new BallImpl();
+    this.auto = new Autonomous(this.drive, this.ballSubsystem);
     registerLifecycleComponent(driverPad);
     registerLifecycleComponent(operatorPad);
   }
@@ -87,9 +90,12 @@ public class Robot extends TitanBot {
 
   /**
    * This function is called periodically during autonomous.
+   * 
+   * @throws InterruptedException
    */
   @Override
-  public void autonomousRoutine() {
+  public void autonomousRoutine() throws InterruptedException {
+    this.auto.hitNRun();
   }
 
   /**
