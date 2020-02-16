@@ -55,8 +55,10 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void unload() {
-        this.reverseFeeder();
-        // TODO implement sensor logic
+        while(!this.poller.checkUnloaded()){
+            this.reverseFeeder();
+        }
+        this.stop();
     }
 
     public void task() {
