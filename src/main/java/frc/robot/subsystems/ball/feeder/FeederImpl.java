@@ -4,6 +4,7 @@ import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.subsystems.ball.feeder.UltrasonicPoller;
+import ca.team3161.lib.utils.SmartDashboardTuner;
 import java.util.concurrent.TimeUnit;
 import frc.robot.RobotMap;
 
@@ -14,6 +15,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
 
     Ultrasonic feederUltrasonic;
     UltrasonicPoller poller;
+    SmartDashboardTuner distanceTuner;
 
     double ballDistance;
 
@@ -23,7 +25,10 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         this.beltController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
         this.rollerController = new WPI_TalonSRX(RobotMap.ROLLER_TALON_PORT);
         this.feederUltrasonic = new Ultrasonic(RobotMap.ULTRASONIC_PORTS[0], RobotMap.ULTRASONIC_PORTS[1]);
+        
         this.ballDistance = 300;
+        this.distanceTuner = new SmartDashboardTuner("Ball Distance", this.ballDistance, d -> this.ballDistance = d);
+
         this.poller = new UltrasonicPoller(feederUltrasonic, 3000, this.ballDistance);
     }
 
