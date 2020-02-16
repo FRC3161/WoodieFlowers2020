@@ -40,6 +40,10 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
         require(ultrasonicSensor);
     }
 
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     // Consider renaming, probably want to generalize the name if we ever re-use it
     public boolean checkUnloaded(){
         return this.noBalls;
