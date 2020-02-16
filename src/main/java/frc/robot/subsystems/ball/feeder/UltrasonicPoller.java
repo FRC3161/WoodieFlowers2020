@@ -44,6 +44,10 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
         this.time = time;
     }
 
+    public void setDistance(double distance){
+        this.distance = distance;
+    }
+
     // Consider renaming, probably want to generalize the name if we ever re-use it
     public boolean checkUnloaded(){
         return this.noBalls;
