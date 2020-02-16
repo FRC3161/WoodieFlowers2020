@@ -65,7 +65,6 @@ dependencies {
     implementation "com.ctre.phoenix:canutils:+"
     implementation "com.ctre.phoenix:platform-stub:+"
     implementation "com.github.FRC3161:Yggdrasil:e04c00a361"
-    implementation "org.apache.commons:commons-lang3:3.9"
 
     implementation wpi.deps.vendor.java()
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
