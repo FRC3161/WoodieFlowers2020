@@ -53,6 +53,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
             this.noBalls = true;
         } else if(this.currentRange <= this.distance) {
             this.startTime = System.nanoTime();
+            this.noBalls = false;
         }
     }
 }
