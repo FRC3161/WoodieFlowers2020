@@ -1,7 +1,6 @@
 package frc.robot.subsystems.ball.feeder;
 
 import java.util.concurrent.TimeUnit;
-import org.apache.commons.lang3.time.StopWatch;
 
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -10,13 +9,14 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 class UltrasonicPoller extends RepeatingPooledSubsystem {
 
     Ultrasonic ultrasonicSensor;
-    StopWatch timer = new StopWatch();
 
     // Consider renaming, couldn't think of a better one ATM
     boolean noBalls;
     long time;
     double distance;
     double currentRange;
+
+    long startTime;
 
     UltrasonicPoller(Ultrasonic sensor, long time, double distance, long rate) {
         // sensor is pretty self explanatory
@@ -27,6 +27,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
         this.time = time;
         this.distance = distance;
         this.noBalls = false;
+        this.startTime = 0;
 
     }
 
@@ -46,14 +47,11 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
 
     @Override
     public void task(){
-        if(!this.timer.isStarted()){
-            this.timer.start();
-        }
         this.currentRange = this.ultrasonicSensor.getRangeMM();
-        if((this.currentRange > this.distance) && (this.timer.getTime() > this.time)) {
+        if((this.currentRange > this.distance) && (((System.nanoTime() - this.startTime) / 100000) > this.time)) {
             this.noBalls = true;
         } else if(this.currentRange <= this.distance) {
-            this.timer.reset();
+            this.startTime = System.nanoTime();
         }
     }
 }
