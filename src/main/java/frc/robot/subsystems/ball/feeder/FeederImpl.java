@@ -17,8 +17,6 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     UltrasonicPoller poller;
     SmartDashboardTuner distanceTuner;
 
-    double ballDistance;
-
     public FeederImpl(){
         super(1, TimeUnit.SECONDS);
         
@@ -26,10 +24,9 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         this.rollerController = new WPI_TalonSRX(RobotMap.ROLLER_TALON_PORT);
         this.feederUltrasonic = new Ultrasonic(RobotMap.ULTRASONIC_PORTS[0], RobotMap.ULTRASONIC_PORTS[1]);
         
-        this.ballDistance = 300;
-        this.distanceTuner = new SmartDashboardTuner("Ball Distance", this.ballDistance, d -> this.ballDistance = d);
 
-        this.poller = new UltrasonicPoller(feederUltrasonic, 3000, this.ballDistance);
+        this.poller = new UltrasonicPoller(feederUltrasonic, 3000, 300);
+        this.distanceTuner = new SmartDashboardTuner("Ball Distance", 300, d -> this.poller.setDistance(d));
     }
 
     public void feedBalls() {
