@@ -18,7 +18,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     private Intake intake;
 
     private boolean shootEnabled;
-    
+
     public BallImpl() {
         // PLACEHOLDER
         super(1, TimeUnit.SECONDS);
@@ -29,8 +29,8 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
         this.intake.start();
         this.shootEnabled = false;
     }
-    
-    public void shoot(){
+
+    public void shoot() {
         this.shootEnabled = true;
     }
 
@@ -38,14 +38,17 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
         this.shootEnabled = false;
     }
 
-    public void stop(){
+    public void stop() {
         this.shooter.stopShooter();
         this.feeder.stop();
         this.shootEnabled = false;
     }
 
     public void unload() {
-        this.feeder.unload();
+        try {
+            this.feeder.unload();
+        } catch (InterruptedException e) {
+        }
         // Seems kind of redundant, but abstraction
     }
 
