@@ -51,9 +51,10 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         require(rollerController);
     }
 
-    public void unload() {
+    public void unload() throws InterruptedException {
         while(!this.poller.checkUnloaded()){
             this.reverseFeeder();
+            Thread.sleep(20);
         }
         this.stop();
     }
