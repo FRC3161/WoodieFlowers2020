@@ -48,6 +48,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
     @Override
     public void task(){
         this.currentRange = this.ultrasonicSensor.getRangeMM();
+        this.startTime = System.nanoTime();
         if((this.currentRange > this.distance) && (((System.nanoTime() - this.startTime) / 100000) > this.time)) {
             this.noBalls = true;
         } else if(this.currentRange <= this.distance) {
