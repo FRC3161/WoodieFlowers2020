@@ -62,7 +62,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
             this.startTime = System.nanoTime(); // I know about a do while, but this isn't contained within a while loop 
             this.count = 1;
         }
-        if((this.currentRange > this.distance) && (((System.nanoTime() - this.startTime) / 100000) > this.time)) {
+        if((this.currentRange > this.distance) && (TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - this.startTime)  > this.time)) {
             this.noBalls = true;
         } else if(this.currentRange <= this.distance) {
             this.startTime = System.nanoTime();
