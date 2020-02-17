@@ -15,7 +15,6 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
     long time;
     double distance;
     double currentRange;
-    int count;
 
     long startTime;
 
@@ -29,7 +28,6 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
         this.distance = distance;
         this.noBalls = false;
         this.startTime = 0;
-        this.count = 0; // There has to be a better way to do this
 
     }
 
@@ -58,10 +56,11 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
     @Override
     public void task(){
         this.currentRange = this.ultrasonicSensor.getRangeMM();
-        if(this.count == 0){ // TODO look into a better way of doing this
+
+        do {
             this.startTime = System.nanoTime(); // I know about a do while, but this isn't contained within a while loop 
-            this.count = 1;
-        }
+        } while(this.startTime == 0);
+
         if((this.currentRange > this.distance) && (TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - this.startTime)  > this.time)) {
             this.noBalls = true;
         } else if(this.currentRange <= this.distance) {
