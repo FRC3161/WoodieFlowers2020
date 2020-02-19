@@ -26,8 +26,6 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
         this.ultrasonicSensor = sensor;
         this.time = time;
         this.distance = distance;
-        this.noBalls = false;
-        this.startTime = 0;
 
     }
 
@@ -47,25 +45,14 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
     public void setDistance(double distance){
         this.distance = distance;
     }
-
-    // Consider renaming, probably want to generalize the name if we ever re-use it
-    public boolean checkUnloaded(){
-        return this.noBalls;
+    
+    public boolean checkUnloaded() {
+        return true;
+        // TODO replace after task is implemented
     }
 
     @Override
     public void task(){
-        this.currentRange = this.ultrasonicSensor.getRangeMM();
-
-        if(this.startTime == 0){
-            this.startTime = System.nanoTime(); // I know about a do while, but this isn't contained within a while loop 
-        }
-        
-        if((this.currentRange > this.distance) && (TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - this.startTime)  > this.time)) {
-            this.noBalls = true;
-        } else if(this.currentRange <= this.distance) {
-            this.startTime = System.nanoTime();
-            this.noBalls = false;
-        }
+        // Placholder
     }
 }
