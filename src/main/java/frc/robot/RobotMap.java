@@ -14,7 +14,7 @@ public final class RobotMap {
     public static final int[] RIGHT_ENCODER_PORTS = {2, 3}; 
 
     // Shooter
-    public static final int SHOOTER_TALON_PORT = 2; 
+    public static final int[] SHOOTER_TALON_PORTS = {2, 3}; 
     public static final int ROLLER_TALON_PORT = 3;
     public static final int BELT_TALON_PORT = 4;
     public static final int[] ULTRASONIC_PORTS = {7,8}; // {IN, OUT}

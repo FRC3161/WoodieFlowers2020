@@ -1,52 +1,48 @@
 package frc.robot.subsystems.ball.shooter;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import ca.team3161.lib.utils.SmartDashboardTuner;
-import edu.wpi.first.wpilibj.SpeedController;
 
 import frc.robot.RobotMap;
 
 public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     
-    SpeedController shooterController;
-    Encoder shooterEncoder;
+    WPI_TalonSRX shooterController1;
+    WPI_TalonSRX shooterController2;
 
     double shooterRPM;
     SmartDashboardTuner rpmTuner;
    
-    public ShooterImpl(SpeedController cntrl, Encoder e){
+    public ShooterImpl(){
         super(20, TimeUnit.MILLISECONDS); // Probably will be a good value 
-        this.shooterController = cntrl;
-        
-        this.shooterEncoder = e;
+        this.shooterController1 = new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORTS[0]);
+        this.shooterController2 = new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORTS[1]);
+
+        this.shooterController1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
 
         this.shooterRPM = 4000;
         this.rpmTuner = new SmartDashboardTuner("Shooter RPM",  shooterRPM, d -> this.shooterRPM = d);
     }
 
-    public ShooterImpl() {
-        this(new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORT), new Encoder(RobotMap.SHOOTER_ENCODER_PORTS[0], RobotMap.SHOOTER_ENCODER_PORTS[1]));
-    }
-
     private double getShooterRPM() {
-        return ((this.shooterEncoder.getRate() / 4096) * 600);
+        return ((this.shooterController1.getSelectedSensorVelocity() / 4096) * 600);
     }
     
     public void runShooter() {
         if (getShooterRPM() < shooterRPM){
-            this.shooterController.set(1.0d);
+            this.shooterController1.set(1.0d);
             return;
         }
-        this.shooterController.set(0.0d);
+        this.shooterController1.set(0.0d);
     }
 
     @Override
     public void defineResources(){
-        require(shooterController);
-        require(shooterEncoder);
+        require(shooterController1);
     }
 
     @Override
@@ -63,6 +59,6 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
 
     public void stopShooter() {
-        this.shooterController.set(0.0d);
+        this.shooterController1.set(0.0d);
     }
 }
