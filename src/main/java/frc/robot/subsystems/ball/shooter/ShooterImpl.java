@@ -18,7 +18,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     SmartDashboardTuner rpmTuner;
    
     public ShooterImpl(SpeedController cntrl, Encoder e){
-        super(50, TimeUnit.MILLISECONDS); // TODO figure out actual value
+        super(20, TimeUnit.MILLISECONDS); // Probably will be a good value 
         this.shooterController = cntrl;
         
         this.shooterEncoder = e;
