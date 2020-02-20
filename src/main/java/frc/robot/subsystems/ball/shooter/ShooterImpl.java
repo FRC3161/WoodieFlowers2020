@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import ca.team3161.lib.utils.SmartDashboardTuner;
+import edu.wpi.first.wpilibj.Solenoid;
 
 import frc.robot.RobotMap;
 
@@ -12,6 +13,8 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     
     WPI_TalonSRX shooterController1;
     WPI_TalonSRX shooterController2;
+
+    Solenoid hatch;
 
     double shooterRPMTrench;
     SmartDashboardTuner rpmTuner;
