@@ -25,6 +25,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
 
         this.shooterRPMTrench = 7500;
         this.rpmTuner = new SmartDashboardTuner("Shooter RPM",  shooterRPMTrench, d -> this.shooterRPMTrench = d);
+        this.rpmTuner.start();
     }
 
     private double getShooterRPM() {
