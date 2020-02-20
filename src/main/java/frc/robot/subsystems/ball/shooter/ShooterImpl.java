@@ -2,7 +2,6 @@ package frc.robot.subsystems.ball.shooter;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.Encoder;
 import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import ca.team3161.lib.utils.SmartDashboardTuner;
@@ -31,18 +30,24 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     private double getShooterRPM() {
         return ((this.shooterController1.getSelectedSensorVelocity() / 4096) * 600);
     }
+
+    private void setShooterSpeed(double speed) {
+        this.shooterController1.set(speed);
+        this.shooterController2.set(speed);
+    }
     
     public void runShooter() {
         if (getShooterRPM() < shooterRPMTrench){
-            this.shooterController1.set(1.0d);
-            return;
+            this.setShooterSpeed(1.0d);
+        } else {
+            this.setShooterSpeed(0.0d);
         }
-        this.shooterController1.set(0.0d);
     }
 
     @Override
     public void defineResources(){
         require(shooterController1);
+        require(shooterController2);
     }
 
     @Override
@@ -59,6 +64,6 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
 
     public void stopShooter() {
-        this.shooterController1.set(0.0d);
+        this.setShooterSpeed(0.0d);
     }
 }
