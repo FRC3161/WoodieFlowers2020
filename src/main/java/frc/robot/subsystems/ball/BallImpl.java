@@ -27,6 +27,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
         this.intake = new IntakeImpl();
 
         this.intake.start();
+        this.shooter.start();
         this.shootEnabled = false;
     }
 
