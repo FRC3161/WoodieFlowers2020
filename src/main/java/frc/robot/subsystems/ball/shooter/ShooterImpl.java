@@ -32,7 +32,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
 
     private double getShooterRPM() {
-        return ((this.shooterEncoder.getRate() / 128) * 60);
+        return ((this.shooterEncoder.getRate() / 4096) * 600);
     }
     
     public void runShooter() {
