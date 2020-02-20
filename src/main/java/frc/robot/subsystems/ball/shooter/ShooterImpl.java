@@ -14,7 +14,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     WPI_TalonSRX shooterController1;
     WPI_TalonSRX shooterController2;
 
-    double shooterRPM;
+    double shooterRPMTrench;
     SmartDashboardTuner rpmTuner;
    
     public ShooterImpl(){
@@ -24,8 +24,8 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
 
         this.shooterController1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
 
-        this.shooterRPM = 4000;
-        this.rpmTuner = new SmartDashboardTuner("Shooter RPM",  shooterRPM, d -> this.shooterRPM = d);
+        this.shooterRPMTrench = 7500;
+        this.rpmTuner = new SmartDashboardTuner("Shooter RPM",  shooterRPMTrench, d -> this.shooterRPMTrench = d);
     }
 
     private double getShooterRPM() {
@@ -33,7 +33,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
     
     public void runShooter() {
-        if (getShooterRPM() < shooterRPM){
+        if (getShooterRPM() < shooterRPMTrench){
             this.shooterController1.set(1.0d);
             return;
         }
@@ -52,7 +52,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
 
     public boolean readyForBalls(){
-        if (this.getShooterRPM() > this.shooterRPM){
+        if (this.getShooterRPM() > this.shooterRPMTrench){
             return true;
         }    
         return false;
