@@ -24,7 +24,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
         this.shooterController1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
 
         this.shooterRPMTrench = 7500;
-        this.rpmTuner = new SmartDashboardTuner("Shooter RPM",  shooterRPMTrench, d -> this.shooterRPMTrench = d);
+        this.rpmTuner = new SmartDashboardTuner("Shooter RPM Trench",  shooterRPMTrench, d -> this.shooterRPMTrench = d);
         this.rpmTuner.start();
     }
 
