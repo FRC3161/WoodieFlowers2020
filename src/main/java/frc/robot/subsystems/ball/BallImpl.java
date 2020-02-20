@@ -21,7 +21,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     public BallImpl() {
         // PLACEHOLDER
-        super(1, TimeUnit.SECONDS);
+        super(100, TimeUnit.MILLISECONDS);
         this.shooter = new ShooterImpl();
         this.feeder = new FeederImpl();
         this.intake = new IntakeImpl();
@@ -70,6 +70,8 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
             if(this.shooter.readyForBalls()) {
                 this.feeder.feedBalls();
             }
+        } else {
+            this.shooter.stopShooter();
         }
     }
 }
