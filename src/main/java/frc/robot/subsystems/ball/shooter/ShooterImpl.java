@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import ca.team3161.lib.utils.SmartDashboardTuner;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.RobotMap;
 
 public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
@@ -46,12 +46,12 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
         this.shooterController2.set(speed);
     }
 
-    public void invertHatch() {
-        if(this.hatch.get() == DoubleSolenoid.Value.kReverse) {
-            this.hatch.set(DoubleSolenoid.Value.kForward);
-        } else {
-            this.hatch.set(DoubleSolenoid.Value.kReverse);
-        }
+    public Value getHatch() {
+        return this.hatch.get();
+    }
+
+    public void setHatch(Value position) {
+        this.hatch.set(position);
     }
     
     public void runShooter() {
