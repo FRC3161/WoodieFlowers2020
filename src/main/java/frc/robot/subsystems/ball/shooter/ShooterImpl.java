@@ -55,11 +55,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
     
     public void runShooter() {
-        if (getShooterRPM() < shooterRPMTrench){
-            this.setShooterSpeed(1.0d);
-        } else {
-            this.setShooterSpeed(0.0d);
-        }
+        this.shooting = true;
     }
 
     @Override
@@ -90,6 +86,6 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
 
     public void stopShooter() {
-        this.setShooterSpeed(0.0d);
+        this.shooting = false;
     }
 }
