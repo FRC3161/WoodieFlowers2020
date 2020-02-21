@@ -8,7 +8,8 @@ import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import ca.team3161.lib.utils.SmartDashboardTuner;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
@@ -17,6 +18,8 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
     WPI_TalonSRX shooterController2;
 
     DoubleSolenoid hatch;
+    
+    volatile boolean shooting;
 
     double shooterRPMTrench;
     SmartDashboardTuner rpmTuner;
@@ -29,6 +32,8 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
         this.shooterController1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
 
         this.hatch = new DoubleSolenoid(RobotMap.SHOOTER_SOLENOID_CHANNELS[0], RobotMap.SHOOTER_SOLENOID_CHANNELS[1]);
+
+        this.shooting = false;
 
         this.shooterRPMTrench = 7500;
         this.rpmTuner = new SmartDashboardTuner("Shooter RPM Trench", shooterRPMTrench, d -> this.shooterRPMTrench = d);
@@ -44,8 +49,16 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
         this.shooterController2.set(speed);
     }
 
-    public void invertHatch() {
-        if (this.hatch.get() == DoubleSolenoid.Value.kReverse) {
+    public boolean getHatch() {
+        if(this.hatch.get() == DoubleSolenoid.Value.kForward) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setHatch(boolean position) {
+        if(position){
             this.hatch.set(DoubleSolenoid.Value.kForward);
         } else {
             this.hatch.set(DoubleSolenoid.Value.kReverse);
@@ -53,23 +66,29 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
     }
 
     public void runShooter() {
-        if (getShooterRPM() < shooterRPMTrench) {
-            this.setShooterSpeed(1.0d);
-        } else {
-            this.setShooterSpeed(0.0d);
-        }
+        this.shooting = true;
     }
 
     @Override
     public void defineResources() {
         require(shooterController1);
         require(shooterController2);
+        require(hatch);
     }
 
     @Override
-    public void task() {
-        return;
-        // Placeholder
+    public void task(){
+        if(this.shooting) {
+            if (getShooterRPM() < shooterRPMTrench){
+                this.setShooterSpeed(1.0d);
+            } else {
+                this.setShooterSpeed(0.0d);
+            }
+        } else {
+            this.setShooterSpeed(0.0d);
+        }
+
+        SmartDashboard.putNumber("Shooter RPM", this.getShooterRPM());
     }
 
     public boolean readyForBalls() {
@@ -80,7 +99,7 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
     }
 
     public void stopShooter() {
-        this.setShooterSpeed(0.0d);
+        this.shooting = false;
     }
 
     @Override
