@@ -85,5 +85,10 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     public void lifecycleStatusChanged(LifecycleEvent previous, LifecycleEvent current) {
         this.shooter.lifecycleStatusChanged(previous, current);
         this.intake.lifecycleStatusChanged(previous, current);
+        if(current.equals(LifecycleEvent.ON_AUTO)) {
+            start();
+        } else if(current.equals(LifecycleEvent.ON_DISABLED)) {
+            cancel();
+        }
     }
 }

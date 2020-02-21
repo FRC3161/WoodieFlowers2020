@@ -85,7 +85,10 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
 
     @Override
     public void lifecycleStatusChanged(LifecycleEvent previous, LifecycleEvent current) {
-        // TODO Auto-generated method stub
-
+        if(current.equals(LifecycleEvent.ON_AUTO)) {
+            start();
+        } else if(current.equals(LifecycleEvent.ON_DISABLED)) {
+            cancel();
+        }
     }
 }
