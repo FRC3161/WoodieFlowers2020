@@ -56,7 +56,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     }
 
     public void setHatch(boolean position) {
-        if(position == true){
+        if(position){
             this.hatch.set(DoubleSolenoid.Value.kForward);
         } else {
             this.hatch.set(DoubleSolenoid.Value.kReverse);
