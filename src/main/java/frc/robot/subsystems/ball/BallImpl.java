@@ -83,6 +83,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     @Override
     public void lifecycleStatusChanged(LifecycleEvent previous, LifecycleEvent current) {
-        // TODO
+        this.shooter.lifecycleStatusChanged(previous, current);
+        this.intake.lifecycleStatusChanged(previous, current);
     }
 }
