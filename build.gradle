@@ -43,7 +43,7 @@ def includeDesktopSupport = false
 repositories {
     mavenCentral()
     maven {
-        url "http://devsite.ctr-electronics.com/maven/release/"
+        url "https://devsite.ctr-electronics.com/maven/release/"
     }
     maven {
         url "https://jitpack.io"
