@@ -75,6 +75,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
             }
         } else {
             this.shooter.stopShooter();
+            this.feeder.stop();
         }
     }
 }
