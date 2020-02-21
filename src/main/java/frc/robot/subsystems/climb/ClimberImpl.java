@@ -1,7 +1,7 @@
 package frc.robot.subsystems.climb;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.robot.RobotMap;
 
 
@@ -10,31 +10,24 @@ public class ClimberImpl implements Climber {
     WPI_TalonSRX lifterMotorController;
 
     // Pretty sure there are two solenoids
-    Solenoid climberSolenoid1;
-    Solenoid climberSolenoid2;
+    DoubleSolenoid climberSolenoid1;
+    DoubleSolenoid climberSolenoid2;
     
     public ClimberImpl() {
         this.lifterMotorController = new WPI_TalonSRX(RobotMap.LIFTER_TALON_PORT);
 
-        this.climberSolenoid1 = new Solenoid(RobotMap.CLIMBER_SOLENOID1_CHANNEL);
-        this.climberSolenoid2 = new Solenoid(RobotMap.CLIMBER_SOLENOID2_CHANNEL);
+        this.climberSolenoid1 = new DoubleSolenoid(RobotMap.CLIMBER_SOLENOID1_CHANNELS[0], RobotMap.CLIMBER_SOLENOID1_CHANNELS[1]);
+        this.climberSolenoid2 = new DoubleSolenoid(RobotMap.CLIMBER_SOLENOID2_CHANNELS[0], RobotMap.CLIMBER_SOLENOID2_CHANNELS[1]);
     }
 
-    // Consider making one method that inverts the climber instead of extending it or retracting it
-
     public void extendClimber() {
-        // Not sure if there are any negative consequences to trying to enable an already enabled solenoid, but it can't hurt
-        if(!this.climberSolenoid1.get() && !this.climberSolenoid2.get()){
-            this.climberSolenoid1.set(true);
-            this.climberSolenoid2.set(true);
-        }
+        this.climberSolenoid1.set(DoubleSolenoid.Value.kForward);
+        this.climberSolenoid2.set(DoubleSolenoid.Value.kForward);
     }
 
     public void retractClimber() {
-        if(this.climberSolenoid1.get() && this.climberSolenoid2.get()) {
-            this.climberSolenoid1.set(false);
-            this.climberSolenoid2.set(false);
-        }
+        this.climberSolenoid1.set(DoubleSolenoid.Value.kReverse);
+        this.climberSolenoid2.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void liftRobot(){
