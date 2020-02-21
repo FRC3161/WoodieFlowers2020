@@ -1,8 +1,6 @@
 package frc.robot;
 
 public final class RobotMap {
-    // TODO gotta fix all of these, it's pretty much just random numbers at this point
-    
     // Drive
     public static final int[] TALON_LEFT_DRIVE_PORTS = {10, 2, 8}; 
     public static final int[] TALON_RIGHT_DRIVE_PORTS = {9, 5, 6}; 
