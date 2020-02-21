@@ -80,7 +80,7 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
 
     @Override
     public void lifecycleStatusChanged(LifecycleEvent previous, LifecycleEvent current) {
-        if(current.equals(LifecycleEvent.ON_AUTO)) {
+        if(current.equals(LifecycleEvent.ON_AUTO) || current.equals(LifecycleEvent.ON_TELEOP)) {
             start();
         } else if(current.equals(LifecycleEvent.ON_DISABLED)) {
             cancel();
