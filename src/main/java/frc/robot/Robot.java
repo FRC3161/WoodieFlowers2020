@@ -110,6 +110,7 @@ public class Robot extends TitanBot {
     this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.RELEASE, () -> ballSubsystem.stop());
     //this.operatorPad.enableBindings();
     this.drive.start();
+    this.ballSubsystem.start();
   }
 
   @Override
