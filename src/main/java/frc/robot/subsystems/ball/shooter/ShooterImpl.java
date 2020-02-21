@@ -66,6 +66,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
     public void defineResources(){
         require(shooterController1);
         require(shooterController2);
+        require(hatch);
     }
 
     @Override
