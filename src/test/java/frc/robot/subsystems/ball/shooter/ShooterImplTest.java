@@ -41,6 +41,7 @@ public class ShooterImplTest {
         assertEquals(Double.valueOf(0.0d), Double.valueOf(shooterMotorController1.get()));
         assertEquals(Double.valueOf(0.0d), Double.valueOf(shooterMotorController2.get()));
     }
+
     @Test
     public void testReadyForBalls() {
         Mockito.when(shooterMotorController1.getSelectedSensorVelocity()).thenReturn(0);
