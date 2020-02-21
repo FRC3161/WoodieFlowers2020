@@ -30,8 +30,8 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void feedBalls() {
-        this.beltController.set(0.6d);
-        this.rollerController.set(0.8d);
+        this.beltController.set(-0.6d);
+        this.rollerController.set(-0.8d);
         // TODO Find actual values
     }
 
@@ -41,8 +41,8 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     void reverseFeeder() {
-        this.beltController.set(-0.6d);
-        this.rollerController.set(-0.8d);
+        this.beltController.set(0.6d);
+        this.rollerController.set(0.8d);
         // TODO see above
     }
 
