@@ -57,10 +57,9 @@ public class Robot extends TitanBot {
     this.operatorPad = new LogitechDualAction(RobotMap.OPERATOR_PAD_PORT);
     this.ballSubsystem = new BallImpl();
     this.auto = new Autonomous(this.drive, this.ballSubsystem);
-    this.drive.start();
-    this.ballSubsystem.start();
     registerLifecycleComponent(driverPad);
     registerLifecycleComponent(operatorPad);
+    registerLifecycleComponent(ballSubsystem);
   }
 
   /**
