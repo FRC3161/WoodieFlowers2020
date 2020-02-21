@@ -17,7 +17,7 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
 
     DoubleSolenoid hatch;
     
-    boolean shooting;
+    volatile boolean shooting;
 
     double shooterRPMTrench;
     SmartDashboardTuner rpmTuner;
