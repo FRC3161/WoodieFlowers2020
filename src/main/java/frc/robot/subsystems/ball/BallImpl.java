@@ -7,6 +7,8 @@ import frc.robot.subsystems.ball.feeder.Feeder;
 import frc.robot.subsystems.ball.shooter.Shooter;
 import frc.robot.subsystems.ball.intake.Intake;
 
+import ca.team3161.lib.robot.LifecycleEvent;
+
 import frc.robot.subsystems.ball.feeder.FeederImpl;
 import frc.robot.subsystems.ball.shooter.ShooterImpl;
 import frc.robot.subsystems.ball.intake.IntakeImpl;
@@ -76,6 +78,17 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
         } else {
             this.shooter.stopShooter();
             this.feeder.stop();
+        }
+    }
+
+    @Override
+    public void lifecycleStatusChanged(LifecycleEvent previous, LifecycleEvent current) {
+        this.shooter.lifecycleStatusChanged(previous, current);
+        this.intake.lifecycleStatusChanged(previous, current);
+        if(current.equals(LifecycleEvent.ON_AUTO) || current.equals(LifecycleEvent.ON_TELEOP)) {
+            start();
+        } else if(current.equals(LifecycleEvent.ON_DISABLED)) {
+            cancel();
         }
     }
 }
