@@ -47,12 +47,20 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
         this.shooterController2.set(speed);
     }
 
-    public Value getHatch() {
-        return this.hatch.get();
+    public boolean getHatch() {
+        if(this.hatch.get() == DoubleSolenoid.Value.kForward) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void setHatch(Value position) {
-        this.hatch.set(position);
+    public void setHatch(boolean position) {
+        if(position == true){
+            this.hatch.set(DoubleSolenoid.Value.kForward);
+        } else {
+            this.hatch.set(DoubleSolenoid.Value.kReverse);
+        }
     }
     
     public void runShooter() {
