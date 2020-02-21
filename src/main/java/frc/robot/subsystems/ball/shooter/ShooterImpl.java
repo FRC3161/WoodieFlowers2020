@@ -70,6 +70,15 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
 
     @Override
     public void task(){
+        if(this.shooting) {
+            if (getShooterRPM() < shooterRPMTrench){
+                this.setShooterSpeed(1.0d);
+            } else {
+                this.setShooterSpeed(0.0d);
+            }
+        } else {
+            this.setShooterSpeed(0.0d);
+        }
     }
 
     public boolean readyForBalls(){
