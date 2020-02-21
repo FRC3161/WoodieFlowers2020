@@ -1,6 +1,10 @@
 package frc.robot;
 
 public final class RobotMap {
+
+    // DONE Motor Controller IDs, Encoder ports
+    // TODO Pneumatics Ports, Ultrasonic Ports
+
     // Drive
     public static final int[] TALON_LEFT_DRIVE_PORTS = {10, 2, 8}; 
     public static final int[] TALON_RIGHT_DRIVE_PORTS = {9, 5, 6}; 
@@ -27,6 +31,6 @@ public final class RobotMap {
     // Climber
     public static final int CLIMBER_TALON_PORT = 3; 
     public static final int LIFTER_TALON_PORT = 5;
-    public static final int CLIMBER_SOLENOID1_CHANNEL = 1;
-    public static final int CLIMBER_SOLENOID2_CHANNEL = 2;
+    public static final int[] CLIMBER_SOLENOID1_CHANNELS = {0, 1};
+    public static final int[] CLIMBER_SOLENOID2_CHANNELS = {2, 3};
 }
