@@ -7,6 +7,7 @@ import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import ca.team3161.lib.utils.SmartDashboardTuner;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
@@ -76,6 +77,8 @@ public class ShooterImpl  extends RepeatingPooledSubsystem implements Shooter{
         } else {
             this.setShooterSpeed(0.0d);
         }
+
+        SmartDashboard.putNumber("Shooter RPM", this.getShooterRPM());
     }
 
     public boolean readyForBalls(){
