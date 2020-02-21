@@ -8,7 +8,6 @@ import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import ca.team3161.lib.utils.SmartDashboardTuner;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
@@ -24,20 +23,24 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
     double shooterRPMTrench;
     SmartDashboardTuner rpmTuner;
 
-    public ShooterImpl() {
+    public ShooterImpl(WPI_TalonSRX talon1, WPI_TalonSRX talon2, DoubleSolenoid sol) {
         super(20, TimeUnit.MILLISECONDS); // Probably will be a good value
-        this.shooterController1 = new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORTS[0]);
-        this.shooterController2 = new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORTS[1]);
+        this.shooterController1 = talon1;
+        this.shooterController2 = talon2;
 
         this.shooterController1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
 
-        this.hatch = new DoubleSolenoid(RobotMap.SHOOTER_SOLENOID_CHANNELS[0], RobotMap.SHOOTER_SOLENOID_CHANNELS[1]);
+        this.hatch = sol;
 
         this.shooting = false;
 
         this.shooterRPMTrench = 7500;
         this.rpmTuner = new SmartDashboardTuner("Shooter RPM Trench", shooterRPMTrench, d -> this.shooterRPMTrench = d);
         this.rpmTuner.start();
+    }
+
+    public ShooterImpl() {
+        this(new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORTS[0]), new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORTS[1]), new DoubleSolenoid(RobotMap.SHOOTER_SOLENOID_CHANNELS[0], RobotMap.SHOOTER_SOLENOID_CHANNELS[1]));
     }
 
     private double getShooterRPM() {
