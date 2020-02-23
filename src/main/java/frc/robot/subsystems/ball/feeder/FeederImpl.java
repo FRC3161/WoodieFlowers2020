@@ -11,7 +11,7 @@ import frc.robot.RobotMap;
 public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     
     WPI_TalonSRX beltController;
-    WPI_TalonSRX rollerController;
+    WPI_TalonSRX hopperController;
 
     Ultrasonic feederUltrasonic;
     UltrasonicPoller poller;
@@ -21,7 +21,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         super(1, TimeUnit.SECONDS);
         
         this.beltController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
-        this.rollerController = new WPI_TalonSRX(RobotMap.ROLLER_TALON_PORT);
+        this.hopperController = new WPI_TalonSRX(RobotMap.ROLLER_TALON_PORT);
         this.feederUltrasonic = new Ultrasonic(RobotMap.ULTRASONIC_PORTS[0], RobotMap.ULTRASONIC_PORTS[1]);
         
 
@@ -30,25 +30,25 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void feedBalls() {
-        this.beltController.set(0.6d);
-        this.rollerController.set(0.8d);
+        this.beltController.set(-0.6d);
+        this.hopperController.set(-0.8d);
         // TODO Find actual values
     }
 
     public void stop() {
         this.beltController.set(0.0d);
-        this.rollerController.set(0.0d);
+        this.hopperController.set(0.0d);
     }
 
     void reverseFeeder() {
-        this.beltController.set(-0.6d);
-        this.rollerController.set(-0.8d);
+        this.beltController.set(0.6d);
+        this.hopperController.set(0.8d);
         // TODO see above
     }
 
     public void defineResources(){
         require(beltController);
-        require(rollerController);
+        require(hopperController);
     }
 
     public void unload() throws InterruptedException {

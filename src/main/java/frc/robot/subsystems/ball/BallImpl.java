@@ -7,6 +7,8 @@ import frc.robot.subsystems.ball.feeder.Feeder;
 import frc.robot.subsystems.ball.shooter.Shooter;
 import frc.robot.subsystems.ball.intake.Intake;
 
+import ca.team3161.lib.robot.LifecycleEvent;
+
 import frc.robot.subsystems.ball.feeder.FeederImpl;
 import frc.robot.subsystems.ball.shooter.ShooterImpl;
 import frc.robot.subsystems.ball.intake.IntakeImpl;
@@ -21,12 +23,13 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     public BallImpl() {
         // PLACEHOLDER
-        super(1, TimeUnit.SECONDS);
+        super(100, TimeUnit.MILLISECONDS);
         this.shooter = new ShooterImpl();
         this.feeder = new FeederImpl();
         this.intake = new IntakeImpl();
 
         this.intake.start();
+        this.shooter.start();
         this.shootEnabled = false;
     }
 
@@ -69,7 +72,23 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
             this.shooter.runShooter();
             if(this.shooter.readyForBalls()) {
                 this.feeder.feedBalls();
+            } else {
+                this.feeder.stop();
             }
+        } else {
+            this.shooter.stopShooter();
+            this.feeder.stop();
+        }
+    }
+
+    @Override
+    public void lifecycleStatusChanged(LifecycleEvent previous, LifecycleEvent current) {
+        this.shooter.lifecycleStatusChanged(previous, current);
+        this.intake.lifecycleStatusChanged(previous, current);
+        if(current.equals(LifecycleEvent.ON_AUTO) || current.equals(LifecycleEvent.ON_TELEOP)) {
+            start();
+        } else if(current.equals(LifecycleEvent.ON_DISABLED)) {
+            cancel();
         }
     }
 }

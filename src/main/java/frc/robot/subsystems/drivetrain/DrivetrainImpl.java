@@ -21,9 +21,9 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     private final SpeedControllerGroup leftMotorControllers;
 
     // PID Constants
-    static final double Kp = 0.0001;
-    static final double Ki = 0.0001;
-    static final double Kd = -0.0001;
+    static final double Kp = 10;
+    static final double Ki = 0.1;
+    static final double Kd = 0.1;
 
     // Right Side Motor Controllers and Group
     private final WPI_TalonSRX rightMotorController1;
@@ -73,7 +73,8 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
 
     @Override
     public boolean atSetpoint(){
-        return this.leftPIDController.atSetpoint() && rightPIDController.atSetpoint();
+        //return this.leftPIDController.atSetpoint() && rightPIDController.atSetpoint();
+        return !this.rightPIDController.atSetpoint();
     }
 
     public void defineResources() {
@@ -94,7 +95,7 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
 
     @Override
     public void drive(double leftSpeed, double rightSpeed) {
-        this.drivetrain.tankDrive(leftSpeed, rightSpeed);
+        this.drivetrain.tankDrive(-leftSpeed, -rightSpeed);
     }
 
     public long getLeftEncoderTicks() {

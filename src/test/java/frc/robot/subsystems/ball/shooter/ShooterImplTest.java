@@ -7,42 +7,51 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Encoder;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class ShooterImplTest {
-    SpeedController shooterMotorController;
+    WPI_TalonSRX shooterMotorController1;
+    WPI_TalonSRX shooterMotorController2;
+    DoubleSolenoid hatch;
     ShooterImpl shooterSubsystem;
-    Encoder shooterEncoder;
-   
+    
     @Before
     public void setup() {
-        shooterMotorController = mock(SpeedController.class);
-        shooterEncoder = mock(Encoder.class);
-        shooterSubsystem = new ShooterImpl(shooterMotorController, shooterEncoder);
+        shooterMotorController1 = mock(WPI_TalonSRX.class);
+        shooterMotorController2 = mock(WPI_TalonSRX.class);
+        hatch = mock(DoubleSolenoid.class);
+        shooterSubsystem = new ShooterImpl(shooterMotorController1, shooterMotorController2, hatch);
     }
 
     @Test
     public void testStopShooter(){
         // Method from the shooter subsystem
         shooterSubsystem.stopShooter();
+        shooterSubsystem.task();
 
         // Specifying return value of mock method
-        Mockito.when(shooterMotorController.get()).thenReturn(0.0d);
-        Mockito.verify(shooterMotorController).set(0.0d);
+        Mockito.when(shooterMotorController1.get()).thenReturn(0.0d);
+        Mockito.verify(shooterMotorController1).set(0.0d);
+
+        Mockito.when(shooterMotorController2.get()).thenReturn(0.0d);
+        Mockito.verify(shooterMotorController2).set(0.0d);
 
         // Testing that the method did what we actually wanted
-        assertEquals(Double.valueOf(0.0d), Double.valueOf(shooterMotorController.get()));
+        assertEquals(Double.valueOf(0.0d), Double.valueOf(shooterMotorController1.get()));
+        assertEquals(Double.valueOf(0.0d), Double.valueOf(shooterMotorController2.get()));
     }
+
     @Test
     public void testReadyForBalls() {
-        Mockito.when(shooterEncoder.getRate()).thenReturn(0.0);
+        Mockito.when(shooterMotorController2.getSelectedSensorVelocity()).thenReturn(0);
         assertEquals(Boolean.valueOf(false), Boolean.valueOf(shooterSubsystem.readyForBalls()));
     }
 
     @Test
     public void testReadyForBallsTrue() {
-        Mockito.when(shooterEncoder.getRate()).thenReturn(100000.0);
+        Mockito.when(shooterMotorController2.getSelectedSensorVelocity()).thenReturn(-81920);
         assertEquals(Boolean.valueOf(true), Boolean.valueOf(shooterSubsystem.readyForBalls()));
     }
+    
 }

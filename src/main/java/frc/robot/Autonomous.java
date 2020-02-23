@@ -19,7 +19,7 @@ public class Autonomous {
         this.ball.shoot();
         Thread.sleep(5000);
         this.ball.cancelShooting();
-        this.drivetrain.setSetpoint(-120 * (WHEEL_DIAMETER * 128)); // Distance in inches * Wheel diameter in inches * ticks per rotation
+        this.drivetrain.setSetpoint((-120 / WHEEL_DIAMETER) * 128); // Distance in inches / Wheel diameter in inches * ticks per rotation
         while(!this.drivetrain.atSetpoint()){
             this.drivetrain.drivePID();
             Thread.sleep(20);
