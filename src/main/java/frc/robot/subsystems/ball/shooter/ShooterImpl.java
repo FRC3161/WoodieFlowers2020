@@ -44,7 +44,7 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
     }
 
     private double getShooterRPM() {
-        return ((this.shooterController2.getSelectedSensorVelocity() / 4096) * 600);
+        return (-(this.shooterController2.getSelectedSensorVelocity() / 4096) * 600);
     }
 
     private void setShooterSpeed(double speed) {
