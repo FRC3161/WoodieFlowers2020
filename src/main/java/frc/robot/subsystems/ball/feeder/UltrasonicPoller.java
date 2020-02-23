@@ -16,6 +16,8 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
     double distance;
     double currentRange;
 
+    boolean firstRun;
+
     long startTime;
 
     UltrasonicPoller(Ultrasonic sensor, long time, double distance, long rate) {
@@ -27,6 +29,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
         this.time = time;
         this.distance = distance;
 
+        this.firstRun = false; // Not sure if this should be static
     }
 
     UltrasonicPoller(Ultrasonic sensor, long time, double distance) {
@@ -53,6 +56,15 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
 
     @Override
     public void task(){
-        // Placholder
+        if(firstRun) {
+            this.startTime = System.nanoTime();
+        }
+        if(this.ultrasonicSensor.getRangeMM() > this.distance) {
+            if(this.startTime > TimeUnit.NANOSECONDS.toMillis(System.nanoTime())) {
+                this.noBalls = true;
+            }
+        } else {
+            this.noBalls = false;
+        }
     }
 }
