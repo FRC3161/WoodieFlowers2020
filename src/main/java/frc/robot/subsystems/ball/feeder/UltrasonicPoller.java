@@ -50,8 +50,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
     }
     
     public boolean checkUnloaded() {
-        return true;
-        // TODO replace after task is implemented
+        return this.noBalls;
     }
 
     @Override
