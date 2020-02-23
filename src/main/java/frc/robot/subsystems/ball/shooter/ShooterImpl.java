@@ -28,7 +28,7 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
         this.shooterController1 = talon1;
         this.shooterController2 = talon2;
 
-        this.shooterController1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
+        this.shooterController2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
 
         this.hatch = sol;
 
@@ -44,7 +44,7 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
     }
 
     private double getShooterRPM() {
-        return ((this.shooterController1.getSelectedSensorVelocity() / 4096) * 600);
+        return ((this.shooterController2.getSelectedSensorVelocity() / 4096) * 600);
     }
 
     private void setShooterSpeed(double speed) {

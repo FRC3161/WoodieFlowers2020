@@ -44,13 +44,13 @@ public class ShooterImplTest {
 
     @Test
     public void testReadyForBalls() {
-        Mockito.when(shooterMotorController1.getSelectedSensorVelocity()).thenReturn(0);
+        Mockito.when(shooterMotorController2.getSelectedSensorVelocity()).thenReturn(0);
         assertEquals(Boolean.valueOf(false), Boolean.valueOf(shooterSubsystem.readyForBalls()));
     }
 
     @Test
     public void testReadyForBallsTrue() {
-        Mockito.when(shooterMotorController1.getSelectedSensorVelocity()).thenReturn(100000);
+        Mockito.when(shooterMotorController2.getSelectedSensorVelocity()).thenReturn(100000);
         assertEquals(Boolean.valueOf(true), Boolean.valueOf(shooterSubsystem.readyForBalls()));
     }
     
