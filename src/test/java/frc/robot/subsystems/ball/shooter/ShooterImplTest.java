@@ -50,7 +50,7 @@ public class ShooterImplTest {
 
     @Test
     public void testReadyForBallsTrue() {
-        Mockito.when(shooterMotorController2.getSelectedSensorVelocity()).thenReturn(100000);
+        Mockito.when(shooterMotorController2.getSelectedSensorVelocity()).thenReturn(-81920);
         assertEquals(Boolean.valueOf(true), Boolean.valueOf(shooterSubsystem.readyForBalls()));
     }
     
