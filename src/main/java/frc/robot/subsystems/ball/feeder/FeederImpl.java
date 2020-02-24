@@ -39,11 +39,12 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void stopConveyor() {
+        this.beltController.set(0.0d);
 
     }
 
     public void stopHopper() {
-
+        this.hopperController.set(0.0d);
     }
 
     public void stopAll() {
