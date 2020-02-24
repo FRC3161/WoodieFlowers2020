@@ -74,7 +74,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
             if(this.shooter.readyForBalls()) {
                 this.feeder.enableConveyor();
             } else {
-                this.feeder.stopAll();
+                this.feeder.stopConveyor();
             }
         } else {
             this.shooter.stopShooter();
