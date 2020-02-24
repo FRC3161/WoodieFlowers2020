@@ -6,5 +6,7 @@ public interface Feeder extends Subsystem{
     void enableConveyor();
     void enableHopper();
     void unload() throws InterruptedException;
-    void stop();
+    void stopAll();
+    void stopConveyor();
+    void stopHopper();
 }

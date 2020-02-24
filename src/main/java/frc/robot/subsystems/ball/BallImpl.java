@@ -43,7 +43,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     public void stop() {
         this.shooter.stopShooter();
-        this.feeder.stop();
+        this.feeder.stopAll();
         this.shootEnabled = false;
     }
 
@@ -74,11 +74,11 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
             if(this.shooter.readyForBalls()) {
                 this.feeder.enableConveyor();
             } else {
-                this.feeder.stop();
+                this.feeder.stopAll();
             }
         } else {
             this.shooter.stopShooter();
-            this.feeder.stop();
+            this.feeder.stopAll();
         }
     }
 
