@@ -29,7 +29,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
         this.time = time;
         this.distance = distance;
 
-        this.firstRun = false; // Not sure if this should be static
+        this.firstRun = true; // Not sure if this should be static
     }
 
     UltrasonicPoller(Ultrasonic sensor, long time, double distance) {
