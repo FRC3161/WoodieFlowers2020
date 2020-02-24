@@ -70,6 +70,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     public void task() {
         if(this.shootEnabled) {
             this.shooter.runShooter();
+            this.feeder.enableHopper();
             if(this.shooter.readyForBalls()) {
                 this.feeder.enableConveyor();
             } else {
