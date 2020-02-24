@@ -29,10 +29,13 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         this.distanceTuner = new SmartDashboardTuner("Ball Distance", 300, d -> this.poller.setDistance(d));
     }
 
-    public void feedBalls() {
+    public void setConveyor() {
         this.beltController.set(-0.6d);
-        this.hopperController.set(-0.8d);
         // TODO Find actual values
+    }
+
+    public void setHopper() {
+        this.hopperController.set(-0.8d);
     }
 
     public void stop() {
