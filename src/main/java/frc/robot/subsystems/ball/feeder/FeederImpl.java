@@ -29,13 +29,25 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         this.distanceTuner = new SmartDashboardTuner("Ball Distance", 300, d -> this.poller.setDistance(d));
     }
 
-    public void feedBalls() {
+    public void enableConveyor() {
         this.beltController.set(-0.6d);
-        this.hopperController.set(-0.8d);
         // TODO Find actual values
     }
 
-    public void stop() {
+    public void enableHopper() {
+        this.hopperController.set(-0.8d);
+    }
+
+    public void stopConveyor() {
+        this.beltController.set(0.0d);
+
+    }
+
+    public void stopHopper() {
+        this.hopperController.set(0.0d);
+    }
+
+    public void stopAll() {
         this.beltController.set(0.0d);
         this.hopperController.set(0.0d);
     }
@@ -56,7 +68,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
             this.reverseFeeder();
             Thread.sleep(20);
         }
-        this.stop();
+        this.stopAll();
     }
 
     public void task() {

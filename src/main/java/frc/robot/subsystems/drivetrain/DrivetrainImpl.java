@@ -94,8 +94,13 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     }
 
     @Override
-    public void drive(double leftSpeed, double rightSpeed) {
+    public void driveTank(double leftSpeed, double rightSpeed) {
         this.drivetrain.tankDrive(-leftSpeed, -rightSpeed);
+    }
+
+    @Override
+    public void driveArcade(double xSpeed, double zRotation){
+        this.drivetrain.arcadeDrive(xSpeed, zRotation);
     }
 
     public long getLeftEncoderTicks() {
