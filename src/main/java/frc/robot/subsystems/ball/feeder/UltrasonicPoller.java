@@ -54,6 +54,12 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
     }
 
     @Override
+    public void start() {
+        this.firstRun = true;
+        super.start();
+    }
+
+    @Override
     public void task(){
         if(firstRun) {
             this.startTime = System.nanoTime();
