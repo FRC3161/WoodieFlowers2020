@@ -98,6 +98,10 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         this.drivetrain.tankDrive(-leftSpeed, -rightSpeed);
     }
 
+    @Override
+    public void driveArcade(double xSpeed, double zRotation){
+    }
+
     public long getLeftEncoderTicks() {
         return this.leftEncoder.get();
     }
