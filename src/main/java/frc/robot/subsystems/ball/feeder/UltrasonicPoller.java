@@ -66,11 +66,12 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
             this.firstRun = false;
         }
         if(this.ultrasonicSensor.getRangeMM() > this.distance) {
-            if(this.startTime > TimeUnit.NANOSECONDS.toMillis(System.nanoTime())) {
+            if((TimeUnit.NANOSECONDS.toMillis(System.nanoTime()) - this.startTime) > this.time) {
                 this.noBalls = true;
             }
         } else {
             this.noBalls = false;
+            this.startTime = System.nanoTime();
         }
     }
 }
