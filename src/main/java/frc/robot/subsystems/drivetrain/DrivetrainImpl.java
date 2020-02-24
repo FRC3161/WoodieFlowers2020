@@ -100,6 +100,7 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
 
     @Override
     public void driveArcade(double xSpeed, double zRotation){
+        this.drivetrain.arcadeDrive(xSpeed, zRotation);
     }
 
     public long getLeftEncoderTicks() {
