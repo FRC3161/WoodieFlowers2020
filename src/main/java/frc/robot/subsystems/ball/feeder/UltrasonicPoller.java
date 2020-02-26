@@ -71,7 +71,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
             }
         } else {
             this.noBalls = false;
-            this.startTime = System.nanoTime();
+            this.startTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
         }
     }
 }
