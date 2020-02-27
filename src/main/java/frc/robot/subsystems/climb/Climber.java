@@ -4,4 +4,5 @@ public interface Climber {
     void extendClimber();
     void retractClimber();
     void liftRobot();
+    void stopClimber();
 }

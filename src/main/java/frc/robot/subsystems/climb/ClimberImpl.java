@@ -33,4 +33,8 @@ public class ClimberImpl implements Climber {
     public void liftRobot(){
         this.lifterMotorController.set(0.8d); // Determine actual value
     }
+
+    public void stopClimber() {
+        this.lifterMotorController.set(0.0d);
+    }
 }
