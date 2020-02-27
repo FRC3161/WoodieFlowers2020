@@ -14,6 +14,8 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 import frc.robot.subsystems.ball.BallImpl;
 import frc.robot.subsystems.ball.Ball;
+import frc.robot.subsystems.climb.Climber;
+import frc.robot.subsystems.climb.ClimberImpl;
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.ControllerBindings;
 import frc.robot.Autonomous;
@@ -32,6 +34,7 @@ public class Robot extends TitanBot {
   private LogitechDualAction operatorPad;
   private Ball ballSubsystem;
   private Autonomous auto;
+  private Climber climb;
   private Compressor comp;
 
   @Override
@@ -58,6 +61,7 @@ public class Robot extends TitanBot {
     this.driverPad = new LogitechDualAction(RobotMap.DRIVER_PAD_PORT); // TODO idk if this is the right port
     this.operatorPad = new LogitechDualAction(RobotMap.OPERATOR_PAD_PORT);
     this.ballSubsystem = new BallImpl();
+    this.climb = new ClimberImpl();
     this.auto = new Autonomous(this.drive, this.ballSubsystem);
     this.comp = new Compressor(0);
     registerLifecycleComponent(driverPad);
@@ -108,10 +112,25 @@ public class Robot extends TitanBot {
   @Override
   public void teleopSetup() {
     // TODO talk with driveteam about controls
-    this.operatorPad.bind(ControllerBindings.INTAKE, PressType.PRESS, () -> ballSubsystem.collect());
-    this.operatorPad.bind(ControllerBindings.INTAKE, PressType.RELEASE, () -> ballSubsystem.retract());
-    this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.PRESS, () -> ballSubsystem.shoot());
-    this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.RELEASE, () -> ballSubsystem.stop());
+    this.drive.driveArcade(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS));
+    if(this.operatorPad.getDpadDirection().equals(ControllerBindings.FEEDER_UP)) {
+      this.ballSubsystem.feedBalls();
+    } else if(this.operatorPad.getDpadDirection().equals(ControllerBindings.FEEDER_DOWN)) {
+      this.ballSubsystem.unfeedBalls();
+    } else {
+      this.ballSubsystem.stopFeeder();
+    }
+
+    if(this.driverPad.getDpadDirection().equals(ControllerBindings.LIFT)) {
+      this.climb.liftRobot();
+    } else if(this.driverPad.getDpadDirection().equals(ControllerBindings.DEPLOY_CLIMBER)) {
+      this.climb.extendClimber();
+    } else if(this.driverPad.getDpadDirection().equals(ControllerBindings.RUN_WINCH)) {
+      this.climb.liftRobot();
+      boolean enabled = true;
+    } else {
+      this.climb.stopClimber();
+    }
   }
 
   @Override
