@@ -32,7 +32,7 @@ public class IntakeImpl extends RepeatingPooledSubsystem implements Intake {
         } else {
             this.extended = false;
         }
-        this.intakeSpeed = 0.8d;
+        this.intakeSpeed = 0.65d;
 
         this.motorDirectionsMap = new EnumMap<>(MotorDirections.class);
         this.motorDirectionsMap.put(MotorDirections.FORWARDS, Integer.valueOf(1));
