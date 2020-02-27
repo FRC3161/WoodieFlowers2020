@@ -2,8 +2,8 @@ package frc.robot;
 
 public final class RobotMap {
 
-    // DONE Motor Controller IDs, Encoder ports, Solenoids
-    // TODO Ultrasonic Ports
+    // DONE Motor Controller IDs, Encoder ports
+    // TODO Pneumatics Ports, Ultrasonic Ports
 
     // Drive
     public static final int[] TALON_LEFT_DRIVE_PORTS = {10, 2, 8}; 
