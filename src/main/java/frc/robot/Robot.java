@@ -127,7 +127,6 @@ public class Robot extends TitanBot {
       this.climb.extendClimber();
     } else if(this.driverPad.getDpadDirection().equals(ControllerBindings.RUN_WINCH)) {
       this.climb.liftRobot();
-      boolean enabled = true;
     } else {
       this.climb.stopClimber();
     }
