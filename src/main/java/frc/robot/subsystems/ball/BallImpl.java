@@ -4,13 +4,13 @@ import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import java.util.concurrent.TimeUnit;
 
 import frc.robot.subsystems.ball.feeder.Feeder;
+import frc.robot.subsystems.ball.shooter.PIDFShooterImpl;
 import frc.robot.subsystems.ball.shooter.Shooter;
 import frc.robot.subsystems.ball.intake.Intake;
 
 import ca.team3161.lib.robot.LifecycleEvent;
 
 import frc.robot.subsystems.ball.feeder.FeederImpl;
-import frc.robot.subsystems.ball.shooter.ShooterImpl;
 import frc.robot.subsystems.ball.intake.IntakeImpl;
 
 public class BallImpl extends RepeatingPooledSubsystem implements Ball {
@@ -24,7 +24,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     public BallImpl() {
         // PLACEHOLDER
         super(100, TimeUnit.MILLISECONDS);
-        this.shooter = new ShooterImpl();
+        this.shooter = new PIDFShooterImpl();
         this.feeder = new FeederImpl();
         this.intake = new IntakeImpl();
 
