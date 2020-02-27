@@ -8,6 +8,7 @@ import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import ca.team3161.lib.utils.SmartDashboardTuner;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
@@ -29,6 +30,7 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
         this.shooterController2 = talon2;
 
         this.shooterController2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
+        this.shooterController2.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms);
 
         this.hatch = sol;
 
