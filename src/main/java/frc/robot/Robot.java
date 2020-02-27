@@ -14,6 +14,7 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 import frc.robot.subsystems.ball.BallImpl;
 import frc.robot.subsystems.ball.Ball;
+import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.ControllerBindings;
 import frc.robot.Autonomous;
 
@@ -31,6 +32,7 @@ public class Robot extends TitanBot {
   private LogitechDualAction operatorPad;
   private Ball ballSubsystem;
   private Autonomous auto;
+  private Compressor comp;
 
   @Override
   public int getAutonomousPeriodLengthSeconds() {
@@ -57,6 +59,7 @@ public class Robot extends TitanBot {
     this.operatorPad = new LogitechDualAction(RobotMap.OPERATOR_PAD_PORT);
     this.ballSubsystem = new BallImpl();
     this.auto = new Autonomous(this.drive, this.ballSubsystem);
+    this.comp = new Compressor(0);
     registerLifecycleComponent(driverPad);
     registerLifecycleComponent(operatorPad);
     registerLifecycleComponent(ballSubsystem);
