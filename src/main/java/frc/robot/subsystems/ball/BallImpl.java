@@ -92,4 +92,17 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
             cancel();
         }
     }
+
+    public void feedBalls() {
+        this.feeder.enableHopper();
+        this.feeder.enableConveyor();
+    }
+
+    public void unfeedBalls() {
+        this.feeder.reverseFeeder();
+    }
+
+    public void stopFeeder() {
+        this.feeder.stopAll();
+    }
 }

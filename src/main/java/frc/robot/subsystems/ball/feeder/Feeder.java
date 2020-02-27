@@ -9,4 +9,5 @@ public interface Feeder extends Subsystem{
     void stopAll();
     void stopConveyor();
     void stopHopper();
+    void reverseFeeder();
 }
