@@ -52,7 +52,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         this.hopperController.set(0.0d);
     }
 
-    void reverseFeeder() {
+    public void reverseFeeder() {
         this.beltController.set(0.6d);
         this.hopperController.set(0.8d);
         // TODO see above
