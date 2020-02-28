@@ -9,6 +9,7 @@ public interface Ball extends Subsystem, LifecycleListener{
     void stop();
     void unload();
     void collect();
+    void collect(boolean direction);
     void retract();
     void feedBalls();
     void unfeedBalls();

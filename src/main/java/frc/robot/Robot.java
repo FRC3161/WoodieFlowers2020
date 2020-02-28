@@ -134,6 +134,8 @@ public class Robot extends TitanBot {
     
     this.climb.retractClimber();
 
+    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PressType.PRESS, () -> ballSubsystem.collect(false));
+    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PressType.PRESS, () -> ballSubsystem.retract());
     this.operatorPad.bind(ControllerBindings.INTAKE, PressType.PRESS, () -> ballSubsystem.collect());
     this.operatorPad.bind(ControllerBindings.INTAKE, PressType.RELEASE, () -> ballSubsystem.retract());
     this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.PRESS, () -> ballSubsystem.shoot());

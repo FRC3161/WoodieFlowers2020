@@ -16,6 +16,7 @@ public final class ControllerBindings {
         public static final DpadDirection LIFT = DpadDirection.DOWN;
         public static final DpadDirection RUN_WINCH = DpadDirection.RIGHT;
         public static final DpadDirection STOP_WINCH = DpadDirection.LEFT;
+        public static final LogitechButton REVERSE_INTAKE_DRIVER = LogitechButton.RIGHT_BUMPER;
 
         public static final LogitechControl RIGHT_STICK = LogitechControl.RIGHT_STICK;
         public static final LogitechControl LEFT_STICK = LogitechControl.LEFT_STICK;

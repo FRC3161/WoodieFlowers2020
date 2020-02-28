@@ -14,6 +14,7 @@ import frc.robot.subsystems.ball.shooter.PIDFShooterImpl;
 import frc.robot.subsystems.ball.shooter.Shooter;
 import frc.robot.subsystems.ball.shooter.ShooterImpl;
 import frc.robot.subsystems.ball.intake.Intake;
+import frc.robot.subsystems.ball.intake.IntakeImpl.MotorDirections;
 
 import ca.team3161.lib.robot.LifecycleEvent;
 
@@ -82,6 +83,14 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     public void defineResources(){
         return;
+    }
+
+    public void collect(boolean direction) {
+        if(!direction) {
+            this.intake.extend(MotorDirections.BACKWARDS);
+        } else {
+            this.intake.extend(MotorDirections.FORWARDS);
+        }
     }
 
     public void collect() {
