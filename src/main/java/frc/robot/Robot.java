@@ -10,6 +10,8 @@ package frc.robot;
 import ca.team3161.lib.robot.TitanBot;
 import ca.team3161.lib.utils.controls.LogitechDualAction;
 import ca.team3161.lib.utils.controls.Gamepad.PressType;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 import frc.robot.subsystems.ball.BallImpl;
@@ -36,6 +38,11 @@ public class Robot extends TitanBot {
   private Autonomous auto;
   private Climber climb;
   private Compressor comp;
+
+  private static final String kWallAuto = "Wall Auto";
+  private static final String kTrenchAuto = "Trench Auto";
+  private String selectedAuto;
+  private final SendableChooser<String> auto_chooser = new SendableChooser<>();
 
   @Override
   public int getAutonomousPeriodLengthSeconds() {
@@ -64,6 +71,11 @@ public class Robot extends TitanBot {
     this.climb = new ClimberImpl();
     this.auto = new Autonomous(this.drive, this.ballSubsystem);
     this.comp = new Compressor(0);
+
+    auto_chooser.setDefaultOption("Wall Auto", kWallAuto);
+    auto_chooser.addOption("Trench Auto", kTrenchAuto);
+    SmartDashboard.putData("Auto Chooser", auto_chooser);
+
     registerLifecycleComponent(driverPad);
     registerLifecycleComponent(operatorPad);
     registerLifecycleComponent(ballSubsystem);
@@ -94,6 +106,7 @@ public class Robot extends TitanBot {
    */
   @Override
   public void autonomousSetup() {
+    selectedAuto = auto_chooser.getSelected();
   }
 
   /**
@@ -103,7 +116,14 @@ public class Robot extends TitanBot {
    */
   @Override
   public void autonomousRoutine() throws InterruptedException {
-    this.auto.hitNRun();
+    switch(selectedAuto){
+      case kWallAuto:
+        this.auto.wallShothitNRun();
+        break;
+      case kTrenchAuto:
+        this.auto.hitNRun();
+        break;
+    }
   }
 
   /**
