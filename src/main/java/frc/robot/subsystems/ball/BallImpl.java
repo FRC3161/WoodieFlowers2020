@@ -40,7 +40,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     public BallImpl() {
         // PLACEHOLDER
-        super(100, TimeUnit.MILLISECONDS);
+        super(10, TimeUnit.MILLISECONDS);
 
         this.shooterController1 = new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORTS[0]);
         this.shooterController2 = new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORTS[1]);
