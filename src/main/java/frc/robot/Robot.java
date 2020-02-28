@@ -51,6 +51,7 @@ public class Robot extends TitanBot {
 
   @Override
   public void disabledSetup(){
+    this.comp.start();
   }
 
   @Override
