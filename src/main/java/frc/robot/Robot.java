@@ -114,6 +114,14 @@ public class Robot extends TitanBot {
     
     this.climb.retractClimber();
 
+  }
+
+  @Override
+  public void teleopRoutine() {
+    //TODO properly bind controls
+    //this.drive.driveTank(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.Y_AXIS)); // Yeah it's shorter the old way, but this way we keep all of the bindings in one place
+    this.drive.driveArcade(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS));
+
     // TODO talk with driveteam about controls
     this.drive.driveArcade(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS));
     if(this.operatorPad.getDpadDirection().equals(ControllerBindings.FEEDER_UP)) {
@@ -133,13 +141,6 @@ public class Robot extends TitanBot {
     } else {
       this.climb.stopClimber();
     }
-  }
-
-  @Override
-  public void teleopRoutine() {
-    //TODO properly bind controls
-    //this.drive.driveTank(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.Y_AXIS)); // Yeah it's shorter the old way, but this way we keep all of the bindings in one place
-    this.drive.driveArcade(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS));
   }
 
   /**
