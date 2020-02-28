@@ -30,7 +30,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void enableConveyor() {
-        this.beltController.set(-0.6d);
+        this.beltController.set(0.95d);
         // TODO Find actual values
     }
 
