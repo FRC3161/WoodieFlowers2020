@@ -114,6 +114,10 @@ public class Robot extends TitanBot {
     
     this.climb.retractClimber();
 
+    this.operatorPad.bind(ControllerBindings.INTAKE, PressType.PRESS, () -> ballSubsystem.collect());
+    this.operatorPad.bind(ControllerBindings.INTAKE, PressType.RELEASE, () -> ballSubsystem.retract());
+    this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.PRESS, () -> ballSubsystem.shoot());
+    this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.RELEASE, () -> ballSubsystem.stop()); 
   }
 
   @Override
