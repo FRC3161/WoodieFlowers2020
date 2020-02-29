@@ -41,6 +41,8 @@ public class Robot extends TitanBot {
   private Climber climb;
   private Compressor comp;
 
+  private boolean manualFeederControl;
+
   private static final String kWallAuto = "Wall Auto";
   private static final String kTrenchAuto = "Trench Auto";
   private String selectedAuto;
@@ -74,6 +76,8 @@ public class Robot extends TitanBot {
     this.climb = new ClimberImpl();
     this.auto = new Autonomous(this.drive, this.ballSubsystem);
     this.comp = new Compressor(0);
+
+    this.manualFeederControl = false;
 
     auto_chooser.setDefaultOption("Wall Auto", kWallAuto);
     auto_chooser.addOption("Trench Auto", kTrenchAuto);
@@ -157,11 +161,16 @@ public class Robot extends TitanBot {
     // TODO talk with driveteam about controls
     this.drive.driveArcade(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS));
     if(this.operatorPad.getDpadDirection().equals(ControllerBindings.FEEDER_UP)) {
+      this.manualFeederControl = true;
       this.ballSubsystem.feedBalls();
     } else if(this.operatorPad.getDpadDirection().equals(ControllerBindings.FEEDER_DOWN)) {
+      this.manualFeederControl = true;
       this.ballSubsystem.unfeedBalls();
     } else {
-      this.ballSubsystem.stopFeeder();
+      if(this.manualFeederControl) {
+        this.ballSubsystem.stopFeeder();
+      }
+      this.manualFeederControl = false;
     }
 
     if(this.driverPad.getDpadDirection().equals(ControllerBindings.LIFT)) {
