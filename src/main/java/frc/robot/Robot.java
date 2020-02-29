@@ -13,6 +13,7 @@ import ca.team3161.lib.utils.controls.SquaredJoystickMode;
 import ca.team3161.lib.utils.controls.Gamepad.PressType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 import frc.robot.subsystems.ball.BallImpl;
@@ -164,8 +165,10 @@ public class Robot extends TitanBot {
     }
 
     if(this.driverPad.getDpadDirection().equals(ControllerBindings.LIFT)) {
-      this.climb.liftRobot();
-      this.comp.stop();
+      if(Timer.getMatchTime() <= 30.0d){
+        this.climb.liftRobot();
+        this.comp.stop();
+      }
     } else if(this.driverPad.getDpadDirection().equals(ControllerBindings.DEPLOY_CLIMBER)) {
       this.climb.extendClimber();
     } else if(this.driverPad.getDpadDirection().equals(ControllerBindings.RUN_WINCH)) {
