@@ -29,8 +29,8 @@ public class Autonomous {
     public void wallShothitNRun() throws InterruptedException {
         // TODO MUST MUST MUST FIND VALUES FOR DEAD RECKONING ON FIELD
         
-        this.drivetrain.driveTank(0.6, 0.6);
-        Thread.sleep(3000);
+        this.drivetrain.driveTank(0.3, 0.3);
+        Thread.sleep(6000);
         this.drivetrain.driveTank(0.0, 0.0);
         this.ball.shoot();
         Thread.sleep(5000);
