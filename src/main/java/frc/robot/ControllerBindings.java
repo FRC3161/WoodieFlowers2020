@@ -12,9 +12,8 @@ public final class ControllerBindings {
         public static final DpadDirection FEEDER_UP = DpadDirection.UP;
         public static final DpadDirection FEEDER_DOWN = DpadDirection.DOWN;
         
-        public static final DpadDirection DEPLOY_CLIMBER = DpadDirection.UP;
-        public static final DpadDirection LIFT = DpadDirection.DOWN;
-        public static final DpadDirection RUN_WINCH = DpadDirection.RIGHT;
+        public static final LogitechButton DEPLOY_CLIMBER = LogitechButton.Y;
+        public static final LogitechButton RUN_WINCH = LogitechButton.A;
         public static final DpadDirection STOP_WINCH = DpadDirection.LEFT;
         public static final LogitechButton REVERSE_INTAKE_DRIVER = LogitechButton.RIGHT_BUMPER;
 

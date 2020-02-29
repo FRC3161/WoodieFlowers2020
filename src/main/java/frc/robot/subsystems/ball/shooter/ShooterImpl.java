@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import java.util.concurrent.TimeUnit;
 
 import ca.team3161.lib.robot.LifecycleEvent;
+import ca.team3161.lib.robot.pid.PID;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import ca.team3161.lib.utils.SmartDashboardTuner;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -36,9 +37,10 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
 
         this.shooting = false;
 
-        this.shooterRPMTrench = 7500;
+        this.shooterRPMTrench = 6000;
         this.rpmTuner = new SmartDashboardTuner("Shooter RPM Trench", shooterRPMTrench, d -> this.shooterRPMTrench = d);
         this.rpmTuner.start();
+
     }
 
     public ShooterImpl() {
@@ -50,8 +52,8 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
     }
 
     private void setShooterSpeed(double speed) {
-        this.shooterController1.set(speed);
-        this.shooterController2.set(speed);
+        this.shooterController1.set(-speed);
+        this.shooterController2.set(-speed);
     }
 
     public boolean getHatch() {
@@ -97,7 +99,7 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
     }
 
     public boolean readyForBalls() {
-        if (this.getShooterRPM() > this.shooterRPMTrench) {
+        if (this.getShooterRPM() > this.shooterRPMTrench/2) {
             return true;
         }
         return false;

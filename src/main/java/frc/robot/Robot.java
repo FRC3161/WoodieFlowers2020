@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.concurrent.TimeUnit;
+
 import ca.team3161.lib.robot.TitanBot;
 import ca.team3161.lib.utils.controls.LogitechDualAction;
 import ca.team3161.lib.utils.controls.SquaredJoystickMode;
@@ -21,6 +23,7 @@ import frc.robot.subsystems.ball.Ball;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.ClimberImpl;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.MotorSafety;
 import frc.robot.ControllerBindings;
 import frc.robot.Autonomous;
 
@@ -85,6 +88,7 @@ public class Robot extends TitanBot {
 
     registerLifecycleComponent(driverPad);
     registerLifecycleComponent(operatorPad);
+    registerLifecycleComponent(drive);
     registerLifecycleComponent(ballSubsystem);
   }
 
@@ -117,13 +121,13 @@ public class Robot extends TitanBot {
   }
 
   /**
-   * This function is called periodically during autonomous.
+   * This function is called once during autonomous.
    * 
    * @throws InterruptedException
    */
   @Override
   public void autonomousRoutine() throws InterruptedException {
-    switch(selectedAuto){
+    /*switch(selectedAuto){
       case kWallAuto:
         this.auto.wallShothitNRun();
         break;
@@ -131,6 +135,25 @@ public class Robot extends TitanBot {
         this.auto.hitNRun();
         break;
     }
+    */
+    //this.auto.wallShothitNRun();
+            // TODO MUST MUST MUST FIND VALUES FOR DEAD RECKONING ON FIELD
+        //this.drivetrain.driveTank(-0.3, -0.3);
+        System.out.println("Auto start");
+        this.drive.driveArcade(-0.4, 0);
+        waitFor(3, TimeUnit.SECONDS);
+        System.out.println("Shooting");
+        //this.drivetrain.driveTank(0.0, 0.0);
+        this.drive.driveArcade(0, 0);
+        this.ballSubsystem.shoot();
+        waitFor(4, TimeUnit.SECONDS);
+        waitFor(500, TimeUnit.MILLISECONDS);
+        this.ballSubsystem.cancelShooting();
+        // this.drivetrain.driveTank(0.3,0.3);
+        this.drive.driveArcade(0.3, 0);
+        waitFor(4, TimeUnit.SECONDS);
+        // this.drivetrain.driveTank(0.0, 0.0);
+        this.drive.driveArcade(0, 0);
   }
 
   /**
@@ -144,12 +167,17 @@ public class Robot extends TitanBot {
     this.driverPad.setMode(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS, new SquaredJoystickMode());
     this.driverPad.setMode(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS, new SquaredJoystickMode());
 
+    this.driverPad.bind(ControllerBindings.DEPLOY_CLIMBER, () -> this.climb.extendClimber());
+    this.driverPad.bind(ControllerBindings.RUN_WINCH, PressType.PRESS, () -> this.climb.liftRobot());
+    this.driverPad.bind(ControllerBindings.RUN_WINCH, PressType.RELEASE, () -> this.climb.stopClimber());
+
     this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PressType.PRESS, () -> ballSubsystem.collect(false));
-    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PressType.PRESS, () -> ballSubsystem.retract());
+    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PressType.RELEASE, () -> ballSubsystem.retract());
     this.operatorPad.bind(ControllerBindings.INTAKE, PressType.PRESS, () -> ballSubsystem.collect());
     this.operatorPad.bind(ControllerBindings.INTAKE, PressType.RELEASE, () -> ballSubsystem.retract());
     this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.PRESS, () -> ballSubsystem.shoot());
     this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.RELEASE, () -> ballSubsystem.stop()); 
+
   }
 
   @Override
@@ -173,6 +201,7 @@ public class Robot extends TitanBot {
       this.manualFeederControl = false;
     }
 
+    /*
     if(this.driverPad.getDpadDirection().equals(ControllerBindings.LIFT)) {
       if(Timer.getMatchTime() <= 30.0d){
         this.climb.liftRobot();
@@ -185,6 +214,7 @@ public class Robot extends TitanBot {
     } else {
       this.climb.stopClimber();
     }
+    */
   }
 
   /**

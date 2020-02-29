@@ -20,8 +20,8 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     public FeederImpl(){
         super(1, TimeUnit.SECONDS);
         
-        this.beltController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
-        this.hopperController = new WPI_TalonSRX(RobotMap.ROLLER_TALON_PORT);
+        this.beltController = new WPI_TalonSRX(RobotMap.ROLLER_TALON_PORT);
+        this.hopperController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
         this.feederUltrasonic = new Ultrasonic(RobotMap.ULTRASONIC_PORTS[0], RobotMap.ULTRASONIC_PORTS[1]);
         
 
@@ -30,12 +30,12 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void enableConveyor() {
-        this.beltController.set(0.95d);
+        this.beltController.set(-0.95d);
         // TODO Find actual values
     }
 
     public void enableHopper() {
-        this.hopperController.set(-0.8d);
+        this.hopperController.set(0.8d);
     }
 
     public void stopConveyor() {
@@ -54,7 +54,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
 
     public void reverseFeeder() {
         this.beltController.set(0.6d);
-        this.hopperController.set(0.8d);
+        this.hopperController.set(-0.8d);
         // TODO see above
     }
 

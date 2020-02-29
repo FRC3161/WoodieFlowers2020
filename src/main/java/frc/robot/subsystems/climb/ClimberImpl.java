@@ -2,6 +2,7 @@ package frc.robot.subsystems.climb;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotMap;
 
 
@@ -19,7 +20,9 @@ public class ClimberImpl implements Climber {
     }
 
     public void extendClimber() {
-        this.climberSolenoid.set(DoubleSolenoid.Value.kForward);
+        if(Timer.getMatchTime() <= 30){
+            this.climberSolenoid.set(DoubleSolenoid.Value.kForward);
+        }
     }
 
     public void retractClimber() {
@@ -27,8 +30,10 @@ public class ClimberImpl implements Climber {
     }
 
     public void liftRobot(){
-        this.lifterMotorController.set(0.8d); // Determine actual value
-        this.retractClimber();
+        if(Timer.getMatchTime() <= 30){
+            this.lifterMotorController.set(0.8d); // Determine actual value
+            this.retractClimber();
+        }
     }
 
     public void stopClimber() {
