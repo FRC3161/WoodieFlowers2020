@@ -1,6 +1,7 @@
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import ca.team3161.lib.robot.pid.RampingSpeedController;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import edu.wpi.first.wpilibj.Encoder;
 import java.util.concurrent.TimeUnit;
@@ -15,9 +16,9 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     //Speed controllers and drivetrain
     
     // Left Side Motor Controllers and Group
-    private final WPI_TalonSRX leftMotorController1;
-    private final WPI_VictorSPX leftMotorController2;
-    private final WPI_VictorSPX leftMotorController3;
+    private final RampingSpeedController leftMotorController1;
+    private final RampingSpeedController leftMotorController2;
+    private final RampingSpeedController leftMotorController3;
     private final SpeedControllerGroup leftMotorControllers;
 
     // PID Constants
@@ -26,11 +27,12 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     static final double Kd = 0.1;
 
     // Right Side Motor Controllers and Group
-    private final WPI_TalonSRX rightMotorController1;
-    private final WPI_VictorSPX rightMotorController2;
-    private final WPI_VictorSPX rightMotorController3;
+    
+    private final RampingSpeedController rightMotorController1;
+    private final RampingSpeedController rightMotorController2;
+    private final RampingSpeedController rightMotorController3;
     private final SpeedControllerGroup rightMotorControllers;
-
+    
     private final Encoder leftEncoder;
     private final Encoder rightEncoder;
 
@@ -42,15 +44,57 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     public DrivetrainImpl(){
         super(500, TimeUnit.MILLISECONDS); // Slow because all it does is put ticks to the dashboard for testing purposes 
         //Motor controllers and drivetrain
-        this.leftMotorController1 = new WPI_TalonSRX(RobotMap.TALON_LEFT_DRIVE_PORTS[0]);
-        this.leftMotorController2 = new WPI_VictorSPX(RobotMap.TALON_LEFT_DRIVE_PORTS[1]);
-        this.leftMotorController3 = new WPI_VictorSPX(RobotMap.TALON_LEFT_DRIVE_PORTS[2]);
+        this.leftMotorController1 = new RampingSpeedController.Builder()
+            .controller(new WPI_TalonSRX(RobotMap.TALON_LEFT_DRIVE_PORTS[0]))
+            .maxStep(1)
+            .rampRatio(1.1)
+            .firstFilter(0.1)
+            .secondFilter(0.05)
+            .build(); 
+
+        this.leftMotorController2 = new RampingSpeedController.Builder()
+            .controller(new WPI_VictorSPX(RobotMap.TALON_LEFT_DRIVE_PORTS[1]))
+            .maxStep(1)
+            .rampRatio(1.1)
+            .firstFilter(0.1)
+            .secondFilter(0.05)
+            .build(); 
+
+        this.leftMotorController3 = new RampingSpeedController.Builder()
+            .controller(new WPI_VictorSPX(RobotMap.TALON_LEFT_DRIVE_PORTS[2]))
+            .maxStep(1)
+            .rampRatio(1.1)
+            .firstFilter(0.1)
+            .secondFilter(0.05)
+            .build(); 
+
         this.leftMotorControllers = new SpeedControllerGroup(this.leftMotorController1, this.leftMotorController2, this.leftMotorController3);
         this.leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_PORTS[0], RobotMap.LEFT_ENCODER_PORTS[1]);
 
-        this.rightMotorController1 = new WPI_TalonSRX(RobotMap.TALON_RIGHT_DRIVE_PORTS[0]);
-        this.rightMotorController2 = new WPI_VictorSPX(RobotMap.TALON_RIGHT_DRIVE_PORTS[1]);
-        this.rightMotorController3 = new WPI_VictorSPX(RobotMap.TALON_RIGHT_DRIVE_PORTS[2]);
+        this.rightMotorController1 = new RampingSpeedController.Builder()
+                .controller(new WPI_TalonSRX(RobotMap.TALON_RIGHT_DRIVE_PORTS[0]))
+                .maxStep(1)
+                .rampRatio(1.1)
+                .firstFilter(0.1)
+                .secondFilter(0.05)
+                .build(); 
+
+        this.rightMotorController2 = new RampingSpeedController.Builder()
+                .controller(new WPI_VictorSPX(RobotMap.TALON_RIGHT_DRIVE_PORTS[1]))
+                .maxStep(1)
+                .rampRatio(1.1)
+                .firstFilter(0.1)
+                .secondFilter(0.05)
+                .build(); 
+
+        this.rightMotorController3 = new RampingSpeedController.Builder()
+            .controller(new WPI_VictorSPX(RobotMap.TALON_RIGHT_DRIVE_PORTS[2]))
+            .maxStep(1)
+            .rampRatio(1.1)
+            .firstFilter(0.1)
+            .secondFilter(0.05)
+            .build(); 
+
         this.rightMotorControllers = new SpeedControllerGroup(this.rightMotorController1, this.rightMotorController2, this.rightMotorController3);
         this.rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORTS[0], RobotMap.RIGHT_ENCODER_PORTS[1]);
 
