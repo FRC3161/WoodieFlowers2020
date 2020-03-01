@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.TitanBot;
 import ca.team3161.lib.utils.controls.LogitechDualAction;
 import ca.team3161.lib.utils.controls.SquaredJoystickMode;
-import ca.team3161.lib.utils.controls.Gamepad.PressType;
+import static ca.team3161.lib.utils.controls.Gamepad.PressType.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
@@ -77,7 +77,7 @@ public class Robot extends TitanBot {
     this.operatorPad = new LogitechDualAction(RobotMap.OPERATOR_PAD_PORT);
     this.ballSubsystem = new BallImpl();
     this.climb = new ClimberImpl();
-    this.auto = new Autonomous(this.drive, this.ballSubsystem);
+    this.auto = new Autonomous(this, this.drive, this.ballSubsystem);
     this.comp = new Compressor(0);
 
     this.manualFeederControl = false;
@@ -139,22 +139,9 @@ public class Robot extends TitanBot {
     //this.auto.wallShothitNRun();
             // TODO MUST MUST MUST FIND VALUES FOR DEAD RECKONING ON FIELD
         //this.drivetrain.driveTank(-0.3, -0.3);
-        System.out.println("Auto start");
-        this.drive.driveArcade(-0.4, 0);
-        waitFor(3, TimeUnit.SECONDS);
-        System.out.println("Shooting");
-        //this.drivetrain.driveTank(0.0, 0.0);
-        this.drive.driveArcade(0, 0);
-        this.ballSubsystem.shoot();
-        waitFor(4, TimeUnit.SECONDS);
-        waitFor(500, TimeUnit.MILLISECONDS);
-        this.ballSubsystem.cancelShooting();
-        // this.drivetrain.driveTank(0.3,0.3);
-        this.drive.driveArcade(0.3, 0);
-        waitFor(4, TimeUnit.SECONDS);
-        // this.drivetrain.driveTank(0.0, 0.0);
-        this.drive.driveArcade(0, 0);
-  }
+        //this.auto.wallShothitNRun();
+        this.auto.driveAway();
+      }
 
   /**
    * This function is called periodically during operator control.
@@ -168,15 +155,15 @@ public class Robot extends TitanBot {
     this.driverPad.setMode(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS, new SquaredJoystickMode());
 
     this.driverPad.bind(ControllerBindings.DEPLOY_CLIMBER, () -> this.climb.extendClimber());
-    this.driverPad.bind(ControllerBindings.RUN_WINCH, PressType.PRESS, () -> this.climb.liftRobot());
-    this.driverPad.bind(ControllerBindings.RUN_WINCH, PressType.RELEASE, () -> this.climb.stopClimber());
+    this.driverPad.bind(ControllerBindings.RUN_WINCH, PRESS, () -> this.climb.liftRobot());
+    this.driverPad.bind(ControllerBindings.RUN_WINCH, RELEASE, () -> this.climb.stopClimber());
 
-    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PressType.PRESS, () -> ballSubsystem.collect(false));
-    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PressType.RELEASE, () -> ballSubsystem.retract());
-    this.operatorPad.bind(ControllerBindings.INTAKE, PressType.PRESS, () -> ballSubsystem.collect());
-    this.operatorPad.bind(ControllerBindings.INTAKE, PressType.RELEASE, () -> ballSubsystem.retract());
-    this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.PRESS, () -> ballSubsystem.shoot());
-    this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.RELEASE, () -> ballSubsystem.stop()); 
+    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PRESS, () -> ballSubsystem.collect(false));
+    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, RELEASE, () -> ballSubsystem.retract());
+    this.operatorPad.bind(ControllerBindings.INTAKE, PRESS, () -> ballSubsystem.collect());
+    this.operatorPad.bind(ControllerBindings.INTAKE, RELEASE, () -> ballSubsystem.retract());
+    this.operatorPad.bind(ControllerBindings.SHOOTER, PRESS, () -> ballSubsystem.shoot());
+    this.operatorPad.bind(ControllerBindings.SHOOTER, RELEASE, () -> ballSubsystem.stop()); 
 
   }
 
