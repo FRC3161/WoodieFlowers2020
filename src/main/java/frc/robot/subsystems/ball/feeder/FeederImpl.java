@@ -52,8 +52,10 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void stopAll() {
-        this.beltController.set(0.0d);
-        this.hopperController.set(0.0d);
+        //this.beltController.set(0.0d);
+        //this.hopperController.set(0.0d);
+        this.stopHopper();
+        this.stopConveyor();
     }
 
     public void reverseFeeder() {
