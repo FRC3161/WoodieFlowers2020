@@ -152,7 +152,7 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         // SmartDashboard.putNumber("Left Side Encoder Ticks", this.getLeftEncoderTicks());
         // SmartDashboard.putNumber("Right Side Encoder Ticks", this.getRightEncoderTicks());
         this.drivetrain.feedWatchdog();
-        this.drivetrain.arcadeDrive(-driveXSpeedTarget, driveZRotationTarget - 0.02 * driveXSpeedTarget, false); // Subtracting a percentage of the x speed from the rotation target to compensate for the drift of one side
+        this.drivetrain.arcadeDrive(-driveXSpeedTarget, driveZRotationTarget - 0.03 * driveXSpeedTarget, false); // Subtracting a percentage of the x speed from the rotation target to compensate for the drift of one side
     }
 
     @Override

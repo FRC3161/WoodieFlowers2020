@@ -29,6 +29,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         this.distanceTuner = new SmartDashboardTuner("Ball Distance", 300, d -> this.poller.setDistance(d));
         
         this.hopperController.configContinuousCurrentLimit(10, 250);
+        this.hopperController.enableCurrentLimit(false);
     }
 
     public void enableConveyor() {
@@ -37,7 +38,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void enableHopper() {
-        this.hopperController.enableCurrentLimit(true);
+        //this.hopperController.enableCurrentLimit(true);
         this.hopperController.set(0.8d);
     }
 
@@ -47,7 +48,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void stopHopper() {
-        this.hopperController.enableCurrentLimit(false);
+       // this.hopperController.enableCurrentLimit(false);
         this.hopperController.set(0.0d);
     }
 
