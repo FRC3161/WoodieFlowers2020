@@ -140,7 +140,8 @@ public class Robot extends TitanBot {
             // TODO MUST MUST MUST FIND VALUES FOR DEAD RECKONING ON FIELD
         //this.drivetrain.driveTank(-0.3, -0.3);
         //this.auto.wallShothitNRun();
-        this.auto.driveAway();
+        //this.auto.driveAway();
+        this.auto.wallShoot();
       }
 
   /**

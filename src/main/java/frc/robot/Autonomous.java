@@ -64,4 +64,16 @@ public class Autonomous {
         this.ball.cancelShooting();
     }
 
+    public void wallShoot() throws InterruptedException{
+        this.drive.driveArcade(-0.4, 0);
+        this.bot.waitFor(3, TimeUnit.SECONDS);
+        //this.drivetrain.driveTank(0.0, 0.0);
+        this.drive.driveArcade(0, 0);
+        this.ball.shoot();
+        this.bot.waitFor(4, TimeUnit.SECONDS);
+        this.bot.waitFor(500, TimeUnit.MILLISECONDS);
+        this.ball.cancelShooting();
+        // this.drivetrain.driveTank(0.3,0.3);
+    }
+
     }

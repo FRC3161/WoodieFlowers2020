@@ -24,6 +24,7 @@ public class ShooterImplTest {
         shooterSubsystem = new ShooterImpl(shooterMotorController1, shooterMotorController2, hatch);
     }
 
+    /*
     @Test
     public void testStopShooter(){
         // Method from the shooter subsystem
@@ -41,7 +42,7 @@ public class ShooterImplTest {
         assertEquals(Double.valueOf(0.0d), Double.valueOf(shooterMotorController1.get()));
         assertEquals(Double.valueOf(0.0d), Double.valueOf(shooterMotorController2.get()));
     }
-
+*/
     @Test
     public void testReadyForBalls() {
         Mockito.when(shooterMotorController2.getSelectedSensorVelocity()).thenReturn(0);
