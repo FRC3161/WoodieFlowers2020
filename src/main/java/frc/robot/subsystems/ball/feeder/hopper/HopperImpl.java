@@ -1,0 +1,30 @@
+package frc.robot.subsystems.ball.feeder.hopper;
+
+import java.util.concurrent.TimeUnit;
+
+import ca.team3161.lib.robot.LifecycleEvent;
+import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
+
+public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
+
+    HopperImpl() {
+        super(1, TimeUnit.SECONDS);
+        // Placeholder
+    }
+
+    @Override
+    public void task() {
+        // Placeholder
+    }
+
+    @Override
+    public void defineResources() {
+        // Placeholder
+    }
+
+    @Override
+    public void lifecycleStatusChanged(LifecycleEvent previous, LifecycleEvent current) {
+        // Placeholder
+    }
+
+}
