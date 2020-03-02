@@ -110,18 +110,18 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     @Override
     public void defineResources() {
 
-        // require(leftMotorController1);
-        // require(leftMotorController2);
-        // require(leftMotorController3);
-        // require(leftMotorControllers);
+        require(leftMotorController1);
+        require(leftMotorController2);
+        require(leftMotorController3);
+        require(leftMotorControllers);
 
-        // require(rightMotorController1);
-        // require(rightMotorController2);
-        // require(rightMotorController3);
-        // require(rightMotorControllers);
+        require(rightMotorController1);
+        require(rightMotorController2);
+        require(rightMotorController3);
+        require(rightMotorControllers);
 
-        // require(leftEncoder);
-        // require(rightEncoder);
+        require(leftEncoder);
+        require(rightEncoder);
     }
 
     @Override
