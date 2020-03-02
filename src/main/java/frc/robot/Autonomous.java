@@ -33,47 +33,50 @@ public class Autonomous {
     }
 
     public void wallShothitNRun() throws InterruptedException {
-        // TODO MUST MUST MUST FIND VALUES FOR DEAD RECKONING ON FIELD
+        // Drive forwards to goal
         this.drive.driveArcade(-0.4, 0);
         this.bot.waitFor(3, TimeUnit.SECONDS);
-        //this.drivetrain.driveTank(0.0, 0.0);
         this.drive.driveArcade(0, 0);
+        // Shoot
         this.ball.shoot();
         this.bot.waitFor(4, TimeUnit.SECONDS);
         this.bot.waitFor(500, TimeUnit.MILLISECONDS);
         this.ball.cancelShooting();
-        // this.drivetrain.driveTank(0.3,0.3);
+        // Drive away
         this.drive.driveArcade(0.3, 0);
         this.bot.waitFor(4, TimeUnit.SECONDS);
-        // this.drivetrain.driveTank(0.0, 0.0);
         this.drive.driveArcade(0, 0);
     }
 
     public void driveAway() throws InterruptedException{
+        // Drive away
         this.drive.driveArcade(0.3, 0);
         this.bot.waitFor(2, TimeUnit.SECONDS);
         this.drive.driveArcade(0, 0);
     }
 
     public void waitAndShoot() throws InterruptedException {
+        // Wait
         this.bot.waitFor(8, TimeUnit.SECONDS);
+        // Drive to goal
         this.drive.driveArcade(-0.4, 0);
         this.bot.waitFor(3, TimeUnit.SECONDS);
+        // Shoot
         this.ball.shoot();
         this.bot.waitFor(3, TimeUnit.SECONDS);
         this.ball.cancelShooting();
     }
 
     public void wallShoot() throws InterruptedException{
+        // Drive to wall
         this.drive.driveArcade(-0.4, 0);
         this.bot.waitFor(3, TimeUnit.SECONDS);
-        //this.drivetrain.driveTank(0.0, 0.0);
         this.drive.driveArcade(0, 0);
+        // Shoot
         this.ball.shoot();
         this.bot.waitFor(4, TimeUnit.SECONDS);
         this.bot.waitFor(500, TimeUnit.MILLISECONDS);
         this.ball.cancelShooting();
-        // this.drivetrain.driveTank(0.3,0.3);
     }
 
     }
