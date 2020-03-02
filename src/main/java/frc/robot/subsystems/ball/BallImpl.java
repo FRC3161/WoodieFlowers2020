@@ -18,9 +18,15 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     private Feeder feeder;
     private Intake intake;
 
-    private int feeding;
+    private FeederStates feeding;
 
     private boolean shootEnabled;
+
+    public enum FeederStates {
+        OFF,
+        DOWN,
+        UP
+    }
 
     public BallImpl() {
         // PLACEHOLDER
@@ -34,7 +40,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
         this.shooter.start();
         this.shootEnabled = false;
 
-        this.feeding = 0;
+        this.feeding = FeederStates.OFF;
     }
 
     public void shoot() {
@@ -52,7 +58,7 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     }
 
     public void unload() {
-        this.feeding = -1;
+        this.feeding = FeederStates.DOWN;
     }
         // Seems kind of redundant, but abstraction
 
@@ -86,10 +92,10 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
                 this.feeder.stopConveyor();
             }
         } else {
-            if(this.feeding == 0){
+            if(this.feeding == FeederStates.OFF){
                 this.shooter.stopShooter();
                 this.feeder.stopAll();
-            } else if(this.feeding == 1) {
+            } else if(this.feeding == FeederStates.UP) {
                 this.feeder.enableConveyor();
                 this.feeder.enableHopper();
             } else {
@@ -129,11 +135,11 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
    @Override
     public void feedCancel() {
-       this.feeding = 0; 
+       this.feeding = FeederStates.OFF; 
     }
 
     @Override
     public void prime() {
-        this.feeding = 1;
+        this.feeding = FeederStates.UP;
     }
 }
