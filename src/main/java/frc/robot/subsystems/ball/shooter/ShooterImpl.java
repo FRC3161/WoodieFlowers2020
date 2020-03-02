@@ -32,13 +32,17 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
         this.shooterController2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
         this.shooterController2.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms);
 
+        this.shooterController1.setInverted(true);
+        this.shooterController2.setInverted(true);
+
         this.hatch = sol;
 
         this.shooting = false;
 
-        this.shooterRPMTrench = 7500;
+        this.shooterRPMTrench = 6000;
         this.rpmTuner = new SmartDashboardTuner("Shooter RPM Trench", shooterRPMTrench, d -> this.shooterRPMTrench = d);
         this.rpmTuner.start();
+
     }
 
     public ShooterImpl() {
@@ -97,7 +101,7 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
     }
 
     public boolean readyForBalls() {
-        if (this.getShooterRPM() > this.shooterRPMTrench) {
+        if (this.getShooterRPM() > this.shooterRPMTrench/2) {
             return true;
         }
         return false;

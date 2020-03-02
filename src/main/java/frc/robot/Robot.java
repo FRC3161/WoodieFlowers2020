@@ -7,22 +7,21 @@
 
 package frc.robot;
 
+import static ca.team3161.lib.utils.controls.Gamepad.PressType.PRESS;
+import static ca.team3161.lib.utils.controls.Gamepad.PressType.RELEASE;
+
 import ca.team3161.lib.robot.TitanBot;
 import ca.team3161.lib.utils.controls.LogitechDualAction;
 import ca.team3161.lib.utils.controls.SquaredJoystickMode;
-import ca.team3161.lib.utils.controls.Gamepad.PressType;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Timer;
-import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.DrivetrainImpl;
-import frc.robot.subsystems.ball.BallImpl;
 import frc.robot.subsystems.ball.Ball;
+import frc.robot.subsystems.ball.BallImpl;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.ClimberImpl;
-import edu.wpi.first.wpilibj.Compressor;
-import frc.robot.ControllerBindings;
-import frc.robot.Autonomous;
+import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,9 +40,13 @@ public class Robot extends TitanBot {
   private Climber climb;
   private Compressor comp;
 
+
   private static final String kWallAuto = "Wall Auto";
-  private static final String kTrenchAuto = "Trench Auto";
+  private static final String kJustDrive = "Drive Away";
+  private static final String kWaitAuto = "Wait and then wall auto";
+  private static final String kShootandStay = "Wall auto without driving back";
   private String selectedAuto;
+
   private final SendableChooser<String> auto_chooser = new SendableChooser<>();
 
   @Override
@@ -72,15 +75,18 @@ public class Robot extends TitanBot {
     this.operatorPad = new LogitechDualAction(RobotMap.OPERATOR_PAD_PORT);
     this.ballSubsystem = new BallImpl();
     this.climb = new ClimberImpl();
-    this.auto = new Autonomous(this.drive, this.ballSubsystem);
+    this.auto = new Autonomous(this, this.drive, this.ballSubsystem);
     this.comp = new Compressor(0);
 
-    auto_chooser.setDefaultOption("Wall Auto", kWallAuto);
-    auto_chooser.addOption("Trench Auto", kTrenchAuto);
+    auto_chooser.setDefaultOption(kWallAuto, kWallAuto);
+    auto_chooser.addOption(kJustDrive, kJustDrive);
+    auto_chooser.addOption(kWaitAuto, kWaitAuto);
+    auto_chooser.addOption(kShootandStay, kShootandStay);
     SmartDashboard.putData("Auto Chooser", auto_chooser);
 
     registerLifecycleComponent(driverPad);
     registerLifecycleComponent(operatorPad);
+    registerLifecycleComponent(drive);
     registerLifecycleComponent(ballSubsystem);
   }
 
@@ -113,18 +119,24 @@ public class Robot extends TitanBot {
   }
 
   /**
-   * This function is called periodically during autonomous.
+   * This function is called once during autonomous.
    * 
    * @throws InterruptedException
    */
   @Override
   public void autonomousRoutine() throws InterruptedException {
     switch(selectedAuto){
-      case kWallAuto:
+      default:
         this.auto.wallShothitNRun();
         break;
-      case kTrenchAuto:
-        this.auto.hitNRun();
+      case kJustDrive:
+        this.auto.driveAway();
+        break;
+      case kShootandStay:
+        this.auto.wallShoot();
+        break;
+      case kWaitAuto:
+        this.auto.waitAndShoot();
         break;
     }
   }
@@ -140,42 +152,26 @@ public class Robot extends TitanBot {
     this.driverPad.setMode(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS, new SquaredJoystickMode());
     this.driverPad.setMode(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS, new SquaredJoystickMode());
 
-    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PressType.PRESS, () -> ballSubsystem.collect(false));
-    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PressType.PRESS, () -> ballSubsystem.retract());
-    this.operatorPad.bind(ControllerBindings.INTAKE, PressType.PRESS, () -> ballSubsystem.collect());
-    this.operatorPad.bind(ControllerBindings.INTAKE, PressType.RELEASE, () -> ballSubsystem.retract());
-    this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.PRESS, () -> ballSubsystem.shoot());
-    this.operatorPad.bind(ControllerBindings.SHOOTER, PressType.RELEASE, () -> ballSubsystem.stop()); 
+    this.driverPad.bind(ControllerBindings.DEPLOY_CLIMBER, () -> this.climb.extendClimber());
+    this.driverPad.bind(ControllerBindings.RUN_WINCH, PRESS, () -> this.climb.liftRobot());
+    this.driverPad.bind(ControllerBindings.RUN_WINCH, RELEASE, () -> this.climb.stopClimber());
+    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PRESS, () -> ballSubsystem.collect(false));
+    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, RELEASE, () -> ballSubsystem.retract());
+
+    this.operatorPad.bind(ControllerBindings.FEEDER_UP, PRESS, () -> this.ballSubsystem.feedBalls());
+    this.operatorPad.bind(ControllerBindings.FEEDER_UP, RELEASE, () -> this.ballSubsystem.stopFeeder());
+    this.operatorPad.bind(ControllerBindings.FEEDER_DOWN, PRESS, () -> this.ballSubsystem.unfeedBalls());
+    this.operatorPad.bind(ControllerBindings.FEEDER_DOWN, RELEASE, () -> this.ballSubsystem.stopFeeder());
+    this.operatorPad.bind(ControllerBindings.INTAKE, PRESS, () -> ballSubsystem.collect());
+    this.operatorPad.bind(ControllerBindings.INTAKE, RELEASE, () -> ballSubsystem.retract());
+    this.operatorPad.bind(ControllerBindings.SHOOTER, PRESS, () -> ballSubsystem.shoot());
+    this.operatorPad.bind(ControllerBindings.SHOOTER, RELEASE, () -> ballSubsystem.stop()); 
+
   }
 
   @Override
   public void teleopRoutine() {
-    //TODO properly bind controls
-    //this.drive.driveTank(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.Y_AXIS)); // Yeah it's shorter the old way, but this way we keep all of the bindings in one place
     this.drive.driveArcade(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS));
-
-    // TODO talk with driveteam about controls
-    this.drive.driveArcade(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS));
-    if(this.operatorPad.getDpadDirection().equals(ControllerBindings.FEEDER_UP)) {
-      this.ballSubsystem.feedBalls();
-    } else if(this.operatorPad.getDpadDirection().equals(ControllerBindings.FEEDER_DOWN)) {
-      this.ballSubsystem.unfeedBalls();
-    } else {
-      this.ballSubsystem.stopFeeder();
-    }
-
-    if(this.driverPad.getDpadDirection().equals(ControllerBindings.LIFT)) {
-      if(Timer.getMatchTime() <= 30.0d){
-        this.climb.liftRobot();
-        this.comp.stop();
-      }
-    } else if(this.driverPad.getDpadDirection().equals(ControllerBindings.DEPLOY_CLIMBER)) {
-      this.climb.extendClimber();
-    } else if(this.driverPad.getDpadDirection().equals(ControllerBindings.RUN_WINCH)) {
-      this.climb.liftRobot();
-    } else {
-      this.climb.stopClimber();
-    }
   }
 
   /**
