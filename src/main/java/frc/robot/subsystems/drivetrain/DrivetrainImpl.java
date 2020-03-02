@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import java.util.concurrent.TimeUnit;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.RobotMap;
