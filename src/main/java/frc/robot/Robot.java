@@ -126,7 +126,7 @@ public class Robot extends TitanBot {
   @Override
   public void autonomousRoutine() throws InterruptedException {
     switch(selectedAuto){
-      case kWallAuto:
+      default:
         this.auto.wallShothitNRun();
         break;
       case kJustDrive:
