@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import java.util.concurrent.TimeUnit;
 
 import ca.team3161.lib.robot.LifecycleEvent;
-import ca.team3161.lib.robot.pid.PID;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import ca.team3161.lib.utils.SmartDashboardTuner;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
