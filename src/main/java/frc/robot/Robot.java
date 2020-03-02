@@ -169,41 +169,8 @@ public class Robot extends TitanBot {
 
   @Override
   public void teleopRoutine() {
-    //TODO properly bind controls
-    //this.drive.driveTank(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.Y_AXIS)); // Yeah it's shorter the old way, but this way we keep all of the bindings in one place
-    //this.drive.driveArcade(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS));
-
     // TODO talk with driveteam about controls
     this.drive.driveArcade(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS));
-    /*
-    if(this.operatorPad.getDpadDirection().equals(ControllerBindings.FEEDER_UP)) {
-      this.manualFeederControl = true;
-      this.ballSubsystem.feedBalls();
-    } else if(this.operatorPad.getDpadDirection().equals(ControllerBindings.FEEDER_DOWN)) {
-      this.manualFeederControl = true;
-      this.ballSubsystem.unfeedBalls();
-    } else {
-      if(this.manualFeederControl) {
-        this.ballSubsystem.stopFeeder();
-      }
-      this.manualFeederControl = false;
-    }
-    */
-
-    /*
-    if(this.driverPad.getDpadDirection().equals(ControllerBindings.LIFT)) {
-      if(Timer.getMatchTime() <= 30.0d){
-        this.climb.liftRobot();
-        this.comp.stop();
-      }
-    } else if(this.driverPad.getDpadDirection().equals(ControllerBindings.DEPLOY_CLIMBER)) {
-      this.climb.extendClimber();
-    } else if(this.driverPad.getDpadDirection().equals(ControllerBindings.RUN_WINCH)) {
-      this.climb.liftRobot();
-    } else {
-      this.climb.stopClimber();
-    }
-    */
   }
 
   /**
