@@ -28,7 +28,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         this.poller = new UltrasonicPoller(feederUltrasonic, 3000, 300);
         this.distanceTuner = new SmartDashboardTuner("Ball Distance", 300, d -> this.poller.setDistance(d));
         
-        this.hopperController.configContinuousCurrentLimit(10, 250);
+        this.hopperController.configContinuousCurrentLimit(20, 250);
         this.hopperController.enableCurrentLimit(false);
     }
 
@@ -38,7 +38,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void enableHopper() {
-        //this.hopperController.enableCurrentLimit(true);
+        this.hopperController.enableCurrentLimit(true);
         this.hopperController.set(0.8d);
     }
 
@@ -48,7 +48,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void stopHopper() {
-       // this.hopperController.enableCurrentLimit(false);
+        this.hopperController.enableCurrentLimit(false);
         this.hopperController.set(0.0d);
     }
 
