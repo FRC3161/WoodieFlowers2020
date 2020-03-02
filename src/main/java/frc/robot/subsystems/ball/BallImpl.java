@@ -14,9 +14,6 @@ import frc.robot.subsystems.ball.shooter.ShooterImpl;
 
 public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
-    static final String PIDF_CONTROLLER_STRATEGY = "pidf";
-    static final String BANGBANG_CONTROLLER_STRATEGY = "bangbang";
-
     private Shooter shooter;
     private Feeder feeder;
     private Intake intake;
