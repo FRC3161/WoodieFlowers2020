@@ -40,11 +40,10 @@ public class Robot extends TitanBot {
   private Climber climb;
   private Compressor comp;
 
-  private boolean manualFeederControl;
 
   private static final String kWallAuto = "Wall Auto";
   private static final String kTrenchAuto = "Trench Auto";
-  private String selectedAuto;
+
   private final SendableChooser<String> auto_chooser = new SendableChooser<>();
 
   @Override
@@ -75,8 +74,6 @@ public class Robot extends TitanBot {
     this.climb = new ClimberImpl();
     this.auto = new Autonomous(this, this.drive, this.ballSubsystem);
     this.comp = new Compressor(0);
-
-    this.manualFeederControl = false;
 
     auto_chooser.setDefaultOption("Wall Auto", kWallAuto);
     auto_chooser.addOption("Trench Auto", kTrenchAuto);
@@ -113,7 +110,7 @@ public class Robot extends TitanBot {
    */
   @Override
   public void autonomousSetup() {
-    selectedAuto = auto_chooser.getSelected();
+    //selectedAuto = auto_chooser.getSelected();
   }
 
   /**
