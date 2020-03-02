@@ -45,6 +45,7 @@ public class Robot extends TitanBot {
   private static final String kJustDrive = "Drive Away";
   private static final String kWaitAuto = "Wait and then wall auto";
   private static final String kShootandStay = "Wall auto without driving back";
+  private String selectedAuto;
 
   private final SendableChooser<String> auto_chooser = new SendableChooser<>();
 
@@ -77,8 +78,10 @@ public class Robot extends TitanBot {
     this.auto = new Autonomous(this, this.drive, this.ballSubsystem);
     this.comp = new Compressor(0);
 
-    auto_chooser.setDefaultOption("Wall Auto", kWallAuto);
-    auto_chooser.addOption("Trench Auto", kJustDrive);
+    auto_chooser.setDefaultOption(kWallAuto, kWallAuto);
+    auto_chooser.addOption(kJustDrive, kJustDrive);
+    auto_chooser.addOption(kWaitAuto, kWaitAuto);
+    auto_chooser.addOption(kShootandStay, kShootandStay);
     SmartDashboard.putData("Auto Chooser", auto_chooser);
 
     registerLifecycleComponent(driverPad);
@@ -112,7 +115,7 @@ public class Robot extends TitanBot {
    */
   @Override
   public void autonomousSetup() {
-    //selectedAuto = auto_chooser.getSelected();
+    selectedAuto = auto_chooser.getSelected();
   }
 
   /**
@@ -122,22 +125,21 @@ public class Robot extends TitanBot {
    */
   @Override
   public void autonomousRoutine() throws InterruptedException {
-    /*switch(selectedAuto){
+    switch(selectedAuto){
       case kWallAuto:
         this.auto.wallShothitNRun();
         break;
-      case kTrenchAuto:
-        this.auto.hitNRun();
+      case kJustDrive:
+        this.auto.driveAway();
+        break;
+      case kShootandStay:
+        this.auto.wallShoot();
+        break;
+      case kWaitAuto:
+        this.auto.waitAndShoot();
         break;
     }
-    */
-    //this.auto.wallShothitNRun();
-            // TODO MUST MUST MUST FIND VALUES FOR DEAD RECKONING ON FIELD
-        //this.drivetrain.driveTank(-0.3, -0.3);
-        //this.auto.wallShothitNRun();
-        //this.auto.driveAway();
-        this.auto.wallShoot();
-      }
+  }
 
   /**
    * This function is called periodically during operator control.
