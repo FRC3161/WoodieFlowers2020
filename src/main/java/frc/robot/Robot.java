@@ -42,7 +42,9 @@ public class Robot extends TitanBot {
 
 
   private static final String kWallAuto = "Wall Auto";
-  private static final String kTrenchAuto = "Trench Auto";
+  private static final String kJustDrive = "Drive Away";
+  private static final String kWaitAuto = "Wait and then wall auto";
+  private static final String kShootandStay = "Wall auto without driving back";
 
   private final SendableChooser<String> auto_chooser = new SendableChooser<>();
 
@@ -76,7 +78,7 @@ public class Robot extends TitanBot {
     this.comp = new Compressor(0);
 
     auto_chooser.setDefaultOption("Wall Auto", kWallAuto);
-    auto_chooser.addOption("Trench Auto", kTrenchAuto);
+    auto_chooser.addOption("Trench Auto", kJustDrive);
     SmartDashboard.putData("Auto Chooser", auto_chooser);
 
     registerLifecycleComponent(driverPad);
