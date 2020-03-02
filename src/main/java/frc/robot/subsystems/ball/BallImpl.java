@@ -1,25 +1,16 @@
 package frc.robot.subsystems.ball;
 
-import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
 import java.util.concurrent.TimeUnit;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import frc.robot.RobotMap;
+import ca.team3161.lib.robot.LifecycleEvent;
+import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import frc.robot.subsystems.ball.feeder.Feeder;
-import frc.robot.subsystems.ball.shooter.PIDFShooterImpl;
+import frc.robot.subsystems.ball.feeder.FeederImpl;
+import frc.robot.subsystems.ball.intake.Intake;
+import frc.robot.subsystems.ball.intake.IntakeImpl;
+import frc.robot.subsystems.ball.intake.IntakeImpl.MotorDirections;
 import frc.robot.subsystems.ball.shooter.Shooter;
 import frc.robot.subsystems.ball.shooter.ShooterImpl;
-import frc.robot.subsystems.ball.intake.Intake;
-import frc.robot.subsystems.ball.intake.IntakeImpl.MotorDirections;
-
-import ca.team3161.lib.robot.LifecycleEvent;
-
-import frc.robot.subsystems.ball.feeder.FeederImpl;
-import frc.robot.subsystems.ball.intake.IntakeImpl;
 
 public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
@@ -32,27 +23,12 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     private int feeding;
 
-    //WPI_TalonSRX shooterController1;
-    //WPI_TalonSRX shooterController2;
-    //DoubleSolenoid shooterHatch;
-
-    //SendableChooser controllerChooser;
-
     private boolean shootEnabled;
 
     public BallImpl() {
         // PLACEHOLDER
         super(10, TimeUnit.MILLISECONDS);
 
-        //this.shooterController1 = new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORTS[0]);
-        //this.shooterController2 = new WPI_TalonSRX(RobotMap.SHOOTER_TALON_PORTS[1]);
-        //this.shooterHatch = new DoubleSolenoid(RobotMap.SHOOTER_SOLENOID_CHANNELS[0], RobotMap.SHOOTER_SOLENOID_CHANNELS[1]);
-/*
-        this.controllerChooser = new SendableChooser();
-        this.controllerChooser.addDefault(BANGBANG_CONTROLLER_STRATEGY, BANGBANG_CONTROLLER_STRATEGY);
-        this.controllerChooser.addObject(PIDF_CONTROLLER_STRATEGY, PIDF_CONTROLLER_STRATEGY);
-*/
-        //this.shooter = new ShooterImpl(shooterController1, shooterController2, shooterHatch);
         this.shooter = new ShooterImpl();
         this.feeder = new FeederImpl();
         this.intake = new IntakeImpl();
@@ -129,23 +105,17 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     public void lifecycleStatusChanged(LifecycleEvent previous, LifecycleEvent current) {
         this.shooter.lifecycleStatusChanged(previous, current);
         this.intake.lifecycleStatusChanged(previous, current);
-        /*
-        if(current.equals(LifecycleEvent.ON_AUTO) || current.equals(LifecycleEvent.ON_TELEOP)) {
-            String shooterStrat = (String) controllerChooser.getSelected();
-            switch (shooterStrat) {
-                case PIDF_CONTROLLER_STRATEGY:
-                    this.shooter = new PIDFShooterImpl(shooterController1, shooterController2, shooterHatch);
-                    break;
-                case BANGBANG_CONTROLLER_STRATEGY:
-                    this.shooter = new ShooterImpl(shooterController1, shooterController2, shooterHatch);
-                    break;
-                default:
-                    this.shooter = new ShooterImpl(shooterController1, shooterController2, shooterHatch);
-                    break;
-                */
-        //    }
-        
-            if(current.equals(LifecycleEvent.ON_AUTO) || current.equals(LifecycleEvent.ON_TELEOP)){
+
+        switch(current) {
+            case ON_AUTO:
+            case ON_TELEOP:
+                start();
+            default:
+                cancel();
+        }
+
+        if(current.equals(LifecycleEvent.ON_AUTO) || current.equals(LifecycleEvent.ON_TELEOP)){
+
             start();
             }
          else if(current.equals(LifecycleEvent.ON_DISABLED)) {
