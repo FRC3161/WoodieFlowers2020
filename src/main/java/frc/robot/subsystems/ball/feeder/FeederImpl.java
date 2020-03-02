@@ -20,8 +20,8 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     public FeederImpl(){
         super(1, TimeUnit.SECONDS);
         
-        this.beltController = new WPI_TalonSRX(RobotMap.ROLLER_TALON_PORT);
-        this.hopperController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
+        this.beltController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
+        this.hopperController = new WPI_TalonSRX(RobotMap.HOPPER_TALON_PORT);
         this.feederUltrasonic = new Ultrasonic(RobotMap.ULTRASONIC_PORTS[0], RobotMap.ULTRASONIC_PORTS[1]);
         
 
