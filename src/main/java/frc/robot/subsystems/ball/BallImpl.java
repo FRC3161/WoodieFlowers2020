@@ -30,6 +30,8 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     private Feeder feeder;
     private Intake intake;
 
+    private int feeding;
+
     //WPI_TalonSRX shooterController1;
     //WPI_TalonSRX shooterController2;
     //DoubleSolenoid shooterHatch;
@@ -58,6 +60,8 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
         this.intake.start();
         this.shooter.start();
         this.shootEnabled = false;
+
+        this.feeding = 0;
     }
 
     public void shoot() {
@@ -75,12 +79,9 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     }
 
     public void unload() {
-        try {
-            this.feeder.unload();
-        } catch (InterruptedException e) {
-        }
-        // Seems kind of redundant, but abstraction
+        this.feeding = -1;
     }
+        // Seems kind of redundant, but abstraction
 
     public void defineResources(){
         return;
@@ -112,8 +113,15 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
                 this.feeder.stopConveyor();
             }
         } else {
-            this.shooter.stopShooter();
-            this.feeder.stopAll();
+            if(this.feeding == 0){
+                this.shooter.stopShooter();
+                this.feeder.stopAll();
+            } else if(this.feeding == 1) {
+                this.feeder.enableConveyor();
+                this.feeder.enableHopper();
+            } else {
+                this.feeder.reverseFeeder();
+            }
         }
     }
 
@@ -156,5 +164,15 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
 
     public void stopFeeder() {
         this.feeder.stopAll();
+    }
+
+   @Override
+    public void feedCancel() {
+       this.feeding = 0; 
+    }
+
+    @Override
+    public void prime() {
+        this.feeding = 1;
     }
 }
