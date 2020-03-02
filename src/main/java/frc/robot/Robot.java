@@ -155,15 +155,13 @@ public class Robot extends TitanBot {
     this.driverPad.bind(ControllerBindings.DEPLOY_CLIMBER, () -> this.climb.extendClimber());
     this.driverPad.bind(ControllerBindings.RUN_WINCH, PRESS, () -> this.climb.liftRobot());
     this.driverPad.bind(ControllerBindings.RUN_WINCH, RELEASE, () -> this.climb.stopClimber());
+    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PRESS, () -> ballSubsystem.collect(false));
+    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, RELEASE, () -> ballSubsystem.retract());
 
     this.operatorPad.bind(ControllerBindings.FEEDER_UP, PRESS, () -> this.ballSubsystem.feedBalls());
     this.operatorPad.bind(ControllerBindings.FEEDER_UP, RELEASE, () -> this.ballSubsystem.stopFeeder());
-
     this.operatorPad.bind(ControllerBindings.FEEDER_DOWN, PRESS, () -> this.ballSubsystem.unfeedBalls());
     this.operatorPad.bind(ControllerBindings.FEEDER_DOWN, RELEASE, () -> this.ballSubsystem.stopFeeder());
-
-    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PRESS, () -> ballSubsystem.collect(false));
-    this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, RELEASE, () -> ballSubsystem.retract());
     this.operatorPad.bind(ControllerBindings.INTAKE, PRESS, () -> ballSubsystem.collect());
     this.operatorPad.bind(ControllerBindings.INTAKE, RELEASE, () -> ballSubsystem.retract());
     this.operatorPad.bind(ControllerBindings.SHOOTER, PRESS, () -> ballSubsystem.shoot());
@@ -173,7 +171,6 @@ public class Robot extends TitanBot {
 
   @Override
   public void teleopRoutine() {
-    // TODO talk with driveteam about controls
     this.drive.driveArcade(this.driverPad.getValue(ControllerBindings.LEFT_STICK, ControllerBindings.Y_AXIS), this.driverPad.getValue(ControllerBindings.RIGHT_STICK, ControllerBindings.X_AXIS));
   }
 
