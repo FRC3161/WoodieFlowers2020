@@ -32,6 +32,9 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
         this.shooterController2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
         this.shooterController2.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_5Ms);
 
+        this.shooterController1.setInverted(true);
+        this.shooterController2.setInverted(true);
+
         this.hatch = sol;
 
         this.shooting = false;
@@ -51,8 +54,8 @@ public class ShooterImpl extends RepeatingPooledSubsystem implements Shooter {
     }
 
     private void setShooterSpeed(double speed) {
-        this.shooterController1.set(-speed);
-        this.shooterController2.set(-speed);
+        this.shooterController1.set(speed);
+        this.shooterController2.set(speed);
     }
 
     public boolean getHatch() {
