@@ -107,17 +107,11 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
             case ON_AUTO:
             case ON_TELEOP:
                 start();
+                break;
             default:
                 cancel();
         }
 
-        if(current.equals(LifecycleEvent.ON_AUTO) || current.equals(LifecycleEvent.ON_TELEOP)){
-
-            start();
-            }
-         else if(current.equals(LifecycleEvent.ON_DISABLED)) {
-            cancel();
-        }
     }
 
     public void feedBalls() {
