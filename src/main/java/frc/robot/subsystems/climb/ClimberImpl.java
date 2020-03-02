@@ -10,7 +10,6 @@ public class ClimberImpl implements Climber {
     
     WPI_TalonSRX lifterMotorController;
 
-    // Pretty sure there are two solenoids
     DoubleSolenoid climberSolenoid;
     
     public ClimberImpl() {
@@ -31,7 +30,7 @@ public class ClimberImpl implements Climber {
 
     public void liftRobot(){
         if(Timer.getMatchTime() <= 30){
-            this.lifterMotorController.set(0.8d); // Determine actual value
+            this.lifterMotorController.set(0.8d);
             this.retractClimber();
         }
     }
