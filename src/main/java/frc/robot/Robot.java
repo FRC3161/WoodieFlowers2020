@@ -7,25 +7,21 @@
 
 package frc.robot;
 
-import java.util.concurrent.TimeUnit;
+import static ca.team3161.lib.utils.controls.Gamepad.PressType.PRESS;
+import static ca.team3161.lib.utils.controls.Gamepad.PressType.RELEASE;
 
 import ca.team3161.lib.robot.TitanBot;
 import ca.team3161.lib.utils.controls.LogitechDualAction;
 import ca.team3161.lib.utils.controls.SquaredJoystickMode;
-import static ca.team3161.lib.utils.controls.Gamepad.PressType.*;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Timer;
-import frc.robot.subsystems.drivetrain.Drivetrain;
-import frc.robot.subsystems.drivetrain.DrivetrainImpl;
-import frc.robot.subsystems.ball.BallImpl;
 import frc.robot.subsystems.ball.Ball;
+import frc.robot.subsystems.ball.BallImpl;
 import frc.robot.subsystems.climb.Climber;
 import frc.robot.subsystems.climb.ClimberImpl;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.MotorSafety;
-import frc.robot.ControllerBindings;
-import frc.robot.Autonomous;
+import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.DrivetrainImpl;
 
 /**
  * The VM is configured to automatically run this class, and to call the
