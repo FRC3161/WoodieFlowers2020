@@ -44,8 +44,15 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
     @Override
     public void lifecycleStatusChanged(LifecycleEvent previous, LifecycleEvent current) {
-        // TODO Auto-generated method stub
-
+        switch(current) {
+            case ON_AUTO:
+            case ON_TELEOP:
+            case ON_TEST:
+                this.start();
+                break;
+            default:
+                this.cancel();
+        }
     }
 
     @Override
