@@ -61,8 +61,7 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
     @Override
     public void stop() {
-        // TODO Auto-generated method stub
-
+        this.state = ConveyorState.OFF;
     }
 
 }
