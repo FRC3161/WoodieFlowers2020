@@ -17,6 +17,7 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
     }
 
     WPI_TalonSRX conveyorController;
+    volatile ConveyorState state;
 
     ConveyorImpl() {
         super(1, TimeUnit.SECONDS);
