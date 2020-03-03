@@ -23,6 +23,7 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
         super(1, TimeUnit.SECONDS);
         this.conveyorController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
         this.conveyorController.setInverted(true);
+        this.state = ConveyorState.OFF;
     }
 
     @Override
