@@ -27,4 +27,22 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
         // Placeholder
     }
 
+    @Override
+    public void feed() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void unload() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void stop() {
+        // TODO Auto-generated method stub
+
+    }
+
 }
