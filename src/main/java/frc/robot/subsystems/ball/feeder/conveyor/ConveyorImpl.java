@@ -33,8 +33,13 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
     @Override
     public void task() {
-        // TODO Auto-generated method stub
-
+        if(this.state == ConveyorState.FEEDING) {
+            this.conveyorController.set(0.95d);
+        } else if(this.state == ConveyorState.UNLOADING) {
+            this.conveyorController.set(-0.95d);
+        } else {
+            this.conveyorController.set(0.0d);
+        }
     }
 
     @Override
