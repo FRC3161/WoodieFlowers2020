@@ -3,18 +3,23 @@ package frc.robot.subsystems.ball.feeder.conveyor;
 import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import frc.robot.RobotMap;
+
 
 public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
+    WPI_TalonSRX conveyorController;
+
     ConveyorImpl() {
         super(1, TimeUnit.SECONDS);
-        // Placeholder
+        this.conveyorController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
     }
 
     @Override
     public void defineResources() {
-        // TODO Auto-generated method stub
-
+        require(this.conveyorController);
     }
 
     @Override
