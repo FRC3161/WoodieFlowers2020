@@ -13,7 +13,8 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
     public enum ConveyorState {
         FEEDING,
         OFF,
-        UNLOADING
+        UNLOADING,
+        PRIMING
     }
 
     WPI_TalonSRX conveyorController;
