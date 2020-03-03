@@ -11,9 +11,9 @@ import frc.robot.RobotMap;
 public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
     public enum ConveyorState {
-        FORWARD,
+        FEEDING,
         OFF,
-        REVERSE
+        UNLOADING
     }
 
     WPI_TalonSRX conveyorController;
@@ -51,8 +51,8 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
     @Override
     public void prime() {
-        // TODO Auto-generated method stub
-
+        // TODO right now this is the same as feed, but it will be updated to use ultrasonic later
+        this.state = ConveyorState.FEEDING;
     }
 
     @Override
