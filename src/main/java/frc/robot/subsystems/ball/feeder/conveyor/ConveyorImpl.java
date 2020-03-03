@@ -64,7 +64,7 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
     @Override
     public void prime() {
         // TODO right now this is the same as feed, but it will be updated to use ultrasonic later
-        this.state = ConveyorState.FEEDING;
+        this.state = ConveyorState.PRIMING;
     }
 
     @Override
