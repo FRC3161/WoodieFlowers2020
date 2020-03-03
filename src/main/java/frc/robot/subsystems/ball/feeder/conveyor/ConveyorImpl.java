@@ -56,8 +56,7 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
     @Override
     public void unload() {
-        // TODO Auto-generated method stub
-
+        this.state = ConveyorState.UNLOADING;
     }
 
     @Override
