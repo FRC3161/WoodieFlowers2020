@@ -45,8 +45,7 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
     @Override
     public void feed() {
-        // TODO Auto-generated method stub
-
+        this.state = ConveyorState.FEEDING;
     }
 
     @Override
