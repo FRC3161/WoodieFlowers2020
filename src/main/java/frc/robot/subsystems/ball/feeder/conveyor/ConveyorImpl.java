@@ -10,6 +10,12 @@ import frc.robot.RobotMap;
 
 public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
+    public enum ConveyorState {
+        FORWARD,
+        OFF,
+        REVERSE
+    }
+
     WPI_TalonSRX conveyorController;
 
     ConveyorImpl() {
