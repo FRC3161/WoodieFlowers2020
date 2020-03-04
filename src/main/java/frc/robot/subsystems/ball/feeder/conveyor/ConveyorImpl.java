@@ -3,6 +3,7 @@ package frc.robot.subsystems.ball.feeder.conveyor;
 import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.RobotMap;
@@ -19,12 +20,14 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
     WPI_TalonSRX conveyorController;
     volatile ConveyorState state;
+    Ultrasonic topUltrasonic;
 
     ConveyorImpl() {
         super(1, TimeUnit.SECONDS);
         this.conveyorController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
         this.conveyorController.setInverted(true);
         this.state = ConveyorState.OFF;
+        this.topUltrasonic = new Ultrasonic(RobotMap.TOP_ULTRASONIC_PORTS[0], RobotMap.TOP_ULTRASONIC_PORTS[1]);
     }
 
     @Override
@@ -39,8 +42,7 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
         } else if(this.state == ConveyorState.UNLOADING) {
             this.conveyorController.set(-0.95d);
         } else if(this.state == ConveyorState.PRIMING){
-            // TODO ultrasonic sensor
-            this.conveyorController.set(-0.95d);
+            this.conveyorController.set(0.95d);
         } else {
             this.conveyorController.set(0.0d);
         }
