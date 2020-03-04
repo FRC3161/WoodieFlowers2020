@@ -32,7 +32,7 @@ public class UltrasonicPoller extends RepeatingPooledSubsystem {
         this.firstRun = true;
     }
 
-    UltrasonicPoller(Ultrasonic sensor, long time, double distance) {
+    public UltrasonicPoller(Ultrasonic sensor, long time, double distance) {
         this(sensor, time, distance, 25);
     }
 
