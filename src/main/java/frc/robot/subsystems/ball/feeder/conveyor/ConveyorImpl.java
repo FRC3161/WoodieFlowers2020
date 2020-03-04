@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.RobotMap;
+import frc.robot.subsystems.ball.feeder.UltrasonicPoller;
 
 
 public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
@@ -20,16 +21,24 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
 
     WPI_TalonSRX conveyorController;
     volatile ConveyorState state;
+
     Ultrasonic topUltrasonic;
     double topUltrasonicDistanceMM;
+
+    Ultrasonic bottomUltrasonic;
+    UltrasonicPoller bottomUltrasonicPoller;
 
     ConveyorImpl() {
         super(1, TimeUnit.SECONDS);
         this.conveyorController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
         this.conveyorController.setInverted(true);
         this.state = ConveyorState.OFF;
+
         this.topUltrasonic = new Ultrasonic(RobotMap.TOP_ULTRASONIC_PORTS[0], RobotMap.TOP_ULTRASONIC_PORTS[1]);
         this.topUltrasonicDistanceMM = 30.0;
+
+        this.bottomUltrasonic = new Ultrasonic(RobotMap.ULTRASONIC_PORTS[0], RobotMap.ULTRASONIC_PORTS[1]);
+        this.bottomUltrasonicPoller = new UltrasonicPoller(this.bottomUltrasonic, 3000, 30); // TODO setup tuners
     }
 
     @Override
