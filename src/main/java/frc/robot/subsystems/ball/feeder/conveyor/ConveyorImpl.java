@@ -52,6 +52,9 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
             this.conveyorController.set(0.95d);
         } else if(this.state == ConveyorState.UNLOADING) {
             this.conveyorController.set(-0.95d);
+            if(this.bottomUltrasonicPoller.checkUnloaded()) {
+                this.state = ConveyorState.OFF;
+            }
         } else if(this.state == ConveyorState.PRIMING){
             this.conveyorController.set(0.95d);
             if(this.topUltrasonic.getRangeMM() < this.topUltrasonicDistanceMM) {
