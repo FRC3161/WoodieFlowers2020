@@ -20,7 +20,7 @@ public class UltrasonicPoller extends RepeatingPooledSubsystem {
 
     long startTime;
 
-    UltrasonicPoller(Ultrasonic sensor, long time, double distance, long rate) {
+    public UltrasonicPoller(Ultrasonic sensor, long time, double distance, long rate) {
         // sensor is pretty self explanatory
         // time is how long you want the sensor to not detect an object until true is returned
         // distance is the minimum distance threshold
