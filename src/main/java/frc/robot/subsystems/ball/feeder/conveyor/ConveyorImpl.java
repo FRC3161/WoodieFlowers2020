@@ -21,6 +21,7 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
     WPI_TalonSRX conveyorController;
     volatile ConveyorState state;
     Ultrasonic topUltrasonic;
+    double topUltrasonicDistanceMM;
 
     ConveyorImpl() {
         super(1, TimeUnit.SECONDS);
@@ -28,6 +29,7 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
         this.conveyorController.setInverted(true);
         this.state = ConveyorState.OFF;
         this.topUltrasonic = new Ultrasonic(RobotMap.TOP_ULTRASONIC_PORTS[0], RobotMap.TOP_ULTRASONIC_PORTS[1]);
+        this.topUltrasonicDistanceMM = 30.0;
     }
 
     @Override
@@ -43,6 +45,9 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
             this.conveyorController.set(-0.95d);
         } else if(this.state == ConveyorState.PRIMING){
             this.conveyorController.set(0.95d);
+            if(this.topUltrasonic.getRangeMM() < this.topUltrasonicDistanceMM) {
+                this.state = ConveyorState.OFF;
+            }
         } else {
             this.conveyorController.set(0.0d);
         }
