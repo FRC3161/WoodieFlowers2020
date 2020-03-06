@@ -4,8 +4,13 @@ import java.util.concurrent.TimeUnit;
 
 import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import frc.robot.RobotMap;
 
 public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
+
+    WPI_TalonSRX hopperController;
 
     enum HopperState {
         FEEDING,
@@ -15,7 +20,8 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
 
     HopperImpl() {
         super(1, TimeUnit.SECONDS);
-        // Placeholder
+
+        this.hopperController = new WPI_TalonSRX(RobotMap.HOPPER_TALON_PORT);
     }
 
     @Override
