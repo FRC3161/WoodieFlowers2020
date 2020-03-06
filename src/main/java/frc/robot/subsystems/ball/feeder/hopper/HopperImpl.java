@@ -18,6 +18,7 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
 
     WPI_TalonSRX hopperController;
     HopperState state;
+    double hopperSpeed;
 
 
     HopperImpl() {
@@ -25,11 +26,18 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
 
         this.hopperController = new WPI_TalonSRX(RobotMap.HOPPER_TALON_PORT);
         this.state = HopperState.OFF;
+        this.hopperSpeed = 0.8d;
     }
 
     @Override
     public void task() {
-        // Placeholder
+        if(this.state == HopperState.FEEDING) {
+            this.hopperController.set(hopperSpeed);
+        } else if(this.state == HopperState.UNLOADING) {
+            this.hopperController.set(-hopperSpeed);
+        } else {
+            this.hopperController.set(0.0d);
+        }
     }
 
     @Override
