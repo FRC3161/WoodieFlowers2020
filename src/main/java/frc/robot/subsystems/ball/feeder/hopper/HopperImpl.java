@@ -25,6 +25,8 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
         super(1, TimeUnit.SECONDS);
 
         this.hopperController = new WPI_TalonSRX(RobotMap.HOPPER_TALON_PORT);
+        this.hopperController.configContinuousCurrentLimit(20, 250);
+
         this.state = HopperState.OFF;
         this.hopperSpeed = 0.8d;
     }
@@ -33,10 +35,13 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
     public void task() {
         if(this.state == HopperState.FEEDING) {
             this.hopperController.set(hopperSpeed);
+            this.hopperController.enableCurrentLimit(true);
         } else if(this.state == HopperState.UNLOADING) {
             this.hopperController.set(-hopperSpeed);
+            this.hopperController.enableCurrentLimit(false);
         } else {
             this.hopperController.set(0.0d);
+            this.hopperController.enableCurrentLimit(false);
         }
     }
 
