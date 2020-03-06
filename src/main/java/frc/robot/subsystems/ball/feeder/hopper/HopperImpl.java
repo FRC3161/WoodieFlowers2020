@@ -10,18 +10,21 @@ import frc.robot.RobotMap;
 
 public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
 
-    WPI_TalonSRX hopperController;
-
     enum HopperState {
         FEEDING,
         OFF,
         UNLOADING
     }
 
+    WPI_TalonSRX hopperController;
+    HopperState state;
+
+
     HopperImpl() {
         super(1, TimeUnit.SECONDS);
 
         this.hopperController = new WPI_TalonSRX(RobotMap.HOPPER_TALON_PORT);
+        this.state = HopperState.OFF;
     }
 
     @Override
