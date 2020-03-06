@@ -44,20 +44,17 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
 
     @Override
     public void feed() {
-        // TODO Auto-generated method stub
-
+        this.state = HopperState.FEEDING;
     }
 
     @Override
     public void unload() {
-        // TODO Auto-generated method stub
-
+        this.state = HopperState.UNLOADING;
     }
 
     @Override
     public void stop() {
-        // TODO Auto-generated method stub
-
+        this.state = HopperState.OFF;
     }
 
 }
