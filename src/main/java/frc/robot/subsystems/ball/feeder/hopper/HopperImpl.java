@@ -31,7 +31,7 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
 
     @Override
     public void defineResources() {
-        // Placeholder
+        require(this.hopperController);
     }
 
     @Override
