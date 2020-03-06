@@ -39,7 +39,15 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
 
     @Override
     public void lifecycleStatusChanged(LifecycleEvent previous, LifecycleEvent current) {
-        // Placeholder
+        switch(current){
+            case ON_TELEOP:
+            case ON_AUTO:
+            case ON_TEST:
+                this.start();
+                break;
+            default:
+                this.cancel();
+        }
     }
 
     @Override
