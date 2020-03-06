@@ -7,6 +7,12 @@ import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 
 public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
 
+    enum HopperState {
+        FEEDING,
+        OFF,
+        UNLOADING
+    }
+
     HopperImpl() {
         super(1, TimeUnit.SECONDS);
         // Placeholder
