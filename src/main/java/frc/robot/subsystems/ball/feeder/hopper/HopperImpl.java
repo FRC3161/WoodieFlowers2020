@@ -1,7 +1,6 @@
 package frc.robot.subsystems.ball.feeder.hopper;
 
 import java.util.concurrent.TimeUnit;
-
 import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -22,7 +21,7 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
 
 
     HopperImpl() {
-        super(1, TimeUnit.SECONDS);
+        super(100, TimeUnit.MILLISECONDS);
 
         this.hopperController = new WPI_TalonSRX(RobotMap.HOPPER_TALON_PORT);
         this.hopperController.configContinuousCurrentLimit(20, 250);
