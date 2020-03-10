@@ -9,8 +9,24 @@ public interface Feeder extends Subsystem{
         HOPPER
     }
 
+    public enum FeederDirection {
+        FORWARDS(1),
+        REVERSE(-1);
+
+        int direction;
+
+        FeederDirection(int direction) {
+            this.direction  = direction;
+        }
+
+        public int getDirection() {
+            return this.direction;
+        }
+    }
+
     void prime();
     void unload();
     void enable(FeederComponent component);
+    void enable(FeederComponent component, FeederDirection direction);
     void stop(FeederComponent component);
 }
