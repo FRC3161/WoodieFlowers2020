@@ -20,7 +20,7 @@ public class HopperImpl extends RepeatingPooledSubsystem implements Hopper{
     double hopperSpeed;
 
 
-    HopperImpl() {
+    public HopperImpl() {
         super(100, TimeUnit.MILLISECONDS);
 
         this.hopperController = new WPI_TalonSRX(RobotMap.HOPPER_TALON_PORT);

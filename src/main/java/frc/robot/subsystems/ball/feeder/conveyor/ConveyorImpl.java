@@ -28,7 +28,7 @@ public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
     Ultrasonic bottomUltrasonic;
     UltrasonicPoller bottomUltrasonicPoller;
 
-    ConveyorImpl() {
+    public ConveyorImpl() {
         super(20, TimeUnit.MILLISECONDS);
         this.conveyorController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
         this.conveyorController.setInverted(true);
