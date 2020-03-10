@@ -16,21 +16,21 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     Conveyor conveyorSubsystem;
     Hopper hopperSubsystem;
 
-    Ultrasonic feederUltrasonic;
-    UltrasonicPoller poller;
-    SmartDashboardTuner distanceTuner;
+    double topUltrasonicDistanceMM;
+    Ultrasonic topUltrasonic;
+    SmartDashboardTuner topUltrasonicTuner;
 
     public FeederImpl(){
         super(1, TimeUnit.SECONDS);
         
-        this.feederUltrasonic = new Ultrasonic(RobotMap.ULTRASONIC_PORTS[0], RobotMap.ULTRASONIC_PORTS[1]);
+        this.topUltrasonic = new Ultrasonic(RobotMap.ULTRASONIC_PORTS[0], RobotMap.ULTRASONIC_PORTS[1]);
         
         this.conveyorSubsystem = new ConveyorImpl();
         this.hopperSubsystem = new HopperImpl();
 
-        this.poller = new UltrasonicPoller(feederUltrasonic, 3000, 300);
-        this.distanceTuner = new SmartDashboardTuner("Ball Distance", 300, d -> this.poller.setDistance(d));
-        
+        this.topUltrasonicDistanceMM = 30;
+        this.topUltrasonicTuner = new SmartDashboardTuner("Top Ultrasonic Tuner", this.topUltrasonicDistanceMM, x -> this.topUltrasonicDistanceMM = x);
+
     }
 
     public void task() {
@@ -40,14 +40,18 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
 
     @Override
     public void defineResources() {
-        require(this.feederUltrasonic);
+        require(this.topUltrasonic);
     }
 
     @Override
     public void prime() {
-        // TODO ultrasonic
-        this.hopperSubsystem.feed();
-        this.conveyorSubsystem.feed();
+        if(this.topUltrasonic.getRangeMM() > this.topUltrasonicDistanceMM) {
+            this.enable(FeederComponent.HOPPER);
+            this.enable(FeederComponent.CONVEYOR);
+        } else {
+            this.stop(FeederComponent.HOPPER);
+            this.stop(FeederComponent.CONVEYOR);
+        }
     }
 
     @Override
