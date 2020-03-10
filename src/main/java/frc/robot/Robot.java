@@ -158,10 +158,10 @@ public class Robot extends TitanBot {
     this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, PRESS, () -> ballSubsystem.collect(false));
     this.driverPad.bind(ControllerBindings.REVERSE_INTAKE_DRIVER, RELEASE, () -> ballSubsystem.retract());
 
-    this.operatorPad.bind(ControllerBindings.FEEDER_UP, PRESS, () -> this.ballSubsystem.feedBalls());
-    this.operatorPad.bind(ControllerBindings.FEEDER_UP, RELEASE, () -> this.ballSubsystem.stopFeeder());
-    this.operatorPad.bind(ControllerBindings.FEEDER_DOWN, PRESS, () -> this.ballSubsystem.unfeedBalls());
-    this.operatorPad.bind(ControllerBindings.FEEDER_DOWN, RELEASE, () -> this.ballSubsystem.stopFeeder());
+    this.operatorPad.bind(ControllerBindings.FEEDER_UP, PRESS, () -> this.ballSubsystem.prime());
+    this.operatorPad.bind(ControllerBindings.FEEDER_UP, RELEASE, () -> this.ballSubsystem.feedCancel());
+    this.operatorPad.bind(ControllerBindings.FEEDER_DOWN, PRESS, () -> this.ballSubsystem.unload());
+    this.operatorPad.bind(ControllerBindings.FEEDER_DOWN, RELEASE, () -> this.ballSubsystem.feedCancel());
     this.operatorPad.bind(ControllerBindings.INTAKE, PRESS, () -> ballSubsystem.collect());
     this.operatorPad.bind(ControllerBindings.INTAKE, RELEASE, () -> ballSubsystem.retract());
     this.operatorPad.bind(ControllerBindings.SHOOTER, PRESS, () -> ballSubsystem.shoot());
