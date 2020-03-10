@@ -20,6 +20,8 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     Ultrasonic topUltrasonic;
     SmartDashboardTuner topUltrasonicTuner;
 
+    UltrasonicPoller topPoller;
+
     public FeederImpl(){
         super(1, TimeUnit.SECONDS);
         
@@ -30,6 +32,8 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
 
         this.topUltrasonicDistanceMM = 30;
         this.topUltrasonicTuner = new SmartDashboardTuner("Top Ultrasonic Tuner", this.topUltrasonicDistanceMM, x -> this.topUltrasonicDistanceMM = x);
+
+        this.topPoller = new UltrasonicPoller(this.topUltrasonic, 3000, 20); // Temp values
 
     }
 
@@ -56,9 +60,13 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
 
     @Override
     public void unload() {
-        // TODO see above
-        this.hopperSubsystem.unload();
-        this.conveyorSubsystem.unload();
+        if(!this.topPoller.noBalls) {
+            this.enable(FeederComponent.HOPPER);
+            this.enable(FeederComponent.CONVEYOR);
+        } else {
+            this.stop(FeederComponent.HOPPER);
+            this.stop(FeederComponent.CONVEYOR);
+        }
     }
 
     @Override
