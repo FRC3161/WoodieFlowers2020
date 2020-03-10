@@ -15,6 +15,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     
     Conveyor conveyorSubsystem;
     Hopper hopperSubsystem;
+
     Ultrasonic feederUltrasonic;
     UltrasonicPoller poller;
     SmartDashboardTuner distanceTuner;
@@ -44,30 +45,54 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
 
     @Override
     public void prime() {
-        // TODO Auto-generated method stub
+        // TODO ultrasonic
+        this.hopperSubsystem.feed();
+        this.conveyorSubsystem.feed();
     }
 
     @Override
     public void unload() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void enable(FeederComponent component) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void stop(FeederComponent component) {
-        // TODO Auto-generated method stub
-
+        // TODO see above
+        this.hopperSubsystem.unload();
+        this.conveyorSubsystem.unload();
     }
 
     @Override
     public void enable(FeederComponent component, FeederDirection direction) {
-        // TODO Auto-generated method stub
-
+        // Probably shouldn't have a default case IMO
+        switch(component) {
+            case HOPPER:
+                if(direction == FeederDirection.FORWARDS) {
+                    this.conveyorSubsystem.feed();
+                } else {
+                    this.conveyorSubsystem.unload();
+                }
+            case CONVEYOR:
+                if(direction == FeederDirection.FORWARDS){
+                    this.conveyorSubsystem.feed();
+                } else {
+                    this.conveyorSubsystem.unload();
+                }
+                break;
+        }
     }
+
+    @Override
+    public void enable(FeederComponent component) {
+        this.enable(component, FeederDirection.FORWARDS);
+    }
+
+    @Override
+    public void stop(FeederComponent component) {
+        // See above
+        switch(component) {
+            case HOPPER:
+                this.hopperSubsystem.stop();
+                break;
+            case CONVEYOR:
+                this.conveyorSubsystem.stop();
+                break;
+        }
+    }
+
 }

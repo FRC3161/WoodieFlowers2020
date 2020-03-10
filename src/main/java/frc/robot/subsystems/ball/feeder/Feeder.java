@@ -10,18 +10,8 @@ public interface Feeder extends Subsystem{
     }
 
     public enum FeederDirection {
-        FORWARDS(1),
-        REVERSE(-1);
-
-        int direction;
-
-        FeederDirection(int direction) {
-            this.direction  = direction;
-        }
-
-        public int getDirection() {
-            return this.direction;
-        }
+        FORWARDS,
+        REVERSE
     }
 
     void prime();
