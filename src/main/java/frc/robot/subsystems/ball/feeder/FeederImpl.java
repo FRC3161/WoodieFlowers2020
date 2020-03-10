@@ -32,54 +32,38 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         this.hopperController.enableCurrentLimit(false);
     }
 
-    public void enableConveyor() {
-        this.beltController.set(-0.95d);
-        // TODO Find actual values
-    }
-
-    public void enableHopper() {
-        this.hopperController.enableCurrentLimit(true);
-        this.hopperController.set(0.8d);
-    }
-
-    public void stopConveyor() {
-        this.beltController.set(0.0d);
-
-    }
-
-    public void stopHopper() {
-        this.hopperController.enableCurrentLimit(false);
-        this.hopperController.set(0.0d);
-    }
-
-    public void stopAll() {
-        //this.beltController.set(0.0d);
-        //this.hopperController.set(0.0d);
-        this.stopHopper();
-        this.stopConveyor();
-    }
-
-    public void reverseFeeder() {
-        this.beltController.set(0.6d);
-        this.hopperController.set(-0.8d);
-        // TODO see above
-    }
-
-    public void defineResources(){
-        require(beltController);
-        require(hopperController);
-    }
-
-    public void unload() throws InterruptedException {
-        while(!this.poller.checkUnloaded()){
-            this.reverseFeeder();
-            Thread.sleep(20);
-        }
-        this.stopAll();
-    }
-
     public void task() {
         // PLACEHOLDER
         return;
+    }
+
+    @Override
+    public void defineResources() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void prime() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void unload() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void enable(FeederComponent component) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void stop(FeederComponent component) {
+        // TODO Auto-generated method stub
+
     }
 }
