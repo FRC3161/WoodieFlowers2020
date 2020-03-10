@@ -60,7 +60,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
 
     @Override
     public void unload() {
-        if(!this.topPoller.noBalls) {
+        if(!this.topPoller.checkUnloaded()) {
             this.enable(FeederComponent.HOPPER);
             this.enable(FeederComponent.CONVEYOR);
         } else {
