@@ -66,4 +66,10 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public void enable(FeederComponent component, FeederDirection direction) {
+        // TODO Auto-generated method stub
+
+    }
 }
