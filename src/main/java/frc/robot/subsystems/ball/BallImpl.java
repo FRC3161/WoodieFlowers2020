@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import frc.robot.subsystems.ball.feeder.Feeder;
+import frc.robot.subsystems.ball.feeder.Feeder.FeederComponent;
+import frc.robot.subsystems.ball.feeder.Feeder.FeederDirection;
 import frc.robot.subsystems.ball.feeder.FeederImpl;
 import frc.robot.subsystems.ball.intake.Intake;
 import frc.robot.subsystems.ball.intake.IntakeImpl;
@@ -52,9 +54,8 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     }
 
     public void stop() {
-        this.shooter.stopShooter();
-        this.feeder.stopAll();
         this.shootEnabled = false;
+        this.feeding = FeederStates.OFF;
     }
 
     public void unload() {
@@ -85,21 +86,22 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     public void task() {
         if(this.shootEnabled) {
             this.shooter.runShooter();
-            this.feeder.enableHopper();
+            this.feeder.enable(FeederComponent.HOPPER);
             if(this.shooter.readyForBalls()) {
-                this.feeder.enableConveyor();
+                this.feeder.enable(FeederComponent.CONVEYOR);
             } else {
-                this.feeder.stopConveyor();
+                this.feeder.stop(FeederComponent.CONVEYOR);
             }
         } else {
             if(this.feeding == FeederStates.OFF){
                 this.shooter.stopShooter();
-                this.feeder.stopAll();
+                this.feeder.stop(FeederComponent.CONVEYOR);
+                this.feeder.stop(FeederComponent.HOPPER);
             } else if(this.feeding == FeederStates.UP) {
-                this.feeder.enableConveyor();
-                this.feeder.enableHopper();
+                this.feeder.enable(FeederComponent.CONVEYOR);
+                this.feeder.enable(FeederComponent.HOPPER);
             } else {
-                this.feeder.reverseFeeder();
+                this.feeder.enable(FeederComponent.CONVEYOR, FeederDirection.REVERSE);
             }
         }
     }
@@ -118,19 +120,6 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
                 cancel();
         }
 
-    }
-
-    public void feedBalls() {
-        this.feeder.enableHopper();
-        this.feeder.enableConveyor();
-    }
-
-    public void unfeedBalls() {
-        this.feeder.reverseFeeder();
-    }
-
-    public void stopFeeder() {
-        this.feeder.stopAll();
     }
 
    @Override
