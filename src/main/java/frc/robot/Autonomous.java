@@ -64,10 +64,12 @@ public class Autonomous {
         this.time.start();
         while(!(this.time.get() < this.trajectory.getTotalTimeSeconds())) {
             this.currentTrajectoryState = this.trajectory.sample(this.time.get());
-            this.bot.waitFor(50, TimeUnit.MILLISECONDS);
             ChassisSpeeds adjustedSpeeds = this.ramsete.calculate(this.drive.getPose(), this.currentTrajectoryState);
             DifferentialDriveWheelSpeeds wheelSpeeds = this.kinematics.toWheelSpeeds(adjustedSpeeds);
-            // TODO set up velocity PID controller to take the left and right wheel speeds
+            this.drive.setLeftVelocityTarget(Units.metersToFeet(wheelSpeeds.leftMetersPerSecond));
+            this.drive.setRightVelocityTarget(Units.metersToFeet(wheelSpeeds.rightMetersPerSecond));
+            this.drive.driveVelocityPID();
+            this.bot.waitFor(50, TimeUnit.MILLISECONDS);
         }
     }
 

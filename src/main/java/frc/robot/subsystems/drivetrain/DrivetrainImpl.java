@@ -34,6 +34,8 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     private AHRS gyro;
     private DifferentialDriveOdometry odometry;
 
+    static final double WHEEL_DIAMETER = 18.84955592;
+
     // Right Side Motor Controllers and Group
 
     private final RampingSpeedController rightMotorController1;
@@ -181,5 +183,28 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
                 this.cancel();
                 break;
         }
+    }
+
+    double getLeftVelocity() {
+        return ((((this.leftEncoder.getRate() / 128) * 60) * WHEEL_DIAMETER) / 60) / 12; // TODO properly implement, currently just uses the rpm code from shooter and converts that to fps
+    }
+
+    double getRightVelocity() {
+        return ((((this.rightEncoder.getRate() / 128) * 60) * WHEEL_DIAMETER) / 60) / 12; // TODO properly implement, currently just uses the rpm code from shooter and converts that to fps
+    }
+
+    @Override
+    public void setLeftVelocityTarget(double leftTarget) {
+        this.leftPIDController.setSetpoint(leftTarget);
+    }
+
+    @Override
+    public void setRightVelocityTarget(double rightTarget) {
+        this.leftPIDController.setSetpoint(rightTarget);
+    }
+
+    @Override
+    public void driveVelocityPID() {
+        this.drivetrain.tankDrive(this.leftPIDController.calculate(this.getLeftVelocity()), this.rightPIDController.calculate(this.getRightVelocity()));
     }
 }

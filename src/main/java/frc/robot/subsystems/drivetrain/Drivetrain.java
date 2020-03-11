@@ -9,6 +9,9 @@ public interface Drivetrain extends Subsystem, LifecycleListener {
     void driveArcade(double xSpeed, double zRotation);
     void setSetpoint(double setpoint);
     void drivePID();
+    void setLeftVelocityTarget(double leftTarget);
+    void setRightVelocityTarget(double rightTarget);
+    void driveVelocityPID();
     boolean atSetpoint();
     void resetEncoderTicks();
     Pose2d getPose();
