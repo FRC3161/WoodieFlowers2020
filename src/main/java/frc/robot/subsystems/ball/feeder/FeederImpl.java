@@ -2,7 +2,6 @@ package frc.robot.subsystems.ball.feeder;
 
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import frc.robot.subsystems.ball.feeder.UltrasonicPoller;
 import ca.team3161.lib.utils.SmartDashboardTuner;
 import java.util.concurrent.TimeUnit;
 import frc.robot.subsystems.ball.feeder.conveyor.Conveyor;
