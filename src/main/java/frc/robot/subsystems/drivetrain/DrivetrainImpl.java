@@ -1,6 +1,8 @@
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.pid.RampingSpeedController;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
@@ -10,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import com.kauailabs.navx.frc.AHRS;
 import frc.robot.RobotMap;
 
 public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetrain {
@@ -25,6 +29,10 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
     static final double Kp = 10;
     static final double Ki = 0.1;
     static final double Kd = 0.1;
+
+    // Odometry
+    private AHRS gyro;
+    private DifferentialDriveOdometry odometry;
 
     // Right Side Motor Controllers and Group
 
@@ -84,6 +92,9 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         this.rightPIDController = new PIDController(Kp, Ki, Kd);
 
         this.drivetrain = new DifferentialDrive(this.leftMotorControllers, this.rightMotorControllers);
+
+        this.gyro = new AHRS();
+        this.odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(this.gyro.getAngle()));
     }
 
     @Override
@@ -152,6 +163,10 @@ public class DrivetrainImpl extends RepeatingPooledSubsystem implements Drivetra
         // SmartDashboard.putNumber("Right Side Encoder Ticks", this.getRightEncoderTicks());
         this.drivetrain.feedWatchdog();
         this.drivetrain.arcadeDrive(-driveXSpeedTarget, driveZRotationTarget - 0.03 * driveXSpeedTarget, false); // Subtracting a percentage of the x speed from the rotation target to compensate for the drift of one side
+    }
+
+    public Pose2d getPose() {
+        return this.odometry.getPoseMeters();
     }
 
     @Override
