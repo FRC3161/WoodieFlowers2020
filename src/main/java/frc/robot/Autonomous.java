@@ -5,13 +5,18 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.TitanBot;
+import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.ball.Ball;
 
 public class Autonomous {
@@ -19,12 +24,24 @@ public class Autonomous {
     TitanBot bot;
     Drivetrain drive;
     Ball ball;
+
+    Timer time;
+    Trajectory trajectory;
+    Trajectory.State currentTrajectoryState;
+    DifferentialDriveKinematics kinematics;
+    
+    // Makes more sense to have this here than in DrivetrainImpl
+    RamseteController ramsete;
+
     static final double WHEEL_DIAMETER = 18.84955592;
     
     Autonomous(TitanBot bot, Drivetrain driveSubsystem, Ball ballSubsystem) {
         this.drive = driveSubsystem;
         this.ball = ballSubsystem;
         this.bot = bot;
+        this.time = new Timer();
+        this.ramsete = new RamseteController(); // Using default values which apparently produce good results (https://docs.wpilib.org/en/latest/docs/software/advanced-control/trajectories/ramsete.html)
+        this.kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(27));
 
     }
 
@@ -40,7 +57,18 @@ public class Autonomous {
 
         TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(18), Units.feetToMeters(8)); // Basically random values that I vaguely remember ATM
 
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(start, interiorWaypoints, trench, config);
+        this.trajectory = TrajectoryGenerator.generateTrajectory(start, interiorWaypoints, trench, config);
+    }
+
+    public void trajectoryAutoTest() throws InterruptedException {
+        this.time.start();
+        while(!(this.time.get() < this.trajectory.getTotalTimeSeconds())) {
+            this.currentTrajectoryState = this.trajectory.sample(this.time.get());
+            this.bot.waitFor(50, TimeUnit.MILLISECONDS);
+            ChassisSpeeds adjustedSpeeds = this.ramsete.calculate(this.drive.getPose(), this.currentTrajectoryState);
+            DifferentialDriveWheelSpeeds wheelSpeeds = this.kinematics.toWheelSpeeds(adjustedSpeeds);
+            // TODO set up velocity PID controller to take the left and right wheel speeds
+        }
     }
 
     public void hitNRun() throws InterruptedException {
