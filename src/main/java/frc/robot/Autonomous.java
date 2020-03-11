@@ -2,9 +2,16 @@ package frc.robot;
 
 import frc.robot.subsystems.drivetrain.Drivetrain;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-
 import ca.team3161.lib.robot.TitanBot;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.subsystems.ball.Ball;
 
 public class Autonomous {
@@ -12,13 +19,28 @@ public class Autonomous {
     TitanBot bot;
     Drivetrain drive;
     Ball ball;
-
     static final double WHEEL_DIAMETER = 18.84955592;
     
     Autonomous(TitanBot bot, Drivetrain driveSubsystem, Ball ballSubsystem) {
         this.drive = driveSubsystem;
         this.ball = ballSubsystem;
         this.bot = bot;
+
+    }
+
+    public void generateTrajectory() {
+
+        Pose2d start = new Pose2d(Units.feetToMeters(10), Units.feetToMeters(10), Rotation2d.fromDegrees(0));
+        Pose2d trench = new Pose2d(Units.feetToMeters(20), Units.feetToMeters(3), Rotation2d.fromDegrees(-180)); // Test waypoint
+
+        // Random interior waypoints
+        var interiorWaypoints = new ArrayList<Translation2d>();
+        interiorWaypoints.add(new Translation2d(Units.feetToMeters(2.6), Units.feetToMeters(1.2)));
+        interiorWaypoints.add(new Translation2d(Units.feetToMeters(12.7), Units.feetToMeters(4.6)));
+
+        TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(18), Units.feetToMeters(8)); // Basically random values that I vaguely remember ATM
+
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(start, interiorWaypoints, trench, config);
     }
 
     public void hitNRun() throws InterruptedException {
