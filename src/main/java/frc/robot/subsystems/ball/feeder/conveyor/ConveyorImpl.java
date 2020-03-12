@@ -3,11 +3,8 @@ package frc.robot.subsystems.ball.feeder.conveyor;
 import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import frc.robot.RobotMap;
-import frc.robot.subsystems.ball.feeder.UltrasonicPoller;
 
 
 public class ConveyorImpl extends RepeatingPooledSubsystem implements Conveyor {
