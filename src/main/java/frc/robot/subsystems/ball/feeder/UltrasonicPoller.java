@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
-// Pretty sure this only allows package level access
 public class UltrasonicPoller extends RepeatingPooledSubsystem {
 
     Ultrasonic ultrasonicSensor;
