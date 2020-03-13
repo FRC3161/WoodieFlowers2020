@@ -117,7 +117,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
                 }
                 break;
             default:
-                throw new RuntimeException("Specified component does not exist!");
+                throw new RuntimeException("Specified component " + component.toString() + " does not exist!");
         }
     }
 
@@ -132,7 +132,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
             case HOPPER:
                 this.hopperSubsystem.stop();
             default:
-                throw new RuntimeException("Specified component does not exist!");
+                throw new RuntimeException("Specified component " + component.toString() + " does not exist!");
         }
     }
 
