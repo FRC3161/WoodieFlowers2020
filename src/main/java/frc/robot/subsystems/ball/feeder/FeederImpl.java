@@ -11,6 +11,13 @@ import frc.robot.subsystems.ball.feeder.hopper.HopperImpl;
 import frc.robot.RobotMap;
 
 public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
+
+    enum FeederState {
+        PRIMING,
+        FEEDING,
+        OFF,
+        UNLOADING
+    }
     
     Conveyor conveyorSubsystem;
     Hopper hopperSubsystem;
@@ -20,6 +27,8 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     SmartDashboardTuner topUltrasonicTuner;
 
     UltrasonicPoller topPoller;
+
+    volatile FeederState state;
 
     public FeederImpl(){
         super(1, TimeUnit.SECONDS);
@@ -37,8 +46,35 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     }
 
     public void task() {
-        // PLACEHOLDER
-        return;
+        switch(this.state) {
+            case PRIMING:
+                if(this.topUltrasonic.getRangeMM() > this.topUltrasonicDistanceMM) {
+                    this.enable(FeederComponent.HOPPER);
+                    this.enable(FeederComponent.CONVEYOR);
+                } else {
+                    this.state = FeederState.OFF;
+                }
+                break; // It will behave as expected because this runs in a loop
+            case FEEDING:
+                this.enable(FeederComponent.HOPPER);
+                this.enable(FeederComponent.CONVEYOR);
+                break;
+            case UNLOADING:
+                if(!this.topPoller.checkUnloaded()) {
+                    this.enable(FeederComponent.HOPPER, FeederDirection.REVERSE);
+                    this.enable(FeederComponent.CONVEYOR, FeederDirection.REVERSE);
+                    break;
+                } else {
+                    this.state = FeederState.OFF;
+                }
+            default:
+                
+        }
+    }
+
+    @Override
+    public void feed() {
+        this.state = FeederState.FEEDING;
     }
 
     @Override
@@ -48,29 +84,17 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
 
     @Override
     public void prime() {
-        if(this.topUltrasonic.getRangeMM() > this.topUltrasonicDistanceMM) {
-            this.enable(FeederComponent.HOPPER);
-            this.enable(FeederComponent.CONVEYOR);
-        } else {
-            this.stop(FeederComponent.HOPPER);
-            this.stop(FeederComponent.CONVEYOR);
-        }
+        this.state = FeederState.PRIMING;
     }
+
+
 
     @Override
     public void unload() {
-        if(!this.topPoller.checkUnloaded()) {
-            this.enable(FeederComponent.HOPPER);
-            this.enable(FeederComponent.CONVEYOR);
-        } else {
-            this.stop(FeederComponent.HOPPER);
-            this.stop(FeederComponent.CONVEYOR);
-        }
+        this.state = FeederState.UNLOADING;
     }
 
-    @Override
-    public void enable(FeederComponent component, FeederDirection direction) {
-        // Probably shouldn't have a default case IMO
+    void enable(FeederComponent component, FeederDirection direction) throws RuntimeException{
         switch(component) {
             case HOPPER:
                 if(direction == FeederDirection.FORWARDS) {
@@ -85,25 +109,29 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
                     this.conveyorSubsystem.unload();
                 }
                 break;
+            default:
+                throw new RuntimeException("Specified component does not exist!");
         }
     }
 
-    @Override
-    public void enable(FeederComponent component) {
+    void enable(FeederComponent component) {
         this.enable(component, FeederDirection.FORWARDS);
     }
 
-    @Override
-    public void stop(FeederComponent component) {
-        // See above
+    void stop(FeederComponent component) throws RuntimeException {
         switch(component) {
-            case HOPPER:
-                this.hopperSubsystem.stop();
-                break;
             case CONVEYOR:
                 this.conveyorSubsystem.stop();
-                break;
+            case HOPPER:
+                this.hopperSubsystem.stop();
+            default:
+                throw new RuntimeException("Specified component does not exist!");
         }
+    }
+
+    @Override
+    public void disable() {
+        this.state = FeederState.OFF;
     }
 
 }

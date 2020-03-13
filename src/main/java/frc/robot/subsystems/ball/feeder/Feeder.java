@@ -16,7 +16,7 @@ public interface Feeder extends Subsystem{
 
     void prime();
     void unload();
-    void enable(FeederComponent component);
-    void enable(FeederComponent component, FeederDirection direction);
-    void stop(FeederComponent component);
+    void feed();
+    void disable();
+    void setShooting();
 }
