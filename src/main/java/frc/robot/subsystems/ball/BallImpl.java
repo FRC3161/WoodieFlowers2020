@@ -86,22 +86,17 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     public void task() {
         if(this.shootEnabled) {
             this.shooter.runShooter();
-            this.feeder.enable(FeederComponent.HOPPER);
-            if(this.shooter.readyForBalls()) {
-                this.feeder.enable(FeederComponent.CONVEYOR);
-            } else {
-                this.feeder.stop(FeederComponent.CONVEYOR);
-            }
+            this.feeder.feed();
+            this.feeder.setShooting(this.shooter.readyForBalls()); // Setting this to the return value of readyForBalls (boolean) instead of using an if statement, avoiding an unnecessary comparison
         } else {
             if(this.feeding == FeederStates.OFF){
                 this.shooter.stopShooter();
-                this.feeder.stop(FeederComponent.CONVEYOR);
-                this.feeder.stop(FeederComponent.HOPPER);
+                this.feeder.disable();
             } else if(this.feeding == FeederStates.UP) {
-                this.feeder.enable(FeederComponent.CONVEYOR);
-                this.feeder.enable(FeederComponent.HOPPER);
+                // Consider renaming states to something more accurate, like Priming, instead of up
+                this.feeder.prime();
             } else {
-                this.feeder.enable(FeederComponent.CONVEYOR, FeederDirection.REVERSE);
+                this.feeder.unload();
             }
         }
     }

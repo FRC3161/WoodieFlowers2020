@@ -43,6 +43,8 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
         this.topUltrasonicTuner = new SmartDashboardTuner("Top Ultrasonic Tuner", this.topUltrasonicDistanceMM, x -> this.topUltrasonicDistanceMM = x);
 
         this.topPoller = new UltrasonicPoller(this.topUltrasonic, 3000, 20); // Temp values
+        
+        this.shooting = false;
 
     }
 
