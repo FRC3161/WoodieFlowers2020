@@ -18,5 +18,5 @@ public interface Feeder extends Subsystem{
     void unload();
     void feed();
     void disable();
-    void setShooting();
+    void setShooting(boolean shooting);
 }

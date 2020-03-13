@@ -29,6 +29,7 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     UltrasonicPoller topPoller;
 
     volatile FeederState state;
+    volatile boolean shooting;
 
     public FeederImpl(){
         super(1, TimeUnit.SECONDS);
@@ -57,7 +58,11 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
                 break; // It will behave as expected because this runs in a loop
             case FEEDING:
                 this.enable(FeederComponent.HOPPER);
-                this.enable(FeederComponent.CONVEYOR);
+                if(this.shooting){
+                    this.enable(FeederComponent.CONVEYOR);
+                } else {
+                    this.stop(FeederComponent.CONVEYOR);
+                }
                 break;
             case UNLOADING:
                 if(!this.topPoller.checkUnloaded()) {
@@ -132,6 +137,11 @@ public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
     @Override
     public void disable() {
         this.state = FeederState.OFF;
+    }
+
+    @Override
+    public void setShooting(boolean shooting) {
+        this.shooting = shooting;
     }
 
 }
