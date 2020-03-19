@@ -1,7 +1,6 @@
 package frc.robot.subsystems.ball;
 
 import java.util.concurrent.TimeUnit;
-
 import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import frc.robot.subsystems.ball.feeder.Feeder;
@@ -52,9 +51,8 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     }
 
     public void stop() {
-        this.shooter.stopShooter();
-        this.feeder.stopAll();
         this.shootEnabled = false;
+        this.feeding = FeederStates.OFF;
     }
 
     public void unload() {
@@ -85,21 +83,17 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
     public void task() {
         if(this.shootEnabled) {
             this.shooter.runShooter();
-            this.feeder.enableHopper();
-            if(this.shooter.readyForBalls()) {
-                this.feeder.enableConveyor();
-            } else {
-                this.feeder.stopConveyor();
-            }
+            this.feeder.feed();
+            this.feeder.setShooting(this.shooter.readyForBalls()); // Setting this to the return value of readyForBalls (boolean) instead of using an if statement, avoiding an unnecessary comparison
         } else {
             if(this.feeding == FeederStates.OFF){
                 this.shooter.stopShooter();
-                this.feeder.stopAll();
+                this.feeder.disable();
             } else if(this.feeding == FeederStates.UP) {
-                this.feeder.enableConveyor();
-                this.feeder.enableHopper();
+                // Consider renaming states to something more accurate, like Priming, instead of up
+                this.feeder.prime();
             } else {
-                this.feeder.reverseFeeder();
+                this.feeder.unload();
             }
         }
     }
@@ -118,19 +112,6 @@ public class BallImpl extends RepeatingPooledSubsystem implements Ball {
                 cancel();
         }
 
-    }
-
-    public void feedBalls() {
-        this.feeder.enableHopper();
-        this.feeder.enableConveyor();
-    }
-
-    public void unfeedBalls() {
-        this.feeder.reverseFeeder();
-    }
-
-    public void stopFeeder() {
-        this.feeder.stopAll();
     }
 
    @Override

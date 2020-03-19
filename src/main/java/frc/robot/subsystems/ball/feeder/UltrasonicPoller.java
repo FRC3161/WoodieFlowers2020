@@ -5,8 +5,7 @@ import java.util.concurrent.TimeUnit;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
-// Pretty sure this only allows package level access
-class UltrasonicPoller extends RepeatingPooledSubsystem {
+public class UltrasonicPoller extends RepeatingPooledSubsystem {
 
     Ultrasonic ultrasonicSensor;
 
@@ -20,7 +19,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
 
     long startTime;
 
-    UltrasonicPoller(Ultrasonic sensor, long time, double distance, long rate) {
+    public UltrasonicPoller(Ultrasonic sensor, long time, double distance, long rate) {
         // sensor is pretty self explanatory
         // time is how long you want the sensor to not detect an object until true is returned
         // distance is the minimum distance threshold
@@ -32,7 +31,7 @@ class UltrasonicPoller extends RepeatingPooledSubsystem {
         this.firstRun = true;
     }
 
-    UltrasonicPoller(Ultrasonic sensor, long time, double distance) {
+    public UltrasonicPoller(Ultrasonic sensor, long time, double distance) {
         this(sensor, time, distance, 25);
     }
 

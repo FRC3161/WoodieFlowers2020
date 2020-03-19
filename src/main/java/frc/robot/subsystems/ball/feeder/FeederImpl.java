@@ -1,85 +1,149 @@
 package frc.robot.subsystems.ball.feeder;
 
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import frc.robot.subsystems.ball.feeder.UltrasonicPoller;
 import ca.team3161.lib.utils.SmartDashboardTuner;
 import java.util.concurrent.TimeUnit;
+import frc.robot.subsystems.ball.feeder.conveyor.Conveyor;
+import frc.robot.subsystems.ball.feeder.conveyor.ConveyorImpl;
+import frc.robot.subsystems.ball.feeder.hopper.Hopper;
+import frc.robot.subsystems.ball.feeder.hopper.HopperImpl;
 import frc.robot.RobotMap;
 
 public class FeederImpl extends RepeatingPooledSubsystem implements Feeder {
-    
-    WPI_TalonSRX beltController;
-    WPI_TalonSRX hopperController;
 
-    Ultrasonic feederUltrasonic;
-    UltrasonicPoller poller;
-    SmartDashboardTuner distanceTuner;
+    enum FeederState {
+        PRIMING,
+        FEEDING,
+        OFF,
+        UNLOADING
+    }
+    
+    Conveyor conveyorSubsystem;
+    Hopper hopperSubsystem;
+
+    double topUltrasonicDistanceMM;
+    Ultrasonic topUltrasonic;
+    SmartDashboardTuner topUltrasonicTuner;
+
+    UltrasonicPoller topPoller;
+
+    volatile FeederState state;
+    volatile boolean shooting;
 
     public FeederImpl(){
         super(1, TimeUnit.SECONDS);
         
-        this.beltController = new WPI_TalonSRX(RobotMap.BELT_TALON_PORT);
-        this.hopperController = new WPI_TalonSRX(RobotMap.HOPPER_TALON_PORT);
-        this.feederUltrasonic = new Ultrasonic(RobotMap.ULTRASONIC_PORTS[0], RobotMap.ULTRASONIC_PORTS[1]);
+        this.topUltrasonic = new Ultrasonic(RobotMap.ULTRASONIC_PORTS[0], RobotMap.ULTRASONIC_PORTS[1]);
         
+        this.conveyorSubsystem = new ConveyorImpl();
+        this.hopperSubsystem = new HopperImpl();
 
-        this.poller = new UltrasonicPoller(feederUltrasonic, 3000, 300);
-        this.distanceTuner = new SmartDashboardTuner("Ball Distance", 300, d -> this.poller.setDistance(d));
+        this.topUltrasonicDistanceMM = 30;
+        this.topUltrasonicTuner = new SmartDashboardTuner("Top Ultrasonic Tuner", this.topUltrasonicDistanceMM, x -> this.topUltrasonicDistanceMM = x);
+
+        this.topPoller = new UltrasonicPoller(this.topUltrasonic, 3000, 20); // Temp values
         
-        this.hopperController.configContinuousCurrentLimit(20, 250);
-        this.hopperController.enableCurrentLimit(false);
-    }
+        this.shooting = false;
 
-    public void enableConveyor() {
-        this.beltController.set(-0.95d);
-        // TODO Find actual values
-    }
-
-    public void enableHopper() {
-        this.hopperController.enableCurrentLimit(true);
-        this.hopperController.set(0.8d);
-    }
-
-    public void stopConveyor() {
-        this.beltController.set(0.0d);
-
-    }
-
-    public void stopHopper() {
-        this.hopperController.enableCurrentLimit(false);
-        this.hopperController.set(0.0d);
-    }
-
-    public void stopAll() {
-        //this.beltController.set(0.0d);
-        //this.hopperController.set(0.0d);
-        this.stopHopper();
-        this.stopConveyor();
-    }
-
-    public void reverseFeeder() {
-        this.beltController.set(0.6d);
-        this.hopperController.set(-0.8d);
-        // TODO see above
-    }
-
-    public void defineResources(){
-        require(beltController);
-        require(hopperController);
-    }
-
-    public void unload() throws InterruptedException {
-        while(!this.poller.checkUnloaded()){
-            this.reverseFeeder();
-            Thread.sleep(20);
-        }
-        this.stopAll();
     }
 
     public void task() {
-        // PLACEHOLDER
-        return;
+        switch(this.state) {
+            case PRIMING:
+                if(this.topUltrasonic.getRangeMM() > this.topUltrasonicDistanceMM) {
+                    this.enable(FeederComponent.HOPPER);
+                    this.enable(FeederComponent.CONVEYOR);
+                } else {
+                    this.state = FeederState.OFF;
+                }
+                break; // It will behave as expected because this runs in a loop
+            case FEEDING:
+                this.enable(FeederComponent.HOPPER);
+                if(this.shooting){
+                    this.enable(FeederComponent.CONVEYOR);
+                } else {
+                    this.stop(FeederComponent.CONVEYOR);
+                }
+                break;
+            case UNLOADING:
+                if(!this.topPoller.checkUnloaded()) {
+                    this.enable(FeederComponent.HOPPER, FeederDirection.REVERSE);
+                    this.enable(FeederComponent.CONVEYOR, FeederDirection.REVERSE);
+                    break;
+                } else {
+                    this.state = FeederState.OFF;
+                }
+            default:
+                
+        }
     }
+
+    @Override
+    public void feed() {
+        this.state = FeederState.FEEDING;
+    }
+
+    @Override
+    public void defineResources() {
+        require(this.topUltrasonic);
+    }
+
+    @Override
+    public void prime() {
+        this.state = FeederState.PRIMING;
+    }
+
+
+
+    @Override
+    public void unload() {
+        this.state = FeederState.UNLOADING;
+    }
+
+    void enable(FeederComponent component, FeederDirection direction) throws RuntimeException{
+        switch(component) {
+            case HOPPER:
+                if(direction == FeederDirection.FORWARDS) {
+                    this.conveyorSubsystem.feed();
+                } else {
+                    this.conveyorSubsystem.unload();
+                }
+            case CONVEYOR:
+                if(direction == FeederDirection.FORWARDS){
+                    this.conveyorSubsystem.feed();
+                } else {
+                    this.conveyorSubsystem.unload();
+                }
+                break;
+            default:
+                throw new RuntimeException("Specified component " + component.toString() + " does not exist!");
+        }
+    }
+
+    void enable(FeederComponent component) {
+        this.enable(component, FeederDirection.FORWARDS);
+    }
+
+    void stop(FeederComponent component) throws RuntimeException {
+        switch(component) {
+            case CONVEYOR:
+                this.conveyorSubsystem.stop();
+            case HOPPER:
+                this.hopperSubsystem.stop();
+            default:
+                throw new RuntimeException("Specified component " + component.toString() + " does not exist!");
+        }
+    }
+
+    @Override
+    public void disable() {
+        this.state = FeederState.OFF;
+    }
+
+    @Override
+    public void setShooting(boolean shooting) {
+        this.shooting = shooting;
+    }
+
 }
