@@ -1,12 +1,9 @@
 package frc.robot.subsystems.ball;
 
 import java.util.concurrent.TimeUnit;
-
 import ca.team3161.lib.robot.LifecycleEvent;
 import ca.team3161.lib.robot.subsystem.RepeatingPooledSubsystem;
 import frc.robot.subsystems.ball.feeder.Feeder;
-import frc.robot.subsystems.ball.feeder.Feeder.FeederComponent;
-import frc.robot.subsystems.ball.feeder.Feeder.FeederDirection;
 import frc.robot.subsystems.ball.feeder.FeederImpl;
 import frc.robot.subsystems.ball.intake.Intake;
 import frc.robot.subsystems.ball.intake.IntakeImpl;
